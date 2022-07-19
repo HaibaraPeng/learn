@@ -1,0 +1,8 @@
+server:
+  port: 8001
+
+mrbird:
+  blog:
+    name: mrbird blog
+    title: SpringBoot
+    wholeTitle: ${mrbird.blog.name}--${mrbird.blog.title}
