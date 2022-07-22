@@ -1,0 +1,6 @@
+security:
+  oauth2:
+    client:
+      client-id: test
+      client-secret: 123456
+      registered-redirect-uri: http://www.baidu.com
