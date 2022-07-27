@@ -30,6 +30,7 @@
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <knife4j.version>2.0.4</knife4j.version>
         <hutool.version>5.8.0</hutool.version>
+        <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
     </properties>
 
     <dependencies>
@@ -77,6 +78,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!--JWT(Json Web Token)登录支持-->
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus-jose-jwt.version}</version>
             </dependency>
             <!--mall通用模块-->
             <dependency>

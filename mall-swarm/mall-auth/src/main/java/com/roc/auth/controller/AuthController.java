@@ -21,12 +21,10 @@ import java.util.Map;
  * 自定义Oauth2获取令牌接口
  * Created by macro on 2020/7/17.
  */
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @RestController
-@RequestMapping("/oauth")
+//@RequestMapping("/oauth")
 public class AuthController {
-
-    private final TokenEndpoint tokenEndpoint;
 
 //    @ApiOperation("Oauth2获取token")
 //    @ApiImplicitParams({
