@@ -10,6 +10,7 @@
     <modules>
         <module>mall-gateway</module>
         <module>mall-auth</module>
+        <module>mall-common</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -21,15 +22,25 @@
     </parent>
 
     <properties>
+        <mall-common.version>1.0-SNAPSHOT</mall-common.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <skipTests>true</skipTests>
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
+        <knife4j.version>2.0.4</knife4j.version>
+        <hutool.version>5.8.0</hutool.version>
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -49,6 +60,29 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!--Knife4j API文档生产工具-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!--Hutool Java工具包-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!--mall通用模块-->
+            <dependency>
+                <groupId>com.roc</groupId>
+                <artifactId>mall-common</artifactId>
+                <version>${mall-common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
