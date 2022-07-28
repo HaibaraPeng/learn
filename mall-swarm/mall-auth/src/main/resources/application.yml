@@ -1,3 +1,10 @@
+server:
+  port: 9401
+spring:
+  profiles:
+    active: dev
+  application:
+    name: mall-auth
 security:
   oauth2:
     client:
