@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  * @author MrBird
  */
 @Configuration
-//@EnableResourceServer
+@EnableResourceServer
 public class ResourceServerConfig  {
 
 }
