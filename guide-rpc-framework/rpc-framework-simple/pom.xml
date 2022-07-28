@@ -12,6 +12,10 @@
     <artifactId>rpc-framework-simple</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.roc</groupId>
+            <artifactId>rpc-framework-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

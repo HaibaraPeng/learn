@@ -33,8 +33,4 @@ public final class SingletonFactory {
         }
     }
 
-    public static void main(String[] args) {
-        SingletonFactory.getInstance(String.class);
-        SingletonFactory.getInstance(Integer.class);
-    }
 }
