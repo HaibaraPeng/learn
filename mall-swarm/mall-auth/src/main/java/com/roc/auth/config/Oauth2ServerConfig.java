@@ -1,5 +1,6 @@
 package com.roc.auth.config;
 
+import com.roc.auth.component.JwtTokenEnhancer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtTokenEnhancer jwtTokenEnhancer;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -41,15 +43,15 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-//        List<TokenEnhancer> delegates = new ArrayList<>();
-//        delegates.add(jwtTokenEnhancer);
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> delegates = new ArrayList<>();
+        delegates.add(jwtTokenEnhancer);
 //        delegates.add(accessTokenConverter());
-//        enhancerChain.setTokenEnhancers(delegates); //配置JWT的内容增强器
-        endpoints.authenticationManager(authenticationManager);
+        enhancerChain.setTokenEnhancers(delegates); //配置JWT的内容增强器
+        endpoints.authenticationManager(authenticationManager)
 //                .userDetailsService(userDetailsService) //配置加载用户信息的服务
 //                .accessTokenConverter(accessTokenConverter())
-//                .tokenEnhancer(enhancerChain);
+                .tokenEnhancer(enhancerChain);
     }
 
 }
