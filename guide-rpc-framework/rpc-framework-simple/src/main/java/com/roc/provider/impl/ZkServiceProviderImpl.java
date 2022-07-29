@@ -1,11 +1,14 @@
 package com.roc.provider.impl;
 
 import com.roc.config.RpcServiceConfig;
+import com.roc.extension.ExtensionLoader;
 import com.roc.provider.ServiceProvider;
+import com.roc.registry.ServiceRegistry;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Description ZkServiceProviderImpl
@@ -17,9 +20,17 @@ public class ZkServiceProviderImpl implements ServiceProvider {
 
     private final Map<String, Object> serviceMap;
     private final Set<String> registeredService;
+    private final ServiceRegistry serviceRegistry;
+
+    public ZkServiceProviderImpl() {
+        serviceMap = new ConcurrentHashMap<>();
+        registeredService = ConcurrentHashMap.newKeySet();
+        serviceRegistry = ExtensionLoader.getExtensionLoader(ServiceRegistry.class).getExtension("zk");
+    }
 
     @Override
     public void addService(RpcServiceConfig rpcServiceConfig) {
+
 
     }
 
@@ -32,4 +43,5 @@ public class ZkServiceProviderImpl implements ServiceProvider {
     public void publishService(RpcServiceConfig rpcServiceConfig) {
 
     }
+
 }
