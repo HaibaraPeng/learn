@@ -1,13 +1,18 @@
 package com.roc.config;
 
-import lombok.Getter;
+import lombok.*;
 
 /**
  * @Description RpcServiceConfig
  * @Author penn
  * @Date 2022/7/28 22:19
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
+@Builder
+@ToString
 public class RpcServiceConfig {
 
     /**

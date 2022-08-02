@@ -1,5 +1,6 @@
 package com.roc.annotation;
 
+import com.roc.spring.CustomScannerRegistrar;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -11,7 +12,7 @@ import java.lang.annotation.*;
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Import()
+@Import(CustomScannerRegistrar.class)
 @Documented
 public @interface RpcScan {
 

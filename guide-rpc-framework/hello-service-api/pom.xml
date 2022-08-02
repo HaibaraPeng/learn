@@ -9,19 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>example-server</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.roc</groupId>
-            <artifactId>rpc-framework-simple</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.roc</groupId>
-            <artifactId>hello-service-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+    <artifactId>hello-service-api</artifactId>
 
 </project>

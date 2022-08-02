@@ -11,6 +11,7 @@ import org.apache.curator.framework.imps.CuratorFrameworkState;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
+import java.net.InetSocketAddress;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,6 +80,19 @@ public final class CuratorUtils {
         } catch (Exception e) {
             log.error("create persistent node for path [{}] fail", path);
         }
+    }
+
+    public void clearRegistry(CuratorFramework zkClient, InetSocketAddress inetSocketAddress) {
+        REGISTERED_PATH_SET.stream().parallel().forEach(p -> {
+            try {
+                if (p.endsWith(inetSocketAddress.toString())) {
+                    zkClient.delete().forPath(p);
+                }
+            } catch (Exception e) {
+                log.error("clear registry for path [{}] fail", p);
+            }
+        });
+        log.info("all registered services on the server are cleared:[{}]", REGISTERED_PATH_SET);
     }
 
 }
