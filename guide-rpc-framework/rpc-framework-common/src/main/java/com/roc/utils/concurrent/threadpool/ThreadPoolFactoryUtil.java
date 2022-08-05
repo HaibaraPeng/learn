@@ -23,9 +23,6 @@ public final class ThreadPoolFactoryUtil {
      */
     private final Map<String, ExecutorService> THREAD_POOLS = new ConcurrentHashMap<>();
 
-    private ThreadPoolFactoryUtil() {
-    }
-
     public ExecutorService createCustomThreadPoolIfAbsent(String threadNamePrefix) {
         CustomThreadPoolConfig customThreadPoolConfig = new CustomThreadPoolConfig();
         return createCustomThreadPoolIfAbsent(customThreadPoolConfig, threadNamePrefix, false);
@@ -62,7 +59,7 @@ public final class ThreadPoolFactoryUtil {
      * @param daemon
      * @return
      */
-    private ThreadFactory createThreadFactory(String threadNamePrefix, Boolean daemon) {
+    public ThreadFactory createThreadFactory(String threadNamePrefix, Boolean daemon) {
         if (threadNamePrefix != null) {
             if (daemon != null) {
                 return new ThreadFactoryBuilder()

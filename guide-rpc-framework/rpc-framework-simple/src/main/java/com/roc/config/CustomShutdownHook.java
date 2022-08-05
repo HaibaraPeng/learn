@@ -2,6 +2,7 @@ package com.roc.config;
 
 import com.roc.registry.zk.util.CuratorUtils;
 import com.roc.remoting.transport.netty.server.NettyRpcServer;
+import com.roc.utils.concurrent.threadpool.ThreadPoolFactoryUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
@@ -37,7 +38,8 @@ public class CustomShutdownHook {
             } catch (UnknownHostException ignored) {
 
             }
-            ThreadPoolFa
+            ThreadPoolFactoryUtil.shutdownAllThreadPool();
         }));
     }
+
 }
