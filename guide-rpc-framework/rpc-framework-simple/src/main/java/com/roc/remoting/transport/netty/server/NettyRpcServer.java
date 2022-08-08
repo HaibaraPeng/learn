@@ -68,7 +68,7 @@ public class NettyRpcServer {
                             // 30秒之内没有收到客户端请求就关闭连接
                             ChannelPipeline p = ch.pipeline();
                             p.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.SECONDS));
-                            p.addLast()
+                            p.addLast(new Rpc)
                         }
                     })
         }
