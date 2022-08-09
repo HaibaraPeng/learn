@@ -1,4 +1,3 @@
-import com.roc.Hello;
 import com.roc.HelloService;
 import com.roc.annotation.RpcScan;
 import com.roc.config.RpcServiceConfig;
@@ -21,6 +20,7 @@ public class NettyServerMain {
         HelloService helloService2 = new HelloServiceImpl2();
         RpcServiceConfig rpcServiceConfig = RpcServiceConfig.builder().group("test2").version("version2")
                 .service(helloService2).build();
-        nettyRpcServer.
+        nettyRpcServer.registerService(rpcServiceConfig);
+        nettyRpcServer.start();
     }
 }

@@ -5,6 +5,8 @@ import com.roc.config.RpcServiceConfig;
 import com.roc.factory.SingletonFactory;
 import com.roc.provider.ServiceProvider;
 import com.roc.provider.impl.ZkServiceProviderImpl;
+import com.roc.remoting.transport.netty.codec.RpcMessageDecoder;
+import com.roc.remoting.transport.netty.codec.RpcMessageEncoder;
 import com.roc.utils.RuntimeUtil;
 import com.roc.utils.concurrent.threadpool.ThreadPoolFactoryUtil;
 import io.netty.bootstrap.ServerBootstrap;
@@ -68,9 +70,22 @@ public class NettyRpcServer {
                             // 30秒之内没有收到客户端请求就关闭连接
                             ChannelPipeline p = ch.pipeline();
                             p.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.SECONDS));
-                            p.addLast(new Rpc)
+                            p.addLast(new RpcMessageEncoder());
+                            p.addLast(new RpcMessageDecoder());
+                            p.addLast(serviceHandlerGroup, new NettyRpcServerHandler());
                         }
-                    })
+                    });
+            // 绑定端口，同步等待绑定成功
+            ChannelFuture f = b.bind(host, PORT).sync();
+            // 等待服务端监听端口关闭
+            f.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            log.error("occur exception when start server: ", e);
+        } finally {
+            log.error("shutdown bossGroup and wokerGroup");
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+            serviceHandlerGroup.shutdownGracefully();
         }
     }
 }
