@@ -16,4 +16,9 @@ public class CommonConst {
      * 是
      */
     public static final int TRUE = 1;
+
+    /**
+     * 默认的配置id
+     */
+    public static final Integer DEFAULT_CONFIG_ID = 1;
 }

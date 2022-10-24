@@ -28,6 +28,11 @@ spring:
       # 数据库连接超时时间,默认30秒，即30000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+  # redis配置
+  redis:
+    host: 192.168.10.100
+    port: 6379
+    password:
 
 # 配置MybatisPlus
 mybatis-plus:
