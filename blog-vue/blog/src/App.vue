@@ -12,10 +12,8 @@ export default {
   },
   methods: {
     getBlogInfo() {
-      console.log("111111111")
       this.axios.get("/api/").then(({data}) => {
-        console.log(JSON.stringify(data))
-        // this.$store.commit("checkBlogInfo", data.data);
+        this.$store.commit("checkBlogInfo", data.data);
       });
     }
   }
