@@ -3,19 +3,20 @@ package org.example.blog.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.example.blog.dao.ArticleDao;
-import org.example.blog.dao.CategoryDao;
-import org.example.blog.dao.TagDao;
-import org.example.blog.dao.WebsiteConfigDao;
+import org.example.blog.dao.*;
+import org.example.blog.dto.BlogBackInfoDTO;
 import org.example.blog.dto.BlogHomeInfoDTO;
+import org.example.blog.dto.UniqueViewDTO;
 import org.example.blog.entity.Article;
 import org.example.blog.service.BlogInfoService;
 import org.example.blog.service.PageService;
 import org.example.blog.service.RedisService;
+import org.example.blog.service.UniqueViewService;
 import org.example.blog.vo.PageVO;
 import org.example.blog.vo.WebsiteConfigVO;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,8 +38,12 @@ public class BlogInfoServiceImpl implements BlogInfoService {
     private final CategoryDao categoryDao;
     private final TagDao tagDao;
     private final WebsiteConfigDao websiteConfigDao;
+    private final MessageDao messageDao;
+    private final UserInfoDao userInfoDao;
     private final RedisService redisService;
     private final PageService pageService;
+    private final UniqueViewService uniqueViewService;
+    private final HttpServletRequest request;
 
     @Override
     public BlogHomeInfoDTO getBlogHomeInfo() {
@@ -66,6 +71,24 @@ public class BlogInfoServiceImpl implements BlogInfoService {
                 .websiteConfig(websiteConfig)
                 .pageList(pageVOList)
                 .build();
+    }
+
+    @Override
+    public BlogBackInfoDTO getBlogBackInfo() {
+        // 查询访问量
+        Object count = redisService.get(BLOG_VIEWS_COUNT);
+        Integer viewsCount = Integer.parseInt(Optional.ofNullable(count).orElse(0).toString());
+        // 查询留言量
+        Integer messageCount = messageDao.selectCount(null);
+        // 查询用户量
+        Integer userCount = userInfoDao.selectCount(null);
+        // 查询文章量
+        Integer articleCount = articleDao.selectCount(new LambdaQueryWrapper<Article>()
+                .eq(Article::getIsDelete, FALSE));
+        // 查询一周用户量
+        List<UniqueViewDTO> uniqueViewList = uniqueViewService.listUniqueViews();
+        // TODO
+        return null;
     }
 
     @Override

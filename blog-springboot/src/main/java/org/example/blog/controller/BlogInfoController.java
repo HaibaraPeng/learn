@@ -3,6 +3,7 @@ package org.example.blog.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.example.blog.dto.BlogBackInfoDTO;
 import org.example.blog.dto.BlogHomeInfoDTO;
 import org.example.blog.service.BlogInfoService;
 import org.example.blog.vo.Result;
@@ -30,5 +31,11 @@ public class BlogInfoController {
     @GetMapping("/")
     public Result<BlogHomeInfoDTO> getBlogHomeInfo() {
         return Result.ok(blogInfoService.getBlogHomeInfo());
+    }
+
+    @ApiOperation(value = "查看后台信息")
+    @GetMapping("/admin")
+    public Result<BlogBackInfoDTO> getBlogBackInfo() {
+        return Result.ok(blogInfoService.getBlogBackInfo());
     }
 }

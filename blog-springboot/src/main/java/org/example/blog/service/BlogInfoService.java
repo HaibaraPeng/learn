@@ -1,5 +1,6 @@
 package org.example.blog.service;
 
+import org.example.blog.dto.BlogBackInfoDTO;
 import org.example.blog.dto.BlogHomeInfoDTO;
 import org.example.blog.vo.WebsiteConfigVO;
 
@@ -16,6 +17,13 @@ public interface BlogInfoService {
      * @return 博客首页信息
      */
     BlogHomeInfoDTO getBlogHomeInfo();
+
+    /**
+     * 获取后台首页数据
+     *
+     * @return 博客后台信息
+     */
+    BlogBackInfoDTO getBlogBackInfo();
 
     /**
      * 获取网站配置
