@@ -27,3 +27,5 @@ learn.iml
 */*/target
 */*/*.iml
 */*.iml
+*/*/node_modules
+*/target
