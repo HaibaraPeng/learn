@@ -21,4 +21,14 @@ public class RedisPrefixConst {
      * 页面封面
      */
     public static final String PAGE_COVER = "page_cover";
+
+    /**
+     * 访客
+     */
+    public static final String UNIQUE_VISITOR = "unique_visitor";
+
+    /**
+     * 访客地区
+     */
+    public static final String VISITOR_AREA = "visitor_area";
 }

@@ -31,4 +31,9 @@ public interface BlogInfoService {
      * @return {@link WebsiteConfigVO} 网站配置
      */
     WebsiteConfigVO getWebsiteConfig();
+
+    /**
+     * 上传访客信息
+     */
+    void report();
 }

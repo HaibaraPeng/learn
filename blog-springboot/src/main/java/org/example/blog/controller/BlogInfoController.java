@@ -8,6 +8,7 @@ import org.example.blog.dto.BlogHomeInfoDTO;
 import org.example.blog.service.BlogInfoService;
 import org.example.blog.vo.Result;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -37,5 +38,16 @@ public class BlogInfoController {
     @GetMapping("/admin")
     public Result<BlogBackInfoDTO> getBlogBackInfo() {
         return Result.ok(blogInfoService.getBlogBackInfo());
+    }
+
+    /**
+     * 上传访客信息
+     *
+     * @return {@link Result}
+     */
+    @PostMapping("/report")
+    public Result<?> report() {
+        blogInfoService.report();
+        return Result.ok();
     }
 }

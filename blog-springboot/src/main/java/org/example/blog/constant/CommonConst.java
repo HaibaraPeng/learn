@@ -26,4 +26,19 @@ public class CommonConst {
      * JSON 格式
      */
     public static final String APPLICATION_JSON = "application/json;charset=utf-8";
+
+    /**
+     * 省
+     */
+    public static final String PROVINCE = "省";
+
+    /**
+     * 市
+     */
+    public static final String CITY = "市";
+
+    /**
+     * 未知的
+     */
+    public static final String UNKNOWN = "未知";
 }
