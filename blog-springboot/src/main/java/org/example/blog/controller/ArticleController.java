@@ -33,4 +33,16 @@ public class ArticleController {
     public Result<List<ArticleHomeDTO>> listArticles() {
         return Result.ok(articleService.listArticles());
     }
+
+    /**
+     * 搜索文章
+     *
+     * @param condition 条件
+     * @return {@link Result<ArticleSearchDTO>} 文章列表
+     */
+    @ApiOperation(value = "搜索文章")
+    @GetMapping("/articles/search")
+    public Result<List<ArticleSearchDTO>> listArticlesBySearch(ConditionVO condition) {
+        return Result.ok(articleService.listArticlesBySearch(condition));
+    }
 }
