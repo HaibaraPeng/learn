@@ -25,6 +25,7 @@ hs_err_pid*
 .idea
 learn.iml
 */*/target
+*/*/*/target
 */*/*.iml
 */*.iml
 */*/node_modules
