@@ -122,18 +122,18 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-<!--            &lt;!&ndash; 使用redisson集成分布式锁等 &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>org.redisson</groupId>-->
-<!--                <artifactId>redisson-spring-boot-starter</artifactId>-->
-<!--                <version>${redisson.version}</version>-->
-<!--            </dependency>-->
-<!--            &lt;!&ndash; 用于序列化和反序列化&ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>com.esotericsoftware</groupId>-->
-<!--                <artifactId>kryo</artifactId>-->
-<!--                <version>${kryo.version}</version>-->
-<!--            </dependency>-->
+            <!-- 使用redisson集成分布式锁等 -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+            <!-- 用于序列化和反序列化-->
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>kryo</artifactId>
+                <version>${kryo.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-to-slf4j</artifactId>
