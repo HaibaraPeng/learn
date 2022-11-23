@@ -12,6 +12,8 @@
         <module>yami-shop-security</module>
         <module>yami-shop-common</module>
         <module>yami-shop-service</module>
+        <module>yami-shop-bean</module>
+        <module>yami-shop-sys</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -102,11 +104,11 @@
 <!--                <artifactId>jsoup</artifactId>-->
 <!--                <version>${jsoup.version}</version>-->
 <!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>com.baomidou</groupId>-->
-<!--                <artifactId>mybatis-plus-boot-starter</artifactId>-->
-<!--                <version>${mybatis-plus.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
 <!--            <dependency>-->
 <!--                <groupId>com.qiniu</groupId>-->
 <!--                <artifactId>qiniu-java-sdk</artifactId>-->

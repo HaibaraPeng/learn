@@ -26,6 +26,7 @@ hs_err_pid*
 learn.iml
 */*/target
 */*/*/target
+*/*/*/*.iml
 */*/*.iml
 */*.iml
 */*/node_modules

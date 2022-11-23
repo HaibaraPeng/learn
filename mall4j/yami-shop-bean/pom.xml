@@ -9,18 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yami-shop-service</artifactId>
+    <artifactId>yami-shop-bean</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.roc</groupId>
-            <artifactId>yami-shop-bean</artifactId>
-            <version>${yami.shop.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.roc</groupId>
-            <artifactId>yami-shop-common</artifactId>
-            <version>${yami.shop.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
     </dependencies>
 

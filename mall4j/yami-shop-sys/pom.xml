@@ -9,19 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yami-shop-admin</artifactId>
+    <artifactId>yami-shop-sys</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.roc</groupId>
-            <artifactId>yami-shop-service</artifactId>
-            <version>${yami.shop.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.roc</groupId>
-            <artifactId>yami-shop-sys</artifactId>
-            <version>${yami.shop.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.roc</groupId>
             <artifactId>yami-shop-security-admin</artifactId>
