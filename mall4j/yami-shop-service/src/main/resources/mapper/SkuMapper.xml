@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roc.shop.service.dao.SkuMapper">
+    <resultMap id="BaseResultMap" type="com.roc.shop.bean.model.Sku">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="sku_id" jdbcType="BIGINT" property="skuId" />
+        <result column="prod_id" jdbcType="BIGINT" property="prodId" />
+        <result column="properties" jdbcType="VARCHAR" property="properties" />
+        <result column="ori_price" jdbcType="DECIMAL" property="oriPrice" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="stocks" jdbcType="INTEGER" property="stocks" />
+        <result column="actual_stocks" jdbcType="INTEGER" property="actualStocks" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="rec_time" jdbcType="TIMESTAMP" property="recTime" />
+        <result column="party_code" jdbcType="VARCHAR" property="partyCode" />
+        <result column="model_id" jdbcType="VARCHAR" property="modelId" />
+        <result column="pic" jdbcType="VARCHAR" property="pic" />
+        <result column="skuName" jdbcType="VARCHAR" property="skuName" />
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+    </resultMap>
+
+    <select id="listByProdId" resultType="com.roc.shop.bean.model.Sku">
+        select * from tz_sku where prod_id = #{prodId} and is_delete = 0
+    </select>
+
+</mapper>

@@ -9,4 +9,12 @@ import com.roc.shop.bean.model.Product;
  * @Date 2022/11/26 下午3:09
  */
 public interface ProductService extends IService<Product> {
+
+    /**
+     * 根据商品id获取商品信息
+     *
+     * @param prodId
+     * @return
+     */
+    Product getProductByProdId(Long prodId);
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roc.shop.bean.model.Product;
 import com.roc.shop.service.dao.ProductMapper;
 import com.roc.shop.service.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +12,14 @@ import org.springframework.stereotype.Service;
  * @Author roc
  * @Date 2022/11/26 下午3:09
  */
+@RequiredArgsConstructor
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService {
+
+    private final ProductMapper productMapper;
+
+    @Override
+    public Product getProductByProdId(Long prodId) {
+        return productMapper.selectById(prodId);
+    }
 }
