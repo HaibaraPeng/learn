@@ -13,5 +13,7 @@ import java.util.List;
  */
 public interface ProdTagReferenceMapper extends BaseMapper<ProdTagReference> {
 
+    void insertBatch(@Param("shopId") Long shopId, @Param("prodId") Long prodId, @Param("tagList") List<Long> tagList);
+
     List<Long> listTagIdByProdId(@Param("prodId") Long prodId);
 }

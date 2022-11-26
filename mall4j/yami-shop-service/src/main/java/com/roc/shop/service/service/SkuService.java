@@ -18,4 +18,6 @@ public interface SkuService extends IService<Sku> {
      * @return sku列表
      */
     List<Sku> listByProdId(Long prodId);
+
+    void removeSkuCacheBySkuId(Long skuId,Long prodId);
 }

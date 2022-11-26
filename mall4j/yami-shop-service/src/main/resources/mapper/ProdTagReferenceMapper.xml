@@ -12,6 +12,13 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
+    <select id="insertBatch">
+        INSERT INTO tz_prod_tag_reference (shop_id,tag_id,prod_id,`status`,create_time) VALUES
+        <foreach collection="tagList" separator="," item="item">
+            (#{shopId},#{item},#{prodId} ,1,NOW())
+        </foreach>
+    </select>
+
     <select id="listTagIdByProdId" resultType="long">
         SELECT tag_id FROM tz_prod_tag_reference WHERE prod_id = #{prodId}
     </select>

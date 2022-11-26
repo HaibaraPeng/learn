@@ -69,11 +69,11 @@
 <!--                <artifactId>weixin-java-mp</artifactId>-->
 <!--                <version>${weixin.version}</version>-->
 <!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>ma.glasnost.orika</groupId>-->
-<!--                <artifactId>orika-core</artifactId>-->
-<!--                <version>${orika.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>${orika.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>

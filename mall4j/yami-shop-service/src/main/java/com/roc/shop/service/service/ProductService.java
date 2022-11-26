@@ -17,4 +17,11 @@ public interface ProductService extends IService<Product> {
      * @return
      */
     Product getProductByProdId(Long prodId);
+
+    /**
+     * 更新商品
+     *
+     * @param product 商品信息
+     */
+    void updateProduct(Product product, Product dbProduct);
 }

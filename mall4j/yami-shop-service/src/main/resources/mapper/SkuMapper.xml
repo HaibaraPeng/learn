@@ -22,8 +22,28 @@
         <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
     </resultMap>
 
+    <insert id="insertBatch">
+        INSERT INTO `tz_sku` (
+        `prod_id`,`properties`,`ori_price`,`price`,`stocks`,`actual_stocks`,
+        `update_time`,`rec_time`,`party_code`,`model_id`, `pic`,
+        `sku_name`,`prod_name`,`version`,`weight`,`volume`, `status`, `is_delete`
+        )
+        VALUES
+        <foreach collection="skuList" item="sku" separator=",">
+            (
+            #{prodId},#{sku.properties},#{sku.oriPrice},#{sku.price},#{sku.stocks},
+            #{sku.actualStocks}, NOW(),NOW(),#{sku.partyCode},#{sku.modelId}, #{sku.pic},
+            #{sku.skuName},#{sku.prodName},0,#{sku.weight},#{sku.volume}, #{sku.status},0
+            )
+        </foreach>
+    </insert>
+
     <select id="listByProdId" resultType="com.roc.shop.bean.model.Sku">
         select * from tz_sku where prod_id = #{prodId} and is_delete = 0
     </select>
+
+    <update id="deleteByProdId">
+        update tz_sku set is_delete = 1 where prod_id = #{prodId}
+    </update>
 
 </mapper>
