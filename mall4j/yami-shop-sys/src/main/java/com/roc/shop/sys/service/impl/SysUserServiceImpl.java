@@ -26,6 +26,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public SysUser getSysUserById(Long userId) {
+        return sysUserMapper.selectById(userId);
+    }
+
+    @Override
     public List<String> queryAllPerms(Long userId) {
         return sysUserMapper.queryAllPerms(userId);
     }
