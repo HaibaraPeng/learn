@@ -63,6 +63,7 @@ public class TokenStore {
     public TokenInfoBO storeAccessToken(UserInfoInTokenBO userInfoInToken) {
         TokenInfoBO tokenInfoBO = new TokenInfoBO();
         String accessToken = IdUtil.simpleUUID();
+        log.error("accessToken :" + accessToken);
         String refreshToken = IdUtil.simpleUUID();
 
         tokenInfoBO.setUserInfoInToken(userInfoInToken);
@@ -115,6 +116,7 @@ public class TokenStore {
 
         // 返回前段是加密的token
         tokenInfoBO.setAccessToken(encryptToken(accessToken, userInfoInToken.getSysType()));
+        log.error("encryptAccessToken : " + tokenInfoBO.getAccessToken());
         tokenInfoBO.setRefreshToken(encryptToken(refreshToken, userInfoInToken.getSysType()));
 
         return tokenInfoBO;
@@ -247,7 +249,7 @@ public class TokenStore {
         }
 
         // 防止解密后的token是脚本，从而对redis进行攻击，uuid只能是数字和小写字母
-        if (PrincipalUtil.isSimpleChar(decryptToken)) {
+        if (!PrincipalUtil.isSimpleChar(decryptToken)) {
             throw new YamiShopBindException(YamiHttpStatus.UNAUTHORIZED, "token error");
         }
         return decryptToken;
