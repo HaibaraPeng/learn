@@ -11,6 +11,7 @@
     <modules>
         <module>rabbit-mq-provider</module>
         <module>rabbit-mq-consumer</module>
+        <module>rabbit-mq-common</module>
     </modules>
 
     <properties>
@@ -20,10 +21,16 @@
         <junit.version>5.10.2</junit.version>
         <lombok.version>1.18.34</lombok.version>
         <rabbit-mq-client.version>5.14.2</rabbit-mq-client.version>
+        <rabbit-mq-example.version>1.0-SNAPSHOT</rabbit-mq-example.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>rabbit-mq</artifactId>
+                <version>${rabbit-mq-example.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.rabbitmq</groupId>
                 <artifactId>amqp-client</artifactId>
@@ -31,5 +38,15 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
