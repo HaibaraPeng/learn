@@ -28,7 +28,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.example</groupId>
-                <artifactId>rabbit-mq</artifactId>
+                <artifactId>rabbit-mq-common</artifactId>
                 <version>${rabbit-mq-example.version}</version>
             </dependency>
             <dependency>
