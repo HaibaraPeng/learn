@@ -16,6 +16,10 @@
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>rabbit-mq-common</artifactId>
+        </dependency>
     </dependencies>
 
 
