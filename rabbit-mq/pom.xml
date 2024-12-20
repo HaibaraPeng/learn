@@ -13,6 +13,7 @@
         <module>rabbit-mq-consumer</module>
         <module>rabbit-mq-common</module>
         <module>rabbit-mq-spring-boot-consumer</module>
+        <module>rabbit-mq-spring-boot-producer</module>
     </modules>
 
     <properties>
@@ -51,6 +52,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
         </dependencies>
