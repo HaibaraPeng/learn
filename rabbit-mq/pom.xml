@@ -12,6 +12,7 @@
         <module>rabbit-mq-provider</module>
         <module>rabbit-mq-consumer</module>
         <module>rabbit-mq-common</module>
+        <module>rabbit-mq-spring-boot-consumer</module>
     </modules>
 
     <properties>
@@ -22,6 +23,7 @@
         <lombok.version>1.18.34</lombok.version>
         <rabbit-mq-client.version>5.14.2</rabbit-mq-client.version>
         <rabbit-mq-example.version>1.0-SNAPSHOT</rabbit-mq-example.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +37,21 @@
                 <groupId>com.rabbitmq</groupId>
                 <artifactId>amqp-client</artifactId>
                 <version>${rabbit-mq-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

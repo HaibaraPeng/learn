@@ -1,0 +1,11 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: 123456
+    virtual-host: /
+logging:
+  level:
+    com.example.rabbitmq.springboot.consumer: info
+    root: info
