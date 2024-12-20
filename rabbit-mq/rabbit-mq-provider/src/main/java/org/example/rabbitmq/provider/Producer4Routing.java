@@ -28,7 +28,8 @@ public class Producer4Routing {
         channel.queueBind(QUEUE_NAME_2, EXCHANGE_NAME, ROUTING_KEY_ERROR);
         channel.queueBind(QUEUE_NAME_2, EXCHANGE_NAME, ROUTING_KEY_WARN);
 
-//        channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY_ERROR, null, body.getBytes(StandardCharsets.UTF_8));
+        channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY_ERROR, null, "ROUTING_KEY_ERROR".getBytes(StandardCharsets.UTF_8));
+        channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY_WARN, null, "ROUTING_KEY_WARN".getBytes(StandardCharsets.UTF_8));
 
         channel.close();
         connection.close();
