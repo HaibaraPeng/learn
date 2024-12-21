@@ -30,4 +30,15 @@ public class RabbitMQTest {
                 ROUTING_KEY,
                 "error message");
     }
+
+    @Test
+    public void testSendPrefetchMessage() {
+        for (int i = 0; i < 100; i++) {
+            rabbitTemplate.convertAndSend(
+                    EXCHANGE_DIRECT,
+                    ROUTING_KEY,
+                    "Hello world " + i);
+        }
+
+    }
 }
