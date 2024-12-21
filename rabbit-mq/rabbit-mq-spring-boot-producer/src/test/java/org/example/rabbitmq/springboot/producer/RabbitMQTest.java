@@ -60,4 +60,16 @@ public class RabbitMQTest {
                 ROUTING_KEY,
                 "test ttl", messagePostProcessor);
     }
+
+    public static final String EXCHANGE_NORMAL = "exchange.normal.video";
+    public static final String ROUTING_KEY_NORMAL = "routing.key.normal.video";
+
+    @Test
+    public void testSendMessageButReject() {
+        rabbitTemplate
+                .convertAndSend(
+                        EXCHANGE_NORMAL,
+                        ROUTING_KEY_NORMAL,
+                        "测试死信情况1：消息被拒绝");
+    }
 }
