@@ -1,6 +1,8 @@
 package org.example.rabbitmq.springboot.producer;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,5 +42,22 @@ public class RabbitMQTest {
                     "Hello world " + i);
         }
 
+    }
+
+    @Test
+    public void testSendMessageTTL() {
+
+        // 1、创建消息后置处理器对象
+        MessagePostProcessor messagePostProcessor = (Message message) -> {
+            // 设定 TTL 时间，以毫秒为单位
+            message.getMessageProperties().setExpiration("5000");
+            return message;
+        };
+
+        // 2、发送消息
+        rabbitTemplate.convertAndSend(
+                EXCHANGE_DIRECT,
+                ROUTING_KEY,
+                "test ttl", messagePostProcessor);
     }
 }
