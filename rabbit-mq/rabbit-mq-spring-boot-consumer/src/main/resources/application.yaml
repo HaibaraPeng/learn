@@ -1,3 +1,17 @@
+# springboot基本配置
+#spring:
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: 123456
+#    virtual-host: /
+#logging:
+#  level:
+#    com.example.rabbitmq.springboot.consumer: info
+#    root: info
+
+# 消费者手动确认消息给队列
 spring:
   rabbitmq:
     host: localhost
@@ -5,6 +19,9 @@ spring:
     username: guest
     password: 123456
     virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual # 把消息确认模式改为手动确认
 logging:
   level:
     com.example.rabbitmq.springboot.consumer: info

@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class RabbitMQTest {
 
     public static final String EXCHANGE_DIRECT = "exchange.direct.springboot.order";
+    public static final String EXCHANGE_DIRECT_ERROR = "exchange.direct.springboot.error.order";
     public static final String ROUTING_KEY = "order";
 
     @Autowired
@@ -20,5 +21,13 @@ public class RabbitMQTest {
                 EXCHANGE_DIRECT,
                 ROUTING_KEY,
                 "Hello world");
+    }
+
+    @Test
+    public void testSendErrorMessage() {
+        rabbitTemplate.convertAndSend(
+                EXCHANGE_DIRECT_ERROR,
+                ROUTING_KEY,
+                "error message");
     }
 }
