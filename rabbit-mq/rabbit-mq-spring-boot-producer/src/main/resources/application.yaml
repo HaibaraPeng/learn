@@ -1,3 +1,17 @@
+# springboot基本配置
+#spring:
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: 123456
+#    virtual-host: /
+#logging:
+#  level:
+#    com.example.rabbitmq.springboot.consumer: info
+#    root: info
+
+# queue增加队列确认配置
 spring:
   rabbitmq:
     host: localhost
@@ -5,7 +19,9 @@ spring:
     username: guest
     password: 123456
     virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
 logging:
   level:
-    com.example.rabbitmq.springboot.producer: info
+    com.example.rabbitmq.springboot.consumer: info
     root: info
