@@ -9,6 +9,9 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 @Component
 @Slf4j
 public class MyMessageListener {
@@ -24,7 +27,9 @@ public class MyMessageListener {
     ))
     public void processMessage(String dateString,
                                Message message,
-                               Channel channel) {
+                               Channel channel) throws InterruptedException, IOException {
         log.info(dateString);
+        TimeUnit.SECONDS.sleep(1);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 }

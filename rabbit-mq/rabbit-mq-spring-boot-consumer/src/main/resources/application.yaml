@@ -27,7 +27,7 @@
 #    com.example.rabbitmq.springboot.consumer: info
 #    root: info
 
-# 消费者手动确认消息给队列
+# prefetch配置
 spring:
   rabbitmq:
     host: localhost
@@ -37,7 +37,8 @@ spring:
     virtual-host: /
     listener:
       simple:
-        acknowledge-mode: manual # 把消息确认模式改为手动确认
+        acknowledge-mode: manual
+        prefetch: 5 # 设置每次最多从消息队列服务器取回多少消息
 logging:
   level:
     com.example.rabbitmq.springboot.consumer: info
