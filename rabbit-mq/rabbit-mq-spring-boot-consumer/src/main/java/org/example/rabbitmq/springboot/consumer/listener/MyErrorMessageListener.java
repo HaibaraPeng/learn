@@ -59,7 +59,8 @@ public class MyErrorMessageListener {
     ))
     public void backupProcessMessage(String dateString,
                                      Message message,
-                                     Channel channel) {
+                                     Channel channel) throws IOException {
         log.info("备份队列消费消息：{}", dateString);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 }
