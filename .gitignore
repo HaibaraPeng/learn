@@ -31,3 +31,4 @@ learn.iml
 */*.iml
 */*/node_modules
 */target
+**/dist
