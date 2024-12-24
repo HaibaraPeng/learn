@@ -11,6 +11,7 @@
     <modules>
         <module>mybatis-generator-2024</module>
         <module>cloud-provider-payment-8001</module>
+        <module>cloud-api-commons</module>
     </modules>
 
     <properties>
@@ -34,6 +35,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- 引入自己定义的api通用包 -->
+            <dependency>
+                <groupId>com.guigu</groupId>
+                <artifactId>cloud-api-commons</artifactId>
+                <version>${version}</version>
+            </dependency>
             <!--springboot 3.2.0-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -63,6 +70,18 @@
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper</artifactId>
                 <version>${mapper.version}</version>
+            </dependency>
+            <!--SpringBoot集成druid连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- swagger3 调用方式 http://你的主机IP地址:5555/swagger-ui/index.html -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${swagger3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

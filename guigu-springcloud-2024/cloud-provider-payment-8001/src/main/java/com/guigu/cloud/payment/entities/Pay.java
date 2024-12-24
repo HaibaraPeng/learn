@@ -1,4 +1,4 @@
-package com.guigu.mybatis.generator.entities;
+package com.guigu.cloud.payment.entities;
 
 import java.math.BigDecimal;
 import java.util.Date;

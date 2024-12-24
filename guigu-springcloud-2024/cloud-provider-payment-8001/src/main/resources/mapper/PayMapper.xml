@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guigu.mybatis.generator.mapper.PayMapper">
-  <resultMap id="BaseResultMap" type="com.guigu.mybatis.generator.entities.Pay">
+<mapper namespace="com.guigu.cloud.payment.mapper.PayMapper">
+  <resultMap id="BaseResultMap" type="com.guigu.cloud.payment.entities.Pay">
     <!--
       WARNING - @mbg.generated
     -->
