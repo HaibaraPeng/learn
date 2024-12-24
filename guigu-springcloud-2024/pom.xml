@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>mybatis-generator-2024</module>
+        <module>cloud-provider-payment-8001</module>
     </modules>
 
     <properties>
