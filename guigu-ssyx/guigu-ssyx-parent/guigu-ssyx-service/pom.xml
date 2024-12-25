@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>guigu-ssyx-service-acl</module>
+        <module>guigu-ssyx-service-sys</module>
     </modules>
 
     <properties>
