@@ -23,11 +23,6 @@
             <groupId>com.guigu</groupId>
             <artifactId>cloud-api-commons</artifactId>
         </dependency>
-        <!--SpringBoot通用依赖模块-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <!--SpringBoot集成druid连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -83,5 +78,14 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -23,11 +23,6 @@
             <groupId>com.guigu</groupId>
             <artifactId>cloud-api-commons</artifactId>
         </dependency>
-        <!--web + actuator-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <!--loadbalancer-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
