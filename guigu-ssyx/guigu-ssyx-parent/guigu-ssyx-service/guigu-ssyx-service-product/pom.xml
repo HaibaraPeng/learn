@@ -5,17 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.example</groupId>
-        <artifactId>guigu-ssyx-parent</artifactId>
+        <artifactId>guigu-ssyx-service</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>guigu-ssyx-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>guigu-ssyx-common-util</module>
-        <module>guigu-ssyx-service-util</module>
-        <module>guigu-ssyx-rabbit-util</module>
-    </modules>
+    <artifactId>guigu-ssyx-service-product</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -24,20 +18,19 @@
     </properties>
 
     <dependencies>
-        <!--lombok用来简化实体类：需要安装lombok插件-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>org.example</groupId>
+            <artifactId>guigu-ssyx-rabbit-util</artifactId>
         </dependency>
-        <!-- https://doc.xiaominfo.com/knife4j/documentation/ -->
+        <!-- 阿里云oss依赖 -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
+        <!-- 日期工具栏依赖 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <scope>provided </scope>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
         </dependency>
     </dependencies>
 
