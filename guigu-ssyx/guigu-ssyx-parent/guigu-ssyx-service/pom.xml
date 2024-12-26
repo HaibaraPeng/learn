@@ -15,6 +15,7 @@
         <module>guigu-ssyx-service-acl</module>
         <module>guigu-ssyx-service-sys</module>
         <module>guigu-ssyx-service-product</module>
+        <module>guigu-ssyx-service-search</module>
     </modules>
 
     <properties>
