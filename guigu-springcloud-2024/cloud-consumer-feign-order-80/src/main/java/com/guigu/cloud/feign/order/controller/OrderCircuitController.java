@@ -38,16 +38,17 @@ public class OrderCircuitController {
      * @param id
      * @return
      */
-    /*@GetMapping(value = "/feign/pay/bulkhead/{id}")
-    @Bulkhead(name = "cloud-payment-service",fallbackMethod = "myBulkheadFallback",type = Bulkhead.Type.SEMAPHORE)
-    public String myBulkhead(@PathVariable("id") Integer id)
-    {
-        return payFeignApi.myBulkhead(id);
-    }
+//    @GetMapping(value = "/feign/pay/bulkhead/{id}")
+//    @Bulkhead(name = "cloud-payment-service",fallbackMethod = "myBulkheadFallback",type = Bulkhead.Type.SEMAPHORE)
+//    public String myBulkhead(@PathVariable("id") Integer id)
+//    {
+//        System.out.println(Thread.currentThread().getName() + "\t" + "---开始进入");
+//        return payFeignApi.myBulkhead(id);
+//    }
     public String myBulkheadFallback(Throwable t)
     {
         return "myBulkheadFallback，隔板超出最大数量限制，系统繁忙，请稍后再试-----/(ㄒoㄒ)/~~";
-    }*/
+    }
 
     /**
      * (船的)舱壁,隔离  threadPool
@@ -60,7 +61,7 @@ public class OrderCircuitController {
     public CompletableFuture<String> myBulkheadTHREADPOOL(@PathVariable("id") Integer id) {
         System.out.println(Thread.currentThread().getName() + "\t" + "---开始进入");
         try {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -75,7 +76,7 @@ public class OrderCircuitController {
 
     @GetMapping(value = "/feign/pay/ratelimit/{id}")
     @RateLimiter(name = "cloud-payment-service", fallbackMethod = "myRatelimitFallback")
-    public String myBulkhead(@PathVariable("id") Integer id) {
+    public String myRatelimit(@PathVariable("id") Integer id) {
         return payFeignApi.myRatelimit(id);
     }
 
