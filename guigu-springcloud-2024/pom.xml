@@ -15,6 +15,7 @@
         <module>cloud-consumer-order-80</module>
         <module>cloud-provider-payment-8002</module>
         <module>cloud-consumer-feign-order-80</module>
+        <module>cloud-gateway-9527</module>
     </modules>
 
     <properties>
