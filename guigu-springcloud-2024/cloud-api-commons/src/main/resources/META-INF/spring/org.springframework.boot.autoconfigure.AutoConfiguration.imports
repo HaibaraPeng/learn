@@ -1,1 +1,2 @@
 com.guigu.cloud.common.exp.GlobalExceptionHandler
+com.guigu.cloud.common.apis.PayFeignSentinelApiFallBack
