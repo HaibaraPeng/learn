@@ -18,6 +18,7 @@
         <module>cloud-gateway-9527</module>
         <module>cloud-alibaba-consumer-nacos-order-83</module>
         <module>cloud-alibaba-provider-payment-9001</module>
+        <module>cloud-alibaba-config-nacos-client-3377</module>
     </modules>
 
     <properties>
