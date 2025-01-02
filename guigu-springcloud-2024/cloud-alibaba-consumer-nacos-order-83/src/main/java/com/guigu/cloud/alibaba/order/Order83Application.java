@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.guigu.cloud.common.apis"})
 public class Order83Application {
     public static void main(String[] args) {
         SpringApplication.run(Order83Application.class, args);
