@@ -20,6 +20,7 @@
         <module>cloud-alibaba-provider-payment-9001</module>
         <module>cloud-alibaba-config-nacos-client-3377</module>
         <module>cloud-alibaba-sentinel-service-8401</module>
+        <module>cloud-alibaba-sentinel-gateway-9528</module>
     </modules>
 
     <properties>
