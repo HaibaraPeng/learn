@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
-@MapperScan("com.atguigu.cloud.seata.storage.mapper") //import tk.mybatis.spring.annotation.MapperScan;
+@MapperScan("com.guigu.cloud.seata.storage.mapper") //import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient //服务注册和发现
 @EnableFeignClients(basePackages = {"com.guigu.cloud.common.apis"})
 public class SeataStorage2002Application {
