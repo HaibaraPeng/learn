@@ -1,5 +1,9 @@
 package com.guigu.ssyx.service.search.controller;
 
+import com.guigu.ssyx.model.entity.search.SkuEs;
+import com.guigu.ssyx.model.vo.search.SkuEsQueryVo;
+import com.guigu.ssyx.service.search.service.SkuService;
+import com.guigu.ssyx.service.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,8 +32,8 @@ public class SkuApiController {
                           @PathVariable Integer limit,
                           SkuEsQueryVo skuEsQueryVo) {
         //创建pageable对象，0代表第一页
-        Pageable pageable = PageRequest.of(page-1,limit);
-        Page<SkuEs> pageModel = skuService.search(pageable,skuEsQueryVo);
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        Page<SkuEs> pageModel = skuService.search(pageable, skuEsQueryVo);
         return Result.ok(pageModel);
     }
 

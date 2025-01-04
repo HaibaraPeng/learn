@@ -1,5 +1,7 @@
 package com.guigu.ssyx.service.search.service;
 
+import com.guigu.ssyx.model.entity.search.SkuEs;
+import com.guigu.ssyx.model.vo.search.SkuEsQueryVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

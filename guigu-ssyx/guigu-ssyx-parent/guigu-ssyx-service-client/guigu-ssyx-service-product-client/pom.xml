@@ -5,23 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.example</groupId>
-        <artifactId>guigu-ssyx-common</artifactId>
+        <artifactId>guigu-ssyx-service-client</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>guigu-ssyx-common-util</artifactId>
+    <artifactId>guigu-ssyx-service-product-client</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>guigu-ssyx-model</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

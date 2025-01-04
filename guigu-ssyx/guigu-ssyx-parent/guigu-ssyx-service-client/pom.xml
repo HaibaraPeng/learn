@@ -9,7 +9,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>guigu-ssyx-model</artifactId>
+    <artifactId>guigu-ssyx-service-client</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>guigu-ssyx-service-search-client</module>
+        <module>guigu-ssyx-service-product-client</module>
+        <module>guigu-ssyx-service-activity-client</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -18,27 +24,16 @@
     </properties>
 
     <dependencies>
+        <!--依赖服务的工具类-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>org.example</groupId>
+            <artifactId>guigu-ssyx-common-util</artifactId>
         </dependency>
-        <!--mybatis-plus-->
+        <!-- 服务调用feign -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
-            <scope>provided</scope>
-        </dependency>
-        <!--创建索引库的-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-            <scope>provided </scope>
         </dependency>
     </dependencies>
 

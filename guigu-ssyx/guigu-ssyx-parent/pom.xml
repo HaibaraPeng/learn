@@ -12,6 +12,7 @@
         <module>guigu-ssyx-common</module>
         <module>guigu-ssyx-model</module>
         <module>guigu-ssyx-service</module>
+        <module>guigu-ssyx-service-client</module>
     </modules>
 
     <properties>
@@ -60,6 +61,16 @@
             <dependency>
                 <groupId>org.example</groupId>
                 <artifactId>guigu-ssyx-model</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-service-product-client</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-service-activity-client</artifactId>
                 <version>${version}</version>
             </dependency>
             <dependency>

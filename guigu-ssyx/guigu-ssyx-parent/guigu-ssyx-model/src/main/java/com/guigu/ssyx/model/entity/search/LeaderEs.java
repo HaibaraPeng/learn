@@ -1,13 +1,16 @@
 package com.guigu.ssyx.model.entity.search;
 
 import lombok.Data;
+import org.elasticsearch.common.geo.GeoPoint;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.*;
 
 /**
  * @Author Roc
  * @Date 2024/12/26 17:22
  */
 @Data
-@Document(indexName = "leaderes" ,shards = 3,replicas = 1)
+@Document(indexName = "leaderes", shards = 3, replicas = 1)
 public class LeaderEs {
 
     @Id
