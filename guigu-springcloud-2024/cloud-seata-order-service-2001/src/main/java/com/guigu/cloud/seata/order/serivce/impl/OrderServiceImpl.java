@@ -27,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     private AccountFeignApi accountFeignApi;
 
     @Override
-//    @GlobalTransactional(name = "zzyy-create-order", rollbackFor = Exception.class) //AT
+    @GlobalTransactional(name = "zzyy-create-order", rollbackFor = Exception.class) //AT
     public void create(Order order) {
         //xid全局事务id的检查，重要
         String xid = RootContext.getXID();
