@@ -21,6 +21,7 @@
         <module>cloud-alibaba-config-nacos-client-3377</module>
         <module>cloud-alibaba-sentinel-service-8401</module>
         <module>cloud-alibaba-sentinel-gateway-9528</module>
+        <module>cloud-seata-order-service-2001</module>
     </modules>
 
     <properties>
@@ -141,6 +142,36 @@
                 <groupId>io.zipkin.reporter2</groupId>
                 <artifactId>zipkin-reporter-brave</artifactId>
                 <version>${zipkin-reporter-brave.version}</version>
+            </dependency>
+            <!--SpringBoot集成mybatis-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.springboot.version}</version>
+            </dependency>
+            <!--Mysql数据库驱动8 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!--通用Mapper4之tk.mybatis-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper</artifactId>
+                <version>${mapper.version}</version>
+            </dependency>
+            <!--persistence-->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${persistence-api.version}</version>
+            </dependency>
+            <!-- fastjson2 -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
