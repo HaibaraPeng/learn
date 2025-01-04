@@ -18,7 +18,7 @@ spring:
 # ========================mybatis===================
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.atguigu.cloud.seata.order.entities
+  type-aliases-package: com.guigu.cloud.seata.order.entities
   configuration:
     map-underscore-to-camel-case: true
 
