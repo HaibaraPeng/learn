@@ -21,7 +21,7 @@ public interface ProductFeignClient {
 
     //根据skuId获取sku信息
     @GetMapping("/api/product/inner/getSkuInfoVo/{skuId}")
-    public SkuInfoVo getSkuInfoVo(@PathVariable Long skuId);
+    public SkuInfoVo getSkuInfoVo(@PathVariable("skuId") Long skuId);
 
     //获取新人专享商品
     @GetMapping("/api/product/inner/findNewPersonSkuInfoList")
