@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mall-member
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 32a1e9e2-d729-4484-b937-128ca3f2cd3b
+        group: DEFAULT_GROUP
+      discovery:
+        server-addr: localhost:8848
+        namespace: 32a1e9e2-d729-4484-b937-128ca3f2cd3b
+        group: DEFAULT_GROUP
+
+

@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mall-cart</artifactId>
+    <artifactId>mall-member</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -21,26 +21,6 @@
         <dependency>
             <groupId>com.guli.mall</groupId>
             <artifactId>mall-common</artifactId>
-        </dependency>
-        <!-- 引入redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.lettuce</groupId>
-                    <artifactId>lettuce-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
-        <!-- 整合springsession -->
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -13,6 +13,7 @@
         <module>mall-common</module>
         <module>mall-auth-server</module>
         <module>mall-cart</module>
+        <module>mall-member</module>
     </modules>
 
     <properties>
@@ -24,6 +25,7 @@
         <cloud.alibaba.version>2.2.1.RELEASE</cloud.alibaba.version>
         <knife4j.version>2.0.8</knife4j.version>
         <lombok.version>1.18.30</lombok.version>
+        <mysql.version>8.0.23</mysql.version>
     </properties>
 
     <dependencyManagement>
@@ -63,6 +65,11 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
