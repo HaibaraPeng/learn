@@ -72,7 +72,7 @@ spring:
         - id: mall_auth_route
           uri: lb://mall-auth-server
           predicates:
-            - Host=auth.gulimall.com
+            - Path=/auth/**
 
         - id: mall_cart_route
           uri: lb://mall-cart

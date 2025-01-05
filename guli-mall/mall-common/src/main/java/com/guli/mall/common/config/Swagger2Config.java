@@ -48,7 +48,7 @@ public class Swagger2Config {
                 // /admin/order/findAll
                 // /add/PERSON/all
                 .apis(RequestHandlerSelectors.basePackage("com.guli.mall.auth"))
-//                .paths(PathSelectors.regex("/cart/.*"))
+                .paths(PathSelectors.regex("/auth/.*"))
                 .build()
                 .globalOperationParameters(pars);
         return cartApi;

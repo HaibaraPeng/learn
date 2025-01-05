@@ -21,3 +21,5 @@ spring:
 
 server:
   port: 20000
+  servlet:
+    context-path: /auth

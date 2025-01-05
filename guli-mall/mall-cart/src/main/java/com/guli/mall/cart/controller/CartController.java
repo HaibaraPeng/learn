@@ -20,7 +20,6 @@ import java.util.concurrent.ExecutionException;
  * @Date 2025/01/05 13:47
  */
 @Controller
-@RequestMapping("/cart")
 public class CartController {
 
     @Resource
