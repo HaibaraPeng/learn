@@ -11,6 +11,7 @@
     <modules>
         <module>mall-gateway</module>
         <module>mall-common</module>
+        <module>mall-auth-server</module>
     </modules>
 
     <properties>
