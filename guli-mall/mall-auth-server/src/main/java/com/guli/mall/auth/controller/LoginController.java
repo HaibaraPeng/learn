@@ -67,7 +67,7 @@ public class LoginController {
         stringRedisTemplate.opsForValue().set(AuthServerConstant.SMS_CODE_CACHE_PREFIX + phone,
                 redisStorage, 10, TimeUnit.MINUTES);
 
-        thirdPartFeignService.sendCode(phone, codeNum);
+//        thirdPartFeignService.sendCode(phone, codeNum);
 
         return R.ok();
     }
