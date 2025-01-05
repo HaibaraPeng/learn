@@ -39,9 +39,9 @@ public class Swagger2Config {
                 .build();
         pars.add(tokenPar.build());
 
-        Docket webApi = new Docket(DocumentationType.SWAGGER_2)
+        Docket cartApi = new Docket(DocumentationType.SWAGGER_2)
                 .groupName("cartApi")
-                .apiInfo(webApiInfo())
+                .apiInfo(cartApiInfo())
                 .select()
                 //只显示api路径下的页面
                 // /api/user/login
@@ -51,10 +51,10 @@ public class Swagger2Config {
                 .paths(PathSelectors.regex("/cart/.*"))
                 .build()
                 .globalOperationParameters(pars);
-        return webApi;
+        return cartApi;
     }
 
-    private ApiInfo webApiInfo() {
+    private ApiInfo cartApiInfo() {
         return new ApiInfoBuilder()
                 .title("网站-API文档")
                 .description("本文档描述了谷粒商城微服务接口定义")
