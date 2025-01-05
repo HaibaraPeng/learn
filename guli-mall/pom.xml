@@ -26,6 +26,10 @@
         <knife4j.version>2.0.8</knife4j.version>
         <lombok.version>1.18.30</lombok.version>
         <mysql.version>8.0.23</mysql.version>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <http.components.version>4.4.13</http.components.version>
+        <commons.lang.version>2.6</commons.lang.version>
+        <elasticsearch.version>7.4.2</elasticsearch.version>
     </properties>
 
     <dependencyManagement>
@@ -70,6 +74,17 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${http.components.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
