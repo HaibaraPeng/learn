@@ -1,5 +1,6 @@
 package com.guli.mall.common.xss;
 
+import com.guli.mall.common.utils.RRException;
 import org.apache.commons.lang.StringUtils;
 
 /**
