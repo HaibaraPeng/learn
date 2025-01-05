@@ -22,6 +22,8 @@
         <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
         <spring.cloud.version>Hoxton.SR3</spring.cloud.version>
         <cloud.alibaba.version>2.2.1.RELEASE</cloud.alibaba.version>
+        <knife4j.version>2.0.8</knife4j.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -51,6 +53,16 @@
                 <groupId>com.guli.mall</groupId>
                 <artifactId>mall-common</artifactId>
                 <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
