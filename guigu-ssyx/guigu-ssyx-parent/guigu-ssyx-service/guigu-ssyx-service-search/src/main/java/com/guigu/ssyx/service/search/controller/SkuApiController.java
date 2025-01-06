@@ -4,6 +4,8 @@ import com.guigu.ssyx.model.entity.search.SkuEs;
 import com.guigu.ssyx.model.vo.search.SkuEsQueryVo;
 import com.guigu.ssyx.service.search.service.SkuService;
 import com.guigu.ssyx.service.util.result.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ import java.util.List;
  * @Author Roc
  * @Date 2024/12/26 17:20
  */
+@Api(tags = "sku接口")
 @RestController
 @RequestMapping("/api/search/sku")
 public class SkuApiController {
@@ -27,6 +30,7 @@ public class SkuApiController {
     private SkuService skuService;
 
     //查询分类商品
+    @ApiOperation("查询分类商品")
     @GetMapping("{page}/{limit}")
     public Result listSku(@PathVariable Integer page,
                           @PathVariable Integer limit,
@@ -38,6 +42,7 @@ public class SkuApiController {
     }
 
     //上架
+    @ApiOperation("上架")
     @GetMapping("inner/upperSku/{skuId}")
     public Result upperSku(@PathVariable Long skuId) {
         skuService.upperSku(skuId);
@@ -45,6 +50,7 @@ public class SkuApiController {
     }
 
     //下架
+    @ApiOperation("下架")
     @GetMapping("inner/lowerSku/{skuId}")
     public Result lowerSku(@PathVariable Long skuId) {
         skuService.lowerSku(skuId);
@@ -52,12 +58,14 @@ public class SkuApiController {
     }
 
     //获取爆款商品
+    @ApiOperation("获取爆款商品")
     @GetMapping("inner/findHotSkuList")
     public List<SkuEs> findHotSkuList() {
         return skuService.findHotSkuList();
     }
 
     //更新商品热度
+    @ApiOperation("更新商品热度")
     @GetMapping("inner/incrHotScore/{skuId}")
     public Boolean incrHotScore(@PathVariable("skuId") Long skuId) {
         skuService.incrHotScore(skuId);

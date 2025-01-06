@@ -13,6 +13,7 @@
         <module>guigu-ssyx-model</module>
         <module>guigu-ssyx-service</module>
         <module>guigu-ssyx-service-client</module>
+        <module>guigu-ssyx-gateway</module>
     </modules>
 
     <properties>
