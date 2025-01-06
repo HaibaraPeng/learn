@@ -34,9 +34,7 @@ spring:
         - id: member_route
           uri: lb://mall-member
           predicates:
-            - Path=/api/member/**
-          filters:
-            - RewritePath=/api/(?<segment>.*),/$\{segment}
+            - Path=/member/**
 
         - id: ware_route
           uri: lb://mall-ware
@@ -77,17 +75,12 @@ spring:
         - id: mall_cart_route
           uri: lb://mall-cart
           predicates:
-            - Host=cart.gulimall.com
+            - Path=/cart/**
 
         - id: mall_order_route
           uri: lb://mall-order
           predicates:
             - Host=order.gulimall.com
-
-        - id: mall_member_route
-          uri: lb://mall-member
-          predicates:
-            - Host=member.gulimall.com
 
         - id: mall_seckill_route
           uri: lb://mall-seckill

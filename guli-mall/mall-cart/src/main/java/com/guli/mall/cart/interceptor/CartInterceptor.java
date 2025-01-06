@@ -45,6 +45,8 @@ public class CartInterceptor implements HandlerInterceptor {
         if (memberResponseVo != null) {
             //用户登录了
             userInfoTo.setUserId(memberResponseVo.getId());
+        } else {
+            userInfoTo.setUserId(1L);
         }
 
         Cookie[] cookies = request.getCookies();

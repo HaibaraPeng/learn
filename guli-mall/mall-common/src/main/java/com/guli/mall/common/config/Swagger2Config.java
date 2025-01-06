@@ -83,6 +83,35 @@ public class Swagger2Config {
         return cartApi;
     }
 
+    @Bean
+    public Docket memberApiConfig() {
+        List<Parameter> pars = new ArrayList<>();
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        tokenPar.name("userId")
+                .description("token")
+                //.defaultValue(JwtHelper.createToken(1L, "admin"))
+                .defaultValue("1")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(false)
+                .build();
+        pars.add(tokenPar.build());
+
+        Docket memberApi = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("memberApi")
+                .apiInfo(apiInfo())
+                .select()
+                //只显示api路径下的页面
+                // /api/user/login
+                // /admin/order/findAll
+                // /add/PERSON/all
+                .apis(RequestHandlerSelectors.basePackage("com.guli.mall.member"))
+                .paths(PathSelectors.regex("/member/.*"))
+                .build()
+                .globalOperationParameters(pars);
+        return memberApi;
+    }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("网站-API文档")

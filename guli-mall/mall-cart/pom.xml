@@ -21,6 +21,12 @@
         <dependency>
             <groupId>com.guli.mall</groupId>
             <artifactId>mall-common</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- 引入redis -->
         <dependency>

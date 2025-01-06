@@ -94,11 +94,13 @@ public class MemberEntity implements Serializable {
     /**
      * 社交登录UID
      */
+    @TableField(exist = false)
     private String socialUid;
 
     /**
      * 社交登录TOKEN
      */
+    @TableField(exist = false)
     private String accessToken;
 
     /**
