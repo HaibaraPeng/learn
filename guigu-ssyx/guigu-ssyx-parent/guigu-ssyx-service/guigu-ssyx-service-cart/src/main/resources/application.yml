@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: service-cart
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.190.42:8848
+        namespace: 7c065c48-faab-41f8-a18f-26f888b31fbc
