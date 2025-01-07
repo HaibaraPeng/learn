@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
     com.guigu.ssyx.service.util.config.MybatisPlusConfig,\
     com.guigu.ssyx.service.util.config.RedisConfig,\
     com.guigu.ssyx.service.util.config.RedissonConfig,\
-    com.guigu.ssyx.service.util.config.Swagger2Config
+    com.guigu.ssyx.service.util.config.Swagger2Config,\
+    com.guigu.ssyx.service.util.auth.LoginMvcConfigurerAdapter
