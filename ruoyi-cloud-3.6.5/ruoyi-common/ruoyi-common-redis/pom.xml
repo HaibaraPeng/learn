@@ -5,16 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ruoyi.cloud</groupId>
-        <artifactId>ruoyi-cloud</artifactId>
+        <artifactId>ruoyi-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ruoyi-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>ruoyi-common-core</module>
-        <module>ruoyi-common-redis</module>
-    </modules>
+    <artifactId>ruoyi-common-redis</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -22,4 +17,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!-- RuoYi Common Core-->
+        <dependency>
+            <groupId>com.ruoyi.cloud</groupId>
+            <artifactId>ruoyi-common-core</artifactId>
+        </dependency>
+    </dependencies>
 </project>

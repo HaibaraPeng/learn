@@ -44,6 +44,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-common-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-common-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- 覆盖SpringFramework的依赖配置-->
             <dependency>
                 <groupId>org.springframework</groupId>
