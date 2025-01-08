@@ -11,6 +11,7 @@
     <modules>
         <module>ruoyi-gateway</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-auth</module>
     </modules>
 
     <properties>
@@ -52,6 +53,11 @@
             <dependency>
                 <groupId>com.ruoyi.cloud</groupId>
                 <artifactId>ruoyi-common-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-common-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- 覆盖SpringFramework的依赖配置-->
