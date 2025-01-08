@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Author Roc
  * @Date 2024/12/24 17:41
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)//取消数据源自动配置
+@SpringBootApplication
 @EnableDiscoveryClient
 public class ServiceUserApplication {
 

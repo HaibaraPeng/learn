@@ -3,6 +3,7 @@ package com.guigu.ssyx.model.enums.user;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guigu.ssyx.model.entity.base.BaseEntity;
+import com.guigu.ssyx.model.enums.UserType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
