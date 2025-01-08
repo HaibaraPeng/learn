@@ -37,7 +37,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         //判断token不为空
         if (!StringUtils.isEmpty(token)) {
             //从token获取userId
-            Long userId = JwtHelper.getUserId(token);
+            Long userId = 1L;
             //根据userId到Redis获取用户信息
             UserLoginVo userLoginVo = (UserLoginVo) redisTemplate.opsForValue()
                     .get(RedisConst.USER_LOGIN_KEY_PREFIX + userId);
@@ -46,6 +46,8 @@ public class UserLoginInterceptor implements HandlerInterceptor {
                 AuthContextHolder.setUserId(userLoginVo.getUserId());
                 AuthContextHolder.setWareId(userLoginVo.getWareId());
                 AuthContextHolder.setUserLoginVo(userLoginVo);
+            } else {
+                AuthContextHolder.setUserId(userId);
             }
         }
     }

@@ -17,6 +17,7 @@
         <module>guigu-ssyx-service-product</module>
         <module>guigu-ssyx-service-search</module>
         <module>guigu-ssyx-service-cart</module>
+        <module>guigu-ssyx-service-home</module>
     </modules>
 
     <properties>
