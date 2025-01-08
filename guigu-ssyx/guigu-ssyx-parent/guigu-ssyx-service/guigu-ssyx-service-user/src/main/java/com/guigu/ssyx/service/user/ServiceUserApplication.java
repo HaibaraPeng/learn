@@ -1,4 +1,4 @@
-package com.guigu.ssyx.service.home;
+package com.guigu.ssyx.service.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,11 +12,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)//取消数据源自动配置
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"com.guigu.ssyx.client.activity", "com.guigu.ssyx.client.product",
-        "com.guigu.ssyx.client.search", "com.guigu.ssyx.client.user"})
-public class HomeProductApplication {
+public class ServiceUserApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HomeProductApplication.class, args);
+        SpringApplication.run(ServiceUserApplication.class, args);
     }
 }

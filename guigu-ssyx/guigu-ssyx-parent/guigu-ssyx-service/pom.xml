@@ -18,6 +18,7 @@
         <module>guigu-ssyx-service-search</module>
         <module>guigu-ssyx-service-cart</module>
         <module>guigu-ssyx-service-home</module>
+        <module>guigu-ssyx-service-user</module>
     </modules>
 
     <properties>
@@ -55,6 +56,16 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 
