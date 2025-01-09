@@ -5,12 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.pig.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>pig-upms</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pig-auth</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>pig-upms-api</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,22 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.pig.cloud</groupId>
-            <artifactId>pig-upms-api</artifactId>
-        </dependency>
-        <!--注册中心客户端-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!--配置中心客户端-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <!--undertow容器-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
+            <artifactId>pig-common-feign</artifactId>
         </dependency>
     </dependencies>
 
