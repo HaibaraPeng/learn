@@ -5,17 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.pig.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>pig-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pig-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>pig-common-bom</module>
-        <module>pig-common-core</module>
-        <module>pig-common-feign</module>
-    </modules>
+    <artifactId>pig-common-core</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -23,4 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+
+    </dependencies>
 </project>

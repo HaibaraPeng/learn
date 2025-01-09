@@ -96,13 +96,10 @@
         <dependencies>
             <dependency>
                 <groupId>com.pig.cloud</groupId>
-                <artifactId>pig-common-feign</artifactId>
+                <artifactId>pig-common-bom</artifactId>
                 <version>${version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.pig.cloud</groupId>
-                <artifactId>pig-upms-api</artifactId>
-                <version>${version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- spring boot 依赖 -->
             <dependency>

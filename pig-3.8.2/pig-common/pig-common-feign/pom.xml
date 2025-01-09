@@ -19,6 +19,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.pig.cloud</groupId>
+            <artifactId>pig-common-core</artifactId>
+        </dependency>
         <!--feign 依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
