@@ -8,6 +8,9 @@
     <artifactId>pig</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <modules>
+        <module>pig-gateway</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -256,8 +259,8 @@
             <properties>
                 <!-- 环境标识，需要与配置文件的名称相对应 -->
                 <profiles.active>dev</profiles.active>
-                <nacos.username>nacos</nacos.username>
-                <nacos.password>nacos</nacos.password>
+                <nacos.username></nacos.username>
+                <nacos.password></nacos.password>
             </properties>
             <activation>
                 <!-- 默认环境 -->
