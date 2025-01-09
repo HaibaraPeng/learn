@@ -12,6 +12,8 @@
         <module>guigu-ssyx-common</module>
         <module>guigu-ssyx-model</module>
         <module>guigu-ssyx-service</module>
+        <module>guigu-ssyx-service-client</module>
+        <module>guigu-ssyx-gateway</module>
     </modules>
 
     <properties>
@@ -35,6 +37,8 @@
         <redisson.version>3.11.2</redisson.version>
         <knife4j.version>2.0.8</knife4j.version>
         <commons.pool2.version>2.6.0</commons.pool2.version>
+        <aliyun.oss.version>3.9.1</aliyun.oss.version>
+        <joda.time.version>2.10.1</joda.time.version>
     </properties>
 
     <dependencyManagement>
@@ -42,7 +46,42 @@
             <!--依赖服务的工具类-->
             <dependency>
                 <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-common-util</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
                 <artifactId>guigu-ssyx-service-util</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-rabbit-util</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-model</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-service-product-client</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-service-activity-client</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-service-user-client</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>guigu-ssyx-service-search-client</artifactId>
                 <version>${version}</version>
             </dependency>
             <dependency>
@@ -88,6 +127,28 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>${commons.pool2.version}</version>
+            </dependency>
+            <!-- 阿里云oss依赖 -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
+            </dependency>
+            <!-- 日期工具栏依赖 -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda.time.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
