@@ -5,20 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ruoyi.cloud</groupId>
-        <artifactId>ruoyi-cloud</artifactId>
+        <artifactId>ruoyi-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ruoyi-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>ruoyi-common-core</module>
-        <module>ruoyi-common-redis</module>
-        <module>ruoyi-common-security</module>
-        <module>ruoyi-common-log</module>
-        <module>ruoyi-common-swagger</module>
-        <module>ruoyi-common-datasource</module>
-    </modules>
+    <artifactId>ruoyi-common-datasource</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -26,4 +17,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!-- Druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <!-- Dynamic DataSource -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>${dynamic-ds.version}</version>
+        </dependency>
+    </dependencies>
 </project>

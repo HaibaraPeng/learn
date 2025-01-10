@@ -9,15 +9,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ruoyi-common</artifactId>
+    <artifactId>ruoyi-modules</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>ruoyi-common-core</module>
-        <module>ruoyi-common-redis</module>
-        <module>ruoyi-common-security</module>
-        <module>ruoyi-common-log</module>
-        <module>ruoyi-common-swagger</module>
-        <module>ruoyi-common-datasource</module>
+        <module>ruoyi-modules-system</module>
     </modules>
 
     <properties>

@@ -13,6 +13,7 @@
         <module>ruoyi-common</module>
         <module>ruoyi-auth</module>
         <module>ruoyi-api</module>
+        <module>ruoyi-modules</module>
     </modules>
 
     <properties>
@@ -59,6 +60,21 @@
             <dependency>
                 <groupId>com.ruoyi.cloud</groupId>
                 <artifactId>ruoyi-common-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-common-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-common-swagger</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-common-datasource</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -127,6 +143,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>${transmittable-thread-local.version}</version>
+            </dependency>
+            <!-- pagehelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
