@@ -1,0 +1,2 @@
+com.ruoyi.cloud.api.system.factory.RemoteUserFallbackFactory
+com.ruoyi.cloud.api.system.factory.RemoteLogFallbackFactory
