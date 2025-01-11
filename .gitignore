@@ -33,3 +33,4 @@ learn.iml
 */target
 **/dist
 **/target
+**/*.iml
