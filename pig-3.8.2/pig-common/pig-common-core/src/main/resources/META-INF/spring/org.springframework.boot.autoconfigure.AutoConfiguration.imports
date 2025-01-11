@@ -1,1 +1,2 @@
 com.pig.cloud.common.core.config.RedisTemplateConfiguration
+com.pig.cloud.common.core.util.SpringContextHolder

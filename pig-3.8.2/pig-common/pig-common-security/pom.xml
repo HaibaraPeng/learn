@@ -5,23 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.pig.cloud</groupId>
-        <artifactId>pig</artifactId>
+        <artifactId>pig-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pig-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>pig-common-bom</module>
-        <module>pig-common-core</module>
-        <module>pig-common-feign</module>
-        <module>pig-common-security</module>
-    </modules>
+    <artifactId>pig-common-security</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+            <version>${spring.authorization.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
