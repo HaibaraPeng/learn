@@ -1,8 +1,13 @@
 package com.pig.cloud.auth.endpoint;
 
+import cn.hutool.core.lang.Validator;
+import com.pig.cloud.common.core.constant.CacheConstants;
+import com.pig.cloud.common.core.constant.SecurityConstants;
+import com.pig4cloud.captcha.ArithmeticCaptcha;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

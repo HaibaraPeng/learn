@@ -29,7 +29,9 @@ learn.iml
 */*/*/*.iml
 */*/*.iml
 */*.iml
+*.iml
 */*/node_modules
 */target
 **/dist
 **/target
+**/logs
