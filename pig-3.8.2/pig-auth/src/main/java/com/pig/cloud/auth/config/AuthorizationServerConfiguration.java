@@ -1,5 +1,6 @@
 package com.pig.cloud.auth.config;
 
+import com.pig.cloud.auth.filter.PasswordDecoderFilter;
 import com.pig.cloud.auth.filter.ValidateCodeFilter;
 import com.pig.cloud.auth.support.core.FormIdentityLoginConfigurer;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +36,8 @@ import java.util.Arrays;
 public class AuthorizationServerConfiguration {
 
 //    private final OAuth2AuthorizationService authorizationService;
-//
-//    private final PasswordDecoderFilter passwordDecoderFilter;
+
+    private final PasswordDecoderFilter passwordDecoderFilter;
 
     private final ValidateCodeFilter validateCodeFilter;
 
@@ -49,8 +50,8 @@ public class AuthorizationServerConfiguration {
         // 增加验证码过滤器
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
         // 增加密码解密过滤器
-//        http.addFilterBefore(passwordDecoderFilter, UsernamePasswordAuthenticationFilter.class);
-//
+        http.addFilterBefore(passwordDecoderFilter, UsernamePasswordAuthenticationFilter.class);
+
 //        http.with(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {// 个性化认证授权端点
 //                    tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter()) // 注入自定义的授权认证Converter
 //                            .accessTokenResponseHandler(new PigAuthenticationSuccessEventHandler()) // 登录成功处理器
