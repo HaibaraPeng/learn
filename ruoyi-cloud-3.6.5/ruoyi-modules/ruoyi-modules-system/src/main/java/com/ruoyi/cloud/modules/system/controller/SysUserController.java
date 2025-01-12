@@ -10,6 +10,7 @@ import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.common.core.domain.R;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
+import com.ruoyi.cloud.common.security.annotation.InnerAuth;
 import com.ruoyi.cloud.modules.system.service.ISysPermissionService;
 import com.ruoyi.cloud.modules.system.service.ISysUserService;
 import org.apache.commons.lang3.ArrayUtils;
@@ -88,7 +89,7 @@ public class SysUserController extends BaseController {
     /**
      * 获取当前用户信息
      */
-//    @InnerAuth
+    @InnerAuth
     @GetMapping("/info/{username}")
     public R<LoginUser> info(@PathVariable("username") String username) {
         SysUser sysUser = userService.selectUserByUserName(username);

@@ -3,6 +3,7 @@ package com.ruoyi.cloud.modules.system.controller;
 import com.ruoyi.cloud.api.system.domain.SysLogininfor;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
+import com.ruoyi.cloud.common.security.annotation.InnerAuth;
 import com.ruoyi.cloud.modules.system.service.ISysLogininforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,7 @@ public class SysLogininforController extends BaseController {
 //        return success();
 //    }
 
-    //    @InnerAuth
+    @InnerAuth
     @PostMapping
     public AjaxResult add(@RequestBody SysLogininfor logininfor) {
         return toAjax(logininforService.insertLogininfor(logininfor));
