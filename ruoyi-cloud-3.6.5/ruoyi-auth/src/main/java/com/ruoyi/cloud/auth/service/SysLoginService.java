@@ -101,10 +101,10 @@ public class SysLoginService {
         remoteUserService.recordUserLogin(sysUser, SecurityConstants.INNER);
     }
 
-//    public void logout(String loginName) {
-//        recordLogService.recordLogininfor(loginName, Constants.LOGOUT, "退出成功");
-//    }
-//
+    public void logout(String loginName) {
+        recordLogService.recordLogininfor(loginName, Constants.LOGOUT, "退出成功");
+    }
+
 //    /**
 //     * 注册
 //     */

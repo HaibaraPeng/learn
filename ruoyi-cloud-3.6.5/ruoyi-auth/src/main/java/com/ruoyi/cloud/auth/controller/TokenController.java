@@ -4,7 +4,11 @@ import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.auth.form.LoginBody;
 import com.ruoyi.cloud.auth.service.SysLoginService;
 import com.ruoyi.cloud.common.core.domain.R;
+import com.ruoyi.cloud.common.core.utils.JwtUtils;
+import com.ruoyi.cloud.common.core.utils.StringUtils;
+import com.ruoyi.cloud.common.security.auth.AuthUtil;
 import com.ruoyi.cloud.common.security.service.TokenService;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,19 +37,19 @@ public class TokenController {
         return R.ok(tokenService.createToken(userInfo));
     }
 
-//    @DeleteMapping("logout")
-//    public R<?> logout(HttpServletRequest request) {
-//        String token = SecurityUtils.getToken(request);
-//        if (StringUtils.isNotEmpty(token)) {
-//            String username = JwtUtils.getUserName(token);
-//            // 删除用户缓存记录
-//            AuthUtil.logoutByToken(token);
-//            // 记录用户退出日志
-//            sysLoginService.logout(username);
-//        }
-//        return R.ok();
-//    }
-//
+    @DeleteMapping("logout")
+    public R<?> logout(HttpServletRequest request) {
+        String token = SecurityUtils.getToken(request);
+        if (StringUtils.isNotEmpty(token)) {
+            String username = JwtUtils.getUserName(token);
+            // 删除用户缓存记录
+            AuthUtil.logoutByToken(token);
+            // 记录用户退出日志
+            sysLoginService.logout(username);
+        }
+        return R.ok();
+    }
+
 //    @PostMapping("refresh")
 //    public R<?> refresh(HttpServletRequest request) {
 //        LoginUser loginUser = tokenService.getLoginUser(request);
