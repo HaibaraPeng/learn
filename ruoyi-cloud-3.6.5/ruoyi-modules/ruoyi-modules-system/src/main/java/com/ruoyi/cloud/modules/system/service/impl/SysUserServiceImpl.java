@@ -285,18 +285,18 @@ public class SysUserServiceImpl implements ISysUserService {
 //    public int updateUserStatus(SysUser user) {
 //        return userMapper.updateUser(user);
 //    }
-//
-//    /**
-//     * 修改用户基本信息
-//     *
-//     * @param user 用户信息
-//     * @return 结果
-//     */
-//    @Override
-//    public boolean updateUserProfile(SysUser user) {
-//        return userMapper.updateUser(user) > 0;
-//    }
-//
+
+    /**
+     * 修改用户基本信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    public boolean updateUserProfile(SysUser user) {
+        return userMapper.updateUser(user) > 0;
+    }
+
 //    /**
 //     * 修改用户头像
 //     *
