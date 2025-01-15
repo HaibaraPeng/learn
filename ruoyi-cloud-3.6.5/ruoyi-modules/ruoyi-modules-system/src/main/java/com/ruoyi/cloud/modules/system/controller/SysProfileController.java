@@ -1,8 +1,11 @@
 package com.ruoyi.cloud.modules.system.controller;
 
 import com.ruoyi.cloud.api.system.domain.SysUser;
+import com.ruoyi.cloud.api.system.model.LoginUser;
+import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
+import com.ruoyi.cloud.common.security.service.TokenService;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,9 @@ public class SysProfileController extends BaseController {
     @Autowired
     private ISysUserService userService;
 
-//    @Autowired
-//    private TokenService tokenService;
-//
+    @Autowired
+    private TokenService tokenService;
+
 //    @Autowired
 //    private RemoteFileService remoteFileService;
 
@@ -40,32 +43,32 @@ public class SysProfileController extends BaseController {
         return ajax;
     }
 
-//    /**
-//     * 修改用户
-//     */
+    /**
+     * 修改用户
+     */
 //    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
-//    @PutMapping
-//    public AjaxResult updateProfile(@RequestBody SysUser user) {
-//        LoginUser loginUser = SecurityUtils.getLoginUser();
-//        SysUser currentUser = loginUser.getSysUser();
-//        currentUser.setNickName(user.getNickName());
-//        currentUser.setEmail(user.getEmail());
-//        currentUser.setPhonenumber(user.getPhonenumber());
-//        currentUser.setSex(user.getSex());
-//        if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(currentUser)) {
-//            return error("修改用户'" + loginUser.getUsername() + "'失败，手机号码已存在");
-//        }
-//        if (StringUtils.isNotEmpty(user.getEmail()) && !userService.checkEmailUnique(currentUser)) {
-//            return error("修改用户'" + loginUser.getUsername() + "'失败，邮箱账号已存在");
-//        }
-//        if (userService.updateUserProfile(currentUser)) {
-//            // 更新缓存用户信息
-//            tokenService.setLoginUser(loginUser);
-//            return success();
-//        }
-//        return error("修改个人信息异常，请联系管理员");
-//    }
-//
+    @PutMapping
+    public AjaxResult updateProfile(@RequestBody SysUser user) {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        SysUser currentUser = loginUser.getSysUser();
+        currentUser.setNickName(user.getNickName());
+        currentUser.setEmail(user.getEmail());
+        currentUser.setPhonenumber(user.getPhonenumber());
+        currentUser.setSex(user.getSex());
+        if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(currentUser)) {
+            return error("修改用户'" + loginUser.getUsername() + "'失败，手机号码已存在");
+        }
+        if (StringUtils.isNotEmpty(user.getEmail()) && !userService.checkEmailUnique(currentUser)) {
+            return error("修改用户'" + loginUser.getUsername() + "'失败，邮箱账号已存在");
+        }
+        if (userService.updateUserProfile(currentUser)) {
+            // 更新缓存用户信息
+            tokenService.setLoginUser(loginUser);
+            return success();
+        }
+        return error("修改个人信息异常，请联系管理员");
+    }
+
 //    /**
 //     * 重置密码
 //     */
