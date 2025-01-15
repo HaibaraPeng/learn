@@ -10,7 +10,10 @@ import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.common.core.domain.R;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
+import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
 import com.ruoyi.cloud.common.security.annotation.InnerAuth;
+import com.ruoyi.cloud.common.security.service.TokenService;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.service.ISysPermissionService;
 import com.ruoyi.cloud.modules.system.service.ISysUserService;
 import org.apache.commons.lang3.ArrayUtils;
@@ -45,9 +48,9 @@ public class SysUserController extends BaseController {
 
 //    @Autowired
 //    private ISysConfigService configService;
-//
-//    @Autowired
-//    private TokenService tokenService;
+
+    @Autowired
+    private TokenService tokenService;
 
 //    /**
 //     * 获取用户列表
@@ -132,30 +135,30 @@ public class SysUserController extends BaseController {
         return R.ok(userService.updateUserProfile(sysUser));
     }
 
-//    /**
-//     * 获取用户信息
-//     *
-//     * @return 用户信息
-//     */
-//    @GetMapping("getInfo")
-//    public AjaxResult getInfo() {
-//        LoginUser loginUser = SecurityUtils.getLoginUser();
-//        SysUser user = loginUser.getSysUser();
-//        // 角色集合
-//        Set<String> roles = permissionService.getRolePermission(user);
-//        // 权限集合
-//        Set<String> permissions = permissionService.getMenuPermission(user);
-//        if (!loginUser.getPermissions().equals(permissions)) {
-//            loginUser.setPermissions(permissions);
-//            tokenService.refreshToken(loginUser);
-//        }
-//        AjaxResult ajax = AjaxResult.success();
-//        ajax.put("user", user);
-//        ajax.put("roles", roles);
-//        ajax.put("permissions", permissions);
-//        return ajax;
-//    }
-//
+    /**
+     * 获取用户信息
+     *
+     * @return 用户信息
+     */
+    @GetMapping("getInfo")
+    public AjaxResult getInfo() {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        SysUser user = loginUser.getSysUser();
+        // 角色集合
+        Set<String> roles = permissionService.getRolePermission(user);
+        // 权限集合
+        Set<String> permissions = permissionService.getMenuPermission(user);
+        if (!loginUser.getPermissions().equals(permissions)) {
+            loginUser.setPermissions(permissions);
+            tokenService.refreshToken(loginUser);
+        }
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("user", user);
+        ajax.put("roles", roles);
+        ajax.put("permissions", permissions);
+        return ajax;
+    }
+
 //    /**
 //     * 根据用户编号获取详细信息
 //     */

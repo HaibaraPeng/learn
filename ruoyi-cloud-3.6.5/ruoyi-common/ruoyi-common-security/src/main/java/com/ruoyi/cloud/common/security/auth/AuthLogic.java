@@ -1,7 +1,10 @@
 package com.ruoyi.cloud.common.security.auth;
 
+import com.ruoyi.cloud.api.system.model.LoginUser;
+import com.ruoyi.cloud.common.core.exception.auth.NotLoginException;
 import com.ruoyi.cloud.common.core.utils.SpringUtils;
 import com.ruoyi.cloud.common.security.service.TokenService;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import org.springframework.util.PatternMatchUtils;
 
 import java.util.Collection;
@@ -48,48 +51,43 @@ public class AuthLogic {
 //    {
 //        getLoginUser();
 //    }
-//
+
 //    /**
 //     * 获取当前用户缓存信息, 如果未登录，则抛出异常
 //     *
 //     * @return 用户缓存信息
 //     */
-//    public LoginUser getLoginUser()
-//    {
+//    public LoginUser getLoginUser() {
 //        String token = SecurityUtils.getToken();
-//        if (token == null)
-//        {
+//        if (token == null) {
 //            throw new NotLoginException("未提供token");
 //        }
 //        LoginUser loginUser = SecurityUtils.getLoginUser();
-//        if (loginUser == null)
-//        {
+//        if (loginUser == null) {
 //            throw new NotLoginException("无效的token");
 //        }
 //        return loginUser;
 //    }
-//
-//    /**
-//     * 获取当前用户缓存信息, 如果未登录，则抛出异常
-//     *
-//     * @param token 前端传递的认证信息
-//     * @return 用户缓存信息
-//     */
-//    public LoginUser getLoginUser(String token)
-//    {
-//        return tokenService.getLoginUser(token);
-//    }
-//
-//    /**
-//     * 验证当前用户有效期, 如果相差不足120分钟，自动刷新缓存
-//     *
-//     * @param loginUser 当前用户信息
-//     */
-//    public void verifyLoginUserExpire(LoginUser loginUser)
-//    {
-//        tokenService.verifyToken(loginUser);
-//    }
-//
+
+    /**
+     * 获取当前用户缓存信息, 如果未登录，则抛出异常
+     *
+     * @param token 前端传递的认证信息
+     * @return 用户缓存信息
+     */
+    public LoginUser getLoginUser(String token) {
+        return tokenService.getLoginUser(token);
+    }
+
+    /**
+     * 验证当前用户有效期, 如果相差不足120分钟，自动刷新缓存
+     *
+     * @param loginUser 当前用户信息
+     */
+    public void verifyLoginUserExpire(LoginUser loginUser) {
+        tokenService.verifyToken(loginUser);
+    }
+
 //    /**
 //     * 验证用户是否具备某权限
 //     *

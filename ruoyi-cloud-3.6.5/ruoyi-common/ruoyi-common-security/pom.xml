@@ -26,5 +26,10 @@
             <groupId>com.ruoyi.cloud</groupId>
             <artifactId>ruoyi-api-system</artifactId>
         </dependency>
+        <!-- Spring Web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
     </dependencies>
 </project>

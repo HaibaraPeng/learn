@@ -37,7 +37,7 @@ public class GatewayConfig {
     private void initGatewayRules() {
         Set<GatewayFlowRule> rules = new HashSet<>();
         rules.add(new GatewayFlowRule("ruoyi-auth")
-                .setCount(3) // 限流阈值
+                .setCount(1000) // 限流阈值
                 .setIntervalSec(60)); // 统计时间窗口，单位是秒，默认是 1 秒
         // 加载网关限流规则
         GatewayRuleManager.loadRules(rules);
