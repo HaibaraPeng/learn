@@ -1,6 +1,11 @@
 package com.ruoyi.cloud.modules.system.service.impl;
 
+import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.api.system.domain.SysUser;
+import com.ruoyi.cloud.common.core.utils.StringUtils;
+import com.ruoyi.cloud.modules.system.domain.SysPost;
+import com.ruoyi.cloud.modules.system.mapper.SysPostMapper;
+import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysUserMapper;
 import com.ruoyi.cloud.modules.system.service.ISysUserService;
 import org.slf4j.Logger;
@@ -26,12 +31,12 @@ public class SysUserServiceImpl implements ISysUserService {
     @Autowired
     private SysUserMapper userMapper;
 
-//    @Autowired
-//    private SysRoleMapper roleMapper;
-//
-//    @Autowired
-//    private SysPostMapper postMapper;
-//
+    @Autowired
+    private SysRoleMapper roleMapper;
+
+    @Autowired
+    private SysPostMapper postMapper;
+
 //    @Autowired
 //    private SysUserRoleMapper userRoleMapper;
 //
@@ -104,37 +109,37 @@ public class SysUserServiceImpl implements ISysUserService {
 //    public SysUser selectUserById(Long userId) {
 //        return userMapper.selectUserById(userId);
 //    }
-//
-//    /**
-//     * 查询用户所属角色组
-//     *
-//     * @param userName 用户名
-//     * @return 结果
-//     */
-//    @Override
-//    public String selectUserRoleGroup(String userName) {
-//        List<SysRole> list = roleMapper.selectRolesByUserName(userName);
-//        if (CollectionUtils.isEmpty(list)) {
-//            return StringUtils.EMPTY;
-//        }
-//        return list.stream().map(SysRole::getRoleName).collect(Collectors.joining(","));
-//    }
-//
-//    /**
-//     * 查询用户所属岗位组
-//     *
-//     * @param userName 用户名
-//     * @return 结果
-//     */
-//    @Override
-//    public String selectUserPostGroup(String userName) {
-//        List<SysPost> list = postMapper.selectPostsByUserName(userName);
-//        if (CollectionUtils.isEmpty(list)) {
-//            return StringUtils.EMPTY;
-//        }
-//        return list.stream().map(SysPost::getPostName).collect(Collectors.joining(","));
-//    }
-//
+
+    /**
+     * 查询用户所属角色组
+     *
+     * @param userName 用户名
+     * @return 结果
+     */
+    @Override
+    public String selectUserRoleGroup(String userName) {
+        List<SysRole> list = roleMapper.selectRolesByUserName(userName);
+        if (CollectionUtils.isEmpty(list)) {
+            return StringUtils.EMPTY;
+        }
+        return list.stream().map(SysRole::getRoleName).collect(Collectors.joining(","));
+    }
+
+    /**
+     * 查询用户所属岗位组
+     *
+     * @param userName 用户名
+     * @return 结果
+     */
+    @Override
+    public String selectUserPostGroup(String userName) {
+        List<SysPost> list = postMapper.selectPostsByUserName(userName);
+        if (CollectionUtils.isEmpty(list)) {
+            return StringUtils.EMPTY;
+        }
+        return list.stream().map(SysPost::getPostName).collect(Collectors.joining(","));
+    }
+
 //    /**
 //     * 校验用户名称是否唯一
 //     *
