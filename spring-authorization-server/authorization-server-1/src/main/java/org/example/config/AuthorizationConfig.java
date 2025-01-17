@@ -7,6 +7,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.example.authorization.DeviceClientAuthenticationConverter;
 import org.example.authorization.DeviceClientAuthenticationProvider;
+import org.example.util.SecurityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -134,7 +135,10 @@ public class AuthorizationConfig {
                 );
         // 添加BearerTokenAuthenticationFilter，将认证服务当做一个资源服务，解析请求头中的token
         http.oauth2ResourceServer((resourceServer) -> resourceServer
-                .jwt(Customizer.withDefaults()));
+                .jwt(Customizer.withDefaults())
+                .accessDeniedHandler(SecurityUtils::exceptionHandler)
+                .authenticationEntryPoint(SecurityUtils::exceptionHandler)
+        );
 
         return http.build();
     }
