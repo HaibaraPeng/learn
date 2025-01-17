@@ -1,0 +1,2 @@
+com.ruoyi.cloud.common.log.service.AsyncLogService
+com.ruoyi.cloud.common.log.aspect.LogAspect

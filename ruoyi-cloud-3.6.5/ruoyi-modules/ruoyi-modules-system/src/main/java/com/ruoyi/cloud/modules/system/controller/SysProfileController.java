@@ -5,6 +5,8 @@ import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
+import com.ruoyi.cloud.common.log.annotation.Log;
+import com.ruoyi.cloud.common.log.enums.BusinessType;
 import com.ruoyi.cloud.common.security.service.TokenService;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.service.ISysUserService;
@@ -46,7 +48,7 @@ public class SysProfileController extends BaseController {
     /**
      * 修改用户
      */
-//    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
+    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUser user) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
