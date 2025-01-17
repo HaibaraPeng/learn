@@ -325,19 +325,19 @@ public class SysUserServiceImpl implements ISysUserService {
 //    public int resetPwd(SysUser user) {
 //        return userMapper.updateUser(user);
 //    }
-//
-//    /**
-//     * 重置用户密码
-//     *
-//     * @param userName 用户名
-//     * @param password 密码
-//     * @return 结果
-//     */
-//    @Override
-//    public int resetUserPwd(String userName, String password) {
-//        return userMapper.resetUserPwd(userName, password);
-//    }
-//
+
+    /**
+     * 重置用户密码
+     *
+     * @param userName 用户名
+     * @param password 密码
+     * @return 结果
+     */
+    @Override
+    public int resetUserPwd(String userName, String password) {
+        return userMapper.resetUserPwd(userName, password);
+    }
+
 //    /**
 //     * 新增用户角色信息
 //     *

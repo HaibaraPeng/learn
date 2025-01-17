@@ -167,16 +167,16 @@ public interface ISysUserService {
 //     * @return 结果
 //     */
 //    public int resetPwd(SysUser user);
-//
-//    /**
-//     * 重置用户密码
-//     *
-//     * @param userName 用户名
-//     * @param password 密码
-//     * @return 结果
-//     */
-//    public int resetUserPwd(String userName, String password);
-//
+
+    /**
+     * 重置用户密码
+     *
+     * @param userName 用户名
+     * @param password 密码
+     * @return 结果
+     */
+    public int resetUserPwd(String userName, String password);
+
 //    /**
 //     * 通过用户ID删除用户
 //     *

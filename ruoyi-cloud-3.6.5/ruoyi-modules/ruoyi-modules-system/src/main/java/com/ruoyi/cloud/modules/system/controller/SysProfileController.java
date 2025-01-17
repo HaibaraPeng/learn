@@ -71,32 +71,32 @@ public class SysProfileController extends BaseController {
         return error("修改个人信息异常，请联系管理员");
     }
 
-//    /**
-//     * 重置密码
-//     */
-//    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
-//    @PutMapping("/updatePwd")
-//    public AjaxResult updatePwd(String oldPassword, String newPassword) {
-//        String username = SecurityUtils.getUsername();
-//        SysUser user = userService.selectUserByUserName(username);
-//        String password = user.getPassword();
-//        if (!SecurityUtils.matchesPassword(oldPassword, password)) {
-//            return error("修改密码失败，旧密码错误");
-//        }
-//        if (SecurityUtils.matchesPassword(newPassword, password)) {
-//            return error("新密码不能与旧密码相同");
-//        }
-//        newPassword = SecurityUtils.encryptPassword(newPassword);
-//        if (userService.resetUserPwd(username, newPassword) > 0) {
-//            // 更新缓存用户密码
-//            LoginUser loginUser = SecurityUtils.getLoginUser();
-//            loginUser.getSysUser().setPassword(newPassword);
-//            tokenService.setLoginUser(loginUser);
-//            return success();
-//        }
-//        return error("修改密码异常，请联系管理员");
-//    }
-//
+    /**
+     * 重置密码
+     */
+    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
+    @PutMapping("/updatePwd")
+    public AjaxResult updatePwd(String oldPassword, String newPassword) {
+        String username = SecurityUtils.getUsername();
+        SysUser user = userService.selectUserByUserName(username);
+        String password = user.getPassword();
+        if (!SecurityUtils.matchesPassword(oldPassword, password)) {
+            return error("修改密码失败，旧密码错误");
+        }
+        if (SecurityUtils.matchesPassword(newPassword, password)) {
+            return error("新密码不能与旧密码相同");
+        }
+        newPassword = SecurityUtils.encryptPassword(newPassword);
+        if (userService.resetUserPwd(username, newPassword) > 0) {
+            // 更新缓存用户密码
+            LoginUser loginUser = SecurityUtils.getLoginUser();
+            loginUser.getSysUser().setPassword(newPassword);
+            tokenService.setLoginUser(loginUser);
+            return success();
+        }
+        return error("修改密码异常，请联系管理员");
+    }
+
 //    /**
 //     * 头像上传
 //     */
