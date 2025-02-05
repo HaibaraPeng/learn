@@ -5,6 +5,7 @@ package com.ruoyi.cloud.modules.system.controller;
  * @Date 2025/01/12 16:38
  */
 
+import com.ruoyi.cloud.api.system.domain.SysDept;
 import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.common.core.domain.R;
@@ -12,8 +13,10 @@ import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
 import com.ruoyi.cloud.common.security.annotation.InnerAuth;
+import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.service.TokenService;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
+import com.ruoyi.cloud.modules.system.service.ISysDeptService;
 import com.ruoyi.cloud.modules.system.service.ISysPermissionService;
 import com.ruoyi.cloud.modules.system.service.ISysUserService;
 import org.apache.commons.lang3.ArrayUtils;
@@ -36,10 +39,10 @@ public class SysUserController extends BaseController {
 
 //    @Autowired
 //    private ISysRoleService roleService;
-//
-//    @Autowired
-//    private ISysDeptService deptService;
-//
+
+    @Autowired
+    private ISysDeptService deptService;
+
 //    @Autowired
 //    private ISysPostService postService;
 
@@ -288,13 +291,13 @@ public class SysUserController extends BaseController {
 //        userService.insertUserAuth(userId, roleIds);
 //        return success();
 //    }
-//
-//    /**
-//     * 获取部门树列表
-//     */
+
+    /**
+     * 获取部门树列表
+     */
 //    @RequiresPermissions("system:user:list")
-//    @GetMapping("/deptTree")
-//    public AjaxResult deptTree(SysDept dept) {
-//        return success(deptService.selectDeptTreeList(dept));
-//    }
+    @GetMapping("/deptTree")
+    public AjaxResult deptTree(SysDept dept) {
+        return success(deptService.selectDeptTreeList(dept));
+    }
 }
