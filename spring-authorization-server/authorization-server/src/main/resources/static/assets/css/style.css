@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
 }
+
 body {
     height: 100vh;
     overflow: hidden;
@@ -49,6 +50,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 /* 表单样式 */
 .form-signin {
     z-index: 20;
@@ -104,7 +106,13 @@ body {
 .code-container input {
     margin-right: 10px;
 }
+
 #code-image {
+    width: 150px;
+    height: 40px;
+}
+
+.code-btn {
     width: 150px;
     height: 40px;
 }
@@ -127,6 +135,7 @@ body {
 .form-signin a {
     text-decoration: none;
 }
+
 .btn-light:hover {
     transform: translateY(-3%);
     -webkit-box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
@@ -160,6 +169,20 @@ body {
     display: none;
     z-index: 500;
     animation: shake 0.2s;
+}
+
+/* 切换登录方式按钮 */
+.change-login-type {
+    display: flex;
+    font-size: 15px;
+    justify-content: space-between;
+    margin-top: -10px !important;
+    margin-bottom: 10px !important;
+}
+
+.getCaptcha {
+    width: 150px;
+    background-color: white;
 }
 
 #error_message {
@@ -209,11 +232,13 @@ input:-ms-input-placeholder {
     .form-signin {
         width: 100%;
     }
+
     .form-container {
         width: auto;
         height: 90vh;
         padding: 20px;
     }
+
     .welcome-text {
         top: 9vh;
         flex-direction: column;
@@ -251,4 +276,3 @@ input:-ms-input-placeholder {
         top: 12%;
     }
 }
-

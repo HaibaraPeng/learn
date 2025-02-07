@@ -2,6 +2,7 @@ package org.example.authorization;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.example.constant.SecurityConstants;
 import org.example.exception.InvalidCaptchaException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -14,12 +15,13 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Objects;
+
 /**
  * @Author Roc
  * @Date 2025/2/5 11:08
  */
 @Slf4j
-@Component
 public class CaptchaAuthenticationProvider extends DaoAuthenticationProvider {
 
     /**
@@ -45,6 +47,13 @@ public class CaptchaAuthenticationProvider extends DaoAuthenticationProvider {
             throw new InvalidCaptchaException("Failed to get the current request.");
         }
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+
+        // 获取当前登录方式
+        String loginType = request.getParameter("loginType");
+        if (Objects.equals(loginType, SecurityConstants.SMS_LOGIN_TYPE)) {
+            log.info("It isn't necessary captcha authenticate.");
+            return super.authenticate(authentication);
+        }
 
         // 获取参数中的验证码
         String code = request.getParameter("code");
