@@ -3,6 +3,7 @@ package com.ruoyi.cloud.modules.system.service.impl;
 import com.ruoyi.cloud.api.system.domain.SysDept;
 import com.ruoyi.cloud.common.core.utils.SpringUtils;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
+import com.ruoyi.cloud.common.datascope.annotation.DataScope;
 import com.ruoyi.cloud.modules.system.domain.vo.TreeSelect;
 import com.ruoyi.cloud.modules.system.mapper.SysDeptMapper;
 import com.ruoyi.cloud.modules.system.service.ISysDeptService;
@@ -33,7 +34,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return 部门信息集合
      */
     @Override
-//    @DataScope(deptAlias = "d")
+    @DataScope(deptAlias = "d")
     public List<SysDept> selectDeptList(SysDept dept) {
         return deptMapper.selectDeptList(dept);
     }
@@ -46,7 +47,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     @Override
     public List<TreeSelect> selectDeptTreeList(SysDept dept) {
-        List<SysDept> depts = selectDeptList(dept);
+        List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
         return buildDeptTreeSelect(depts);
     }
 

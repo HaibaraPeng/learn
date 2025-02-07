@@ -30,6 +30,10 @@
             <groupId>com.ruoyi.cloud</groupId>
             <artifactId>ruoyi-common-datasource</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi.cloud</groupId>
+            <artifactId>ruoyi-common-datascope</artifactId>
+        </dependency>
         <!-- SpringCloud Alibaba Nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

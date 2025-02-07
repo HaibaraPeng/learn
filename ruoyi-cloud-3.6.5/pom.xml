@@ -79,6 +79,11 @@
             </dependency>
             <dependency>
                 <groupId>com.ruoyi.cloud</groupId>
+                <artifactId>ruoyi-common-datascope</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ruoyi.cloud</groupId>
                 <artifactId>ruoyi-api-system</artifactId>
                 <version>${project.version}</version>
             </dependency>
