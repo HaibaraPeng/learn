@@ -12,6 +12,7 @@ import com.ruoyi.cloud.common.core.domain.R;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
+import com.ruoyi.cloud.common.core.web.page.TableDataInfo;
 import com.ruoyi.cloud.common.security.annotation.InnerAuth;
 import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.service.TokenService;
@@ -55,17 +56,17 @@ public class SysUserController extends BaseController {
     @Autowired
     private TokenService tokenService;
 
-//    /**
-//     * 获取用户列表
-//     */
-//    @RequiresPermissions("system:user:list")
-//    @GetMapping("/list")
-//    public TableDataInfo list(SysUser user) {
-//        startPage();
-//        List<SysUser> list = userService.selectUserList(user);
-//        return getDataTable(list);
-//    }
-//
+    /**
+     * 获取用户列表
+     */
+    @RequiresPermissions("system:user:list")
+    @GetMapping("/list")
+    public TableDataInfo list(SysUser user) {
+        startPage();
+        List<SysUser> list = userService.selectUserList(user);
+        return getDataTable(list);
+    }
+
 //    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
 //    @RequiresPermissions("system:user:export")
 //    @PostMapping("/export")

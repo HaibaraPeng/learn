@@ -4,6 +4,7 @@ import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.common.core.constant.UserConstants;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
+import com.ruoyi.cloud.common.datascope.annotation.DataScope;
 import com.ruoyi.cloud.modules.system.domain.SysPost;
 import com.ruoyi.cloud.modules.system.mapper.SysPostMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
@@ -53,18 +54,18 @@ public class SysUserServiceImpl implements ISysUserService {
 //    @Autowired
 //    protected Validator validator;
 
-//    /**
-//     * 根据条件分页查询用户列表
-//     *
-//     * @param user 用户信息
-//     * @return 用户信息集合信息
-//     */
-//    @Override
-//    @DataScope(deptAlias = "d", userAlias = "u")
-//    public List<SysUser> selectUserList(SysUser user) {
-//        return userMapper.selectUserList(user);
-//    }
-//
+    /**
+     * 根据条件分页查询用户列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<SysUser> selectUserList(SysUser user) {
+        return userMapper.selectUserList(user);
+    }
+
 //    /**
 //     * 根据条件分页查询已分配用户角色列表
 //     *
