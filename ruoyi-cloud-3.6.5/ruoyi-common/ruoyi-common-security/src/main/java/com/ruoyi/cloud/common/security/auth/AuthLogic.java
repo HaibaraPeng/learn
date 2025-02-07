@@ -1,8 +1,13 @@
 package com.ruoyi.cloud.common.security.auth;
 
 import com.ruoyi.cloud.api.system.model.LoginUser;
+import com.ruoyi.cloud.common.core.context.SecurityContextHolder;
 import com.ruoyi.cloud.common.core.exception.auth.NotLoginException;
+import com.ruoyi.cloud.common.core.exception.auth.NotPermissionException;
 import com.ruoyi.cloud.common.core.utils.SpringUtils;
+import com.ruoyi.cloud.common.core.utils.StringUtils;
+import com.ruoyi.cloud.common.security.annotation.Logical;
+import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.service.TokenService;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import org.springframework.util.PatternMatchUtils;
@@ -10,6 +15,8 @@ import org.springframework.util.PatternMatchUtils;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import static sun.security.util.SecurityConstants.ALL_PERMISSION;
 
 /**
  * @Author Roc
@@ -52,22 +59,22 @@ public class AuthLogic {
 //        getLoginUser();
 //    }
 
-//    /**
-//     * 获取当前用户缓存信息, 如果未登录，则抛出异常
-//     *
-//     * @return 用户缓存信息
-//     */
-//    public LoginUser getLoginUser() {
-//        String token = SecurityUtils.getToken();
-//        if (token == null) {
-//            throw new NotLoginException("未提供token");
-//        }
-//        LoginUser loginUser = SecurityUtils.getLoginUser();
-//        if (loginUser == null) {
-//            throw new NotLoginException("无效的token");
-//        }
-//        return loginUser;
-//    }
+    /**
+     * 获取当前用户缓存信息, 如果未登录，则抛出异常
+     *
+     * @return 用户缓存信息
+     */
+    public LoginUser getLoginUser() {
+        String token = SecurityUtils.getToken();
+        if (token == null) {
+            throw new NotLoginException("未提供token");
+        }
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (loginUser == null) {
+            throw new NotLoginException("无效的token");
+        }
+        return loginUser;
+    }
 
     /**
      * 获取当前用户缓存信息, 如果未登录，则抛出异常
@@ -112,63 +119,52 @@ public class AuthLogic {
 //            throw new NotPermissionException(permission);
 //        }
 //    }
-//
-//    /**
-//     * 根据注解(@RequiresPermissions)鉴权, 如果验证未通过，则抛出异常: NotPermissionException
-//     *
-//     * @param requiresPermissions 注解对象
-//     */
-//    public void checkPermi(RequiresPermissions requiresPermissions)
-//    {
-//        SecurityContextHolder.setPermission(StringUtils.join(requiresPermissions.value(), ","));
-//        if (requiresPermissions.logical() == Logical.AND)
-//        {
-//            checkPermiAnd(requiresPermissions.value());
-//        }
-//        else
-//        {
-//            checkPermiOr(requiresPermissions.value());
-//        }
-//    }
-//
-//    /**
-//     * 验证用户是否含有指定权限，必须全部拥有
-//     *
-//     * @param permissions 权限列表
-//     */
-//    public void checkPermiAnd(String... permissions)
-//    {
-//        Set<String> permissionList = getPermiList();
-//        for (String permission : permissions)
-//        {
-//            if (!hasPermi(permissionList, permission))
-//            {
-//                throw new NotPermissionException(permission);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * 验证用户是否含有指定权限，只需包含其中一个
-//     *
-//     * @param permissions 权限码数组
-//     */
-//    public void checkPermiOr(String... permissions)
-//    {
-//        Set<String> permissionList = getPermiList();
-//        for (String permission : permissions)
-//        {
-//            if (hasPermi(permissionList, permission))
-//            {
-//                return;
-//            }
-//        }
-//        if (permissions.length > 0)
-//        {
-//            throw new NotPermissionException(permissions);
-//        }
-//    }
-//
+
+    /**
+     * 根据注解(@RequiresPermissions)鉴权, 如果验证未通过，则抛出异常: NotPermissionException
+     *
+     * @param requiresPermissions 注解对象
+     */
+    public void checkPermi(RequiresPermissions requiresPermissions) {
+        SecurityContextHolder.setPermission(StringUtils.join(requiresPermissions.value(), ","));
+        if (requiresPermissions.logical() == Logical.AND) {
+            checkPermiAnd(requiresPermissions.value());
+        } else {
+            checkPermiOr(requiresPermissions.value());
+        }
+    }
+
+    /**
+     * 验证用户是否含有指定权限，必须全部拥有
+     *
+     * @param permissions 权限列表
+     */
+    public void checkPermiAnd(String... permissions) {
+        Set<String> permissionList = getPermiList();
+        for (String permission : permissions) {
+            if (!hasPermi(permissionList, permission)) {
+                throw new NotPermissionException(permission);
+            }
+        }
+    }
+
+    /**
+     * 验证用户是否含有指定权限，只需包含其中一个
+     *
+     * @param permissions 权限码数组
+     */
+    public void checkPermiOr(String... permissions) {
+        Set<String> permissionList = getPermiList();
+        for (String permission : permissions) {
+            if (hasPermi(permissionList, permission)) {
+                return;
+            }
+        }
+        if (permissions.length > 0) {
+            throw new NotPermissionException(permissions);
+        }
+    }
+
 //    /**
 //     * 判断用户是否拥有某个角色
 //     *
@@ -311,38 +307,33 @@ public class AuthLogic {
 //            return new HashSet<>();
 //        }
 //    }
-//
-//    /**
-//     * 获取当前账号的权限列表
-//     *
-//     * @return 权限列表
-//     */
-//    public Set<String> getPermiList()
-//    {
-//        try
-//        {
-//            LoginUser loginUser = getLoginUser();
-//            return loginUser.getPermissions();
-//        }
-//        catch (Exception e)
-//        {
-//            return new HashSet<>();
-//        }
-//    }
-//
-//    /**
-//     * 判断是否包含权限
-//     *
-//     * @param authorities 权限列表
-//     * @param permission 权限字符串
-//     * @return 用户是否具备某权限
-//     */
-//    public boolean hasPermi(Collection<String> authorities, String permission)
-//    {
-//        return authorities.stream().filter(StringUtils::hasText)
-//                .anyMatch(x -> ALL_PERMISSION.equals(x) || PatternMatchUtils.simpleMatch(x, permission));
-//    }
-//
+
+    /**
+     * 获取当前账号的权限列表
+     *
+     * @return 权限列表
+     */
+    public Set<String> getPermiList() {
+        try {
+            LoginUser loginUser = getLoginUser();
+            return loginUser.getPermissions();
+        } catch (Exception e) {
+            return new HashSet<>();
+        }
+    }
+
+    /**
+     * 判断是否包含权限
+     *
+     * @param authorities 权限列表
+     * @param permission  权限字符串
+     * @return 用户是否具备某权限
+     */
+    public boolean hasPermi(Collection<String> authorities, String permission) {
+        return authorities.stream().filter(StringUtils::hasText)
+                .anyMatch(x -> ALL_PERMISSION.equals(x) || PatternMatchUtils.simpleMatch(x, permission));
+    }
+
 //    /**
 //     * 判断是否包含角色
 //     *

@@ -1,3 +1,4 @@
 com.ruoyi.cloud.common.security.config.WebMvcConfig
 com.ruoyi.cloud.common.security.service.TokenService
+com.ruoyi.cloud.common.security.aspect.PreAuthorizeAspect
 com.ruoyi.cloud.common.security.aspect.InnerAuthAspect

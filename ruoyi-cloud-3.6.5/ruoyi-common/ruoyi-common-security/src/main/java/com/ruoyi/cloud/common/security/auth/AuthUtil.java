@@ -1,6 +1,7 @@
 package com.ruoyi.cloud.common.security.auth;
 
 import com.ruoyi.cloud.api.system.model.LoginUser;
+import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 
 /**
  * @Author Roc
@@ -118,16 +119,16 @@ public class AuthUtil {
 //    public static void checkPermi(String permission) {
 //        authLogic.checkPermi(permission);
 //    }
-//
-//    /**
-//     * 根据注解传入参数鉴权, 如果验证未通过，则抛出异常: NotPermissionException
-//     *
-//     * @param requiresPermissions 权限注解
-//     */
-//    public static void checkPermi(RequiresPermissions requiresPermissions) {
-//        authLogic.checkPermi(requiresPermissions);
-//    }
-//
+
+    /**
+     * 根据注解传入参数鉴权, 如果验证未通过，则抛出异常: NotPermissionException
+     *
+     * @param requiresPermissions 权限注解
+     */
+    public static void checkPermi(RequiresPermissions requiresPermissions) {
+        authLogic.checkPermi(requiresPermissions);
+    }
+
 //    /**
 //     * 当前账号是否含有指定权限 [指定多个，必须全部验证通过]
 //     *
