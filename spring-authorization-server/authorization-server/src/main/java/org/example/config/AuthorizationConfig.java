@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.SneakyThrows;
 import org.example.authorization.DeviceClientAuthenticationConverter;
 import org.example.authorization.DeviceClientAuthenticationProvider;
 import org.example.authorization.sms.SmsCaptchaGrantAuthenticationConverter;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -208,7 +210,7 @@ public class AuthorizationConfig {
 
                 JwtClaimsSet.Builder claims = context.getClaims();
                 // 将权限信息放入jwt的claims中（也可以生成一个以指定字符分割的字符串放入）
-                claims.claim("authorities", authoritySet);
+                claims.claim(SecurityConstants.AUTHORITIES_KEY, authoritySet);
                 // 放入其它自定内容
                 // 角色、头像...
             }
@@ -226,11 +228,23 @@ public class AuthorizationConfig {
         // 设置解析权限信息的前缀，设置为空是去掉前缀
         grantedAuthoritiesConverter.setAuthorityPrefix("");
         // 设置权限信息在jwt claims中的key
-        grantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
+        grantedAuthoritiesConverter.setAuthoritiesClaimName(SecurityConstants.AUTHORITIES_KEY);
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
+    }
+
+    /**
+     * 将AuthenticationManager注入ioc中，其它需要使用地方可以直接从ioc中获取
+     *
+     * @param authenticationConfiguration 导出认证配置
+     * @return AuthenticationManager 认证管理器
+     */
+    @Bean
+    @SneakyThrows
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     /**
@@ -263,6 +277,8 @@ public class AuthorizationConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                // 客户端添加自定义认证
+                .authorizationGrantType(new AuthorizationGrantType(SecurityConstants.GRANT_TYPE_SMS_CODE))
                 // 授权码模式回调地址，oauth2.1已改为精准匹配，不能只设置域名，并且屏蔽了localhost，本机使用127.0.0.1访问
                 .redirectUri("http://127.0.0.1:8080/login/oauth2/code/messaging-client-oidc")
                 .redirectUri("https://www.baidu.com")
@@ -412,21 +428,4 @@ public class AuthorizationConfig {
                 .build();
     }
 
-    /**
-     * 先暂时配置一个基于内存的用户，框架在用户认证时会默认调用
-     * {@link UserDetailsService#loadUserByUsername(String)} 方法根据
-     * 账号查询用户信息，一般是重写该方法实现自己的逻辑
-     *
-     * @param passwordEncoder 密码解析器
-     * @return UserDetailsService
-     */
-    @Bean
-    public UserDetailsService users(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.withUsername("admin")
-                .password(passwordEncoder.encode("123456"))
-                .roles("admin", "normal", "unAuthentication")
-                .authorities("app", "web", "/test2", "/test3")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }
 }

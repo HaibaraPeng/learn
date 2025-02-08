@@ -7,3 +7,9 @@ spring:
 logging:
   level:
     root: DEBUG
+
+# Mybatis-Plus 配置
+mybatis-plus:
+  # 扫描mapper文件
+  mapper-locations:
+    - classpath:org/example/mapper/xml/*Mapper.xml
