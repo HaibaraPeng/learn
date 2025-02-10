@@ -1,9 +1,12 @@
 package com.ruoyi.cloud.modules.system.service.impl;
 
 import com.ruoyi.cloud.api.system.domain.SysRole;
+import com.ruoyi.cloud.api.system.domain.SysUser;
+import com.ruoyi.cloud.common.core.exception.ServiceException;
 import com.ruoyi.cloud.common.core.utils.SpringUtils;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.datascope.annotation.DataScope;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,26 +159,26 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //            throw new ServiceException("不允许操作超级管理员角色");
 //        }
 //    }
-//
-//    /**
-//     * 校验角色是否有数据权限
-//     *
-//     * @param roleIds 角色id
-//     */
-//    @Override
-//    public void checkRoleDataScope(Long... roleIds) {
-//        if (!SysUser.isAdmin(SecurityUtils.getUserId())) {
-//            for (Long roleId : roleIds) {
-//                SysRole role = new SysRole();
-//                role.setRoleId(roleId);
-//                List<SysRole> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
-//                if (StringUtils.isEmpty(roles)) {
-//                    throw new ServiceException("没有权限访问角色数据！");
-//                }
-//            }
-//        }
-//    }
-//
+
+    /**
+     * 校验角色是否有数据权限
+     *
+     * @param roleIds 角色id
+     */
+    @Override
+    public void checkRoleDataScope(Long... roleIds) {
+        if (!SysUser.isAdmin(SecurityUtils.getUserId())) {
+            for (Long roleId : roleIds) {
+                SysRole role = new SysRole();
+                role.setRoleId(roleId);
+                List<SysRole> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
+                if (StringUtils.isEmpty(roles)) {
+                    throw new ServiceException("没有权限访问角色数据！");
+                }
+            }
+        }
+    }
+
 //    /**
 //     * 通过角色ID查询角色使用数量
 //     *

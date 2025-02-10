@@ -14,6 +14,8 @@ import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
 import com.ruoyi.cloud.common.core.web.page.TableDataInfo;
+import com.ruoyi.cloud.common.log.annotation.Log;
+import com.ruoyi.cloud.common.log.enums.BusinessType;
 import com.ruoyi.cloud.common.security.annotation.InnerAuth;
 import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.service.TokenService;
@@ -182,27 +184,27 @@ public class SysUserController extends BaseController {
         return ajax;
     }
 
-//    /**
-//     * 新增用户
-//     */
-//    @RequiresPermissions("system:user:add")
-//    @Log(title = "用户管理", businessType = BusinessType.INSERT)
-//    @PostMapping
-//    public AjaxResult add(@Validated @RequestBody SysUser user) {
-//        deptService.checkDeptDataScope(user.getDeptId());
-//        roleService.checkRoleDataScope(user.getRoleIds());
-//        if (!userService.checkUserNameUnique(user)) {
-//            return error("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
-//        } else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(user)) {
-//            return error("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
-//        } else if (StringUtils.isNotEmpty(user.getEmail()) && !userService.checkEmailUnique(user)) {
-//            return error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
-//        }
-//        user.setCreateBy(SecurityUtils.getUsername());
-//        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
-//        return toAjax(userService.insertUser(user));
-//    }
-//
+    /**
+     * 新增用户
+     */
+    @RequiresPermissions("system:user:add")
+    @Log(title = "用户管理", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@Validated @RequestBody SysUser user) {
+        deptService.checkDeptDataScope(user.getDeptId());
+        roleService.checkRoleDataScope(user.getRoleIds());
+        if (!userService.checkUserNameUnique(user)) {
+            return error("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
+        } else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(user)) {
+            return error("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
+        } else if (StringUtils.isNotEmpty(user.getEmail()) && !userService.checkEmailUnique(user)) {
+            return error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
+        }
+        user.setCreateBy(SecurityUtils.getUsername());
+        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+        return toAjax(userService.insertUser(user));
+    }
+
 //    /**
 //     * 修改用户
 //     */

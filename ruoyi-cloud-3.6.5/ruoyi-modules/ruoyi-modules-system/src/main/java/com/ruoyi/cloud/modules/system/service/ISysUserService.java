@@ -65,13 +65,13 @@ public interface ISysUserService {
      */
     public String selectUserPostGroup(String userName);
 
-//    /**
-//     * 校验用户名称是否唯一
-//     *
-//     * @param user 用户信息
-//     * @return 结果
-//     */
-//    public boolean checkUserNameUnique(SysUser user);
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    public boolean checkUserNameUnique(SysUser user);
 
     /**
      * 校验手机号码是否唯一
@@ -103,14 +103,14 @@ public interface ISysUserService {
      */
     public void checkUserDataScope(Long userId);
 
-//    /**
-//     * 新增用户信息
-//     *
-//     * @param user 用户信息
-//     * @return 结果
-//     */
-//    public int insertUser(SysUser user);
-//
+    /**
+     * 新增用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    public int insertUser(SysUser user);
+
 //    /**
 //     * 注册用户信息
 //     *

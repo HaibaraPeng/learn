@@ -1,9 +1,12 @@
 package com.ruoyi.cloud.modules.system.service.impl;
 
 import com.ruoyi.cloud.api.system.domain.SysDept;
+import com.ruoyi.cloud.api.system.domain.SysUser;
+import com.ruoyi.cloud.common.core.exception.ServiceException;
 import com.ruoyi.cloud.common.core.utils.SpringUtils;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.datascope.annotation.DataScope;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.vo.TreeSelect;
 import com.ruoyi.cloud.modules.system.mapper.SysDeptMapper;
 import com.ruoyi.cloud.modules.system.service.ISysDeptService;
@@ -166,27 +169,24 @@ public class SysDeptServiceImpl implements ISysDeptService {
 //        }
 //        return UserConstants.UNIQUE;
 //    }
-//
-//    /**
-//     * 校验部门是否有数据权限
-//     *
-//     * @param deptId 部门id
-//     */
-//    @Override
-//    public void checkDeptDataScope(Long deptId)
-//    {
-//        if (!SysUser.isAdmin(SecurityUtils.getUserId()) && StringUtils.isNotNull(deptId))
-//        {
-//            SysDept dept = new SysDept();
-//            dept.setDeptId(deptId);
-//            List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
-//            if (StringUtils.isEmpty(depts))
-//            {
-//                throw new ServiceException("没有权限访问部门数据！");
-//            }
-//        }
-//    }
-//
+
+    /**
+     * 校验部门是否有数据权限
+     *
+     * @param deptId 部门id
+     */
+    @Override
+    public void checkDeptDataScope(Long deptId) {
+        if (!SysUser.isAdmin(SecurityUtils.getUserId()) && StringUtils.isNotNull(deptId)) {
+            SysDept dept = new SysDept();
+            dept.setDeptId(deptId);
+            List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
+            if (StringUtils.isEmpty(depts)) {
+                throw new ServiceException("没有权限访问部门数据！");
+            }
+        }
+    }
+
 //    /**
 //     * 新增保存部门信息
 //     *
