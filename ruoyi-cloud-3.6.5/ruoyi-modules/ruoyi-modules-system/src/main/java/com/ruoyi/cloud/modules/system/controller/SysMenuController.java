@@ -42,18 +42,17 @@ public class SysMenuController extends BaseController {
 //    {
 //        return success(menuService.selectMenuById(menuId));
 //    }
-//
-//    /**
-//     * 获取菜单下拉树列表
-//     */
-//    @GetMapping("/treeselect")
-//    public AjaxResult treeselect(SysMenu menu)
-//    {
-//        Long userId = SecurityUtils.getUserId();
-//        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
-//        return success(menuService.buildMenuTreeSelect(menus));
-//    }
-//
+
+    /**
+     * 获取菜单下拉树列表
+     */
+    @GetMapping("/treeselect")
+    public AjaxResult treeselect(SysMenu menu) {
+        Long userId = SecurityUtils.getUserId();
+        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
+        return success(menuService.buildMenuTreeSelect(menus));
+    }
+
 //    /**
 //     * 加载对应角色菜单列表树
 //     */

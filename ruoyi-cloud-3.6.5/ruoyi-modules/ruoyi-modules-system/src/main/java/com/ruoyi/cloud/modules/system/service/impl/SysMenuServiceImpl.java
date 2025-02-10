@@ -1,5 +1,6 @@
 package com.ruoyi.cloud.modules.system.service.impl;
 
+import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.common.core.constant.Constants;
 import com.ruoyi.cloud.common.core.constant.UserConstants;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
@@ -7,6 +8,7 @@ import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.SysMenu;
 import com.ruoyi.cloud.modules.system.domain.vo.MetaVo;
 import com.ruoyi.cloud.modules.system.domain.vo.RouterVo;
+import com.ruoyi.cloud.modules.system.domain.vo.TreeSelect;
 import com.ruoyi.cloud.modules.system.mapper.SysMenuMapper;
 import com.ruoyi.cloud.modules.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,29 +45,25 @@ public class SysMenuServiceImpl implements ISysMenuService {
 //    {
 //        return selectMenuList(new SysMenu(), userId);
 //    }
-//
-//    /**
-//     * 查询系统菜单列表
-//     *
-//     * @param menu 菜单信息
-//     * @return 菜单列表
-//     */
-//    @Override
-//    public List<SysMenu> selectMenuList(SysMenu menu, Long userId)
-//    {
-//        List<SysMenu> menuList = null;
-//        // 管理员显示所有菜单信息
-//        if (SysUser.isAdmin(userId))
-//        {
-//            menuList = menuMapper.selectMenuList(menu);
-//        }
-//        else
-//        {
-//            menu.getParams().put("userId", userId);
-//            menuList = menuMapper.selectMenuListByUserId(menu);
-//        }
-//        return menuList;
-//    }
+
+    /**
+     * 查询系统菜单列表
+     *
+     * @param menu 菜单信息
+     * @return 菜单列表
+     */
+    @Override
+    public List<SysMenu> selectMenuList(SysMenu menu, Long userId) {
+        List<SysMenu> menuList = null;
+        // 管理员显示所有菜单信息
+        if (SysUser.isAdmin(userId)) {
+            menuList = menuMapper.selectMenuList(menu);
+        } else {
+            menu.getParams().put("userId", userId);
+            menuList = menuMapper.selectMenuListByUserId(menu);
+        }
+        return menuList;
+    }
 
     /**
      * 根据用户ID查询权限
@@ -184,47 +182,42 @@ public class SysMenuServiceImpl implements ISysMenuService {
         return routers;
     }
 
-//    /**
-//     * 构建前端所需要树结构
-//     *
-//     * @param menus 菜单列表
-//     * @return 树结构列表
-//     */
-//    @Override
-//    public List<SysMenu> buildMenuTree(List<SysMenu> menus)
-//    {
-//        List<SysMenu> returnList = new ArrayList<SysMenu>();
-//        List<Long> tempList = menus.stream().map(SysMenu::getMenuId).collect(Collectors.toList());
-//        for (Iterator<SysMenu> iterator = menus.iterator(); iterator.hasNext();)
-//        {
-//            SysMenu menu = (SysMenu) iterator.next();
-//            // 如果是顶级节点, 遍历该父节点的所有子节点
-//            if (!tempList.contains(menu.getParentId()))
-//            {
-//                recursionFn(menus, menu);
-//                returnList.add(menu);
-//            }
-//        }
-//        if (returnList.isEmpty())
-//        {
-//            returnList = menus;
-//        }
-//        return returnList;
-//    }
-//
-//    /**
-//     * 构建前端所需要下拉树结构
-//     *
-//     * @param menus 菜单列表
-//     * @return 下拉树结构列表
-//     */
-//    @Override
-//    public List<TreeSelect> buildMenuTreeSelect(List<SysMenu> menus)
-//    {
-//        List<SysMenu> menuTrees = buildMenuTree(menus);
-//        return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
-//    }
-//
+    /**
+     * 构建前端所需要树结构
+     *
+     * @param menus 菜单列表
+     * @return 树结构列表
+     */
+    @Override
+    public List<SysMenu> buildMenuTree(List<SysMenu> menus) {
+        List<SysMenu> returnList = new ArrayList<SysMenu>();
+        List<Long> tempList = menus.stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+        for (Iterator<SysMenu> iterator = menus.iterator(); iterator.hasNext(); ) {
+            SysMenu menu = (SysMenu) iterator.next();
+            // 如果是顶级节点, 遍历该父节点的所有子节点
+            if (!tempList.contains(menu.getParentId())) {
+                recursionFn(menus, menu);
+                returnList.add(menu);
+            }
+        }
+        if (returnList.isEmpty()) {
+            returnList = menus;
+        }
+        return returnList;
+    }
+
+    /**
+     * 构建前端所需要下拉树结构
+     *
+     * @param menus 菜单列表
+     * @return 下拉树结构列表
+     */
+    @Override
+    public List<TreeSelect> buildMenuTreeSelect(List<SysMenu> menus) {
+        List<SysMenu> menuTrees = buildMenuTree(menus);
+        return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
 //    /**
 //     * 根据菜单ID查询信息
 //     *
