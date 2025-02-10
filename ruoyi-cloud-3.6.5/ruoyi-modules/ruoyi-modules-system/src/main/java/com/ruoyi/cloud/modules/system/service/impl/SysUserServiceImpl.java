@@ -193,17 +193,17 @@ public class SysUserServiceImpl implements ISysUserService {
         return UserConstants.UNIQUE;
     }
 
-//    /**
-//     * 校验用户是否允许操作
-//     *
-//     * @param user 用户信息
-//     */
-//    @Override
-//    public void checkUserAllowed(SysUser user) {
-//        if (StringUtils.isNotNull(user.getUserId()) && user.isAdmin()) {
-//            throw new ServiceException("不允许操作超级管理员用户");
-//        }
-//    }
+    /**
+     * 校验用户是否允许操作
+     *
+     * @param user 用户信息
+     */
+    @Override
+    public void checkUserAllowed(SysUser user) {
+        if (StringUtils.isNotNull(user.getUserId()) && user.isAdmin()) {
+            throw new ServiceException("不允许操作超级管理员用户");
+        }
+    }
 
     /**
      * 校验用户是否有数据权限
@@ -284,17 +284,17 @@ public class SysUserServiceImpl implements ISysUserService {
 //        userRoleMapper.deleteUserRoleByUserId(userId);
 //        insertUserRole(userId, roleIds);
 //    }
-//
-//    /**
-//     * 修改用户状态
-//     *
-//     * @param user 用户信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int updateUserStatus(SysUser user) {
-//        return userMapper.updateUser(user);
-//    }
+
+    /**
+     * 修改用户状态
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    public int updateUserStatus(SysUser user) {
+        return userMapper.updateUser(user);
+    }
 
     /**
      * 修改用户基本信息

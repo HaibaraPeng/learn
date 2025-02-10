@@ -89,12 +89,12 @@ public interface ISysUserService {
      */
     public boolean checkEmailUnique(SysUser user);
 
-//    /**
-//     * 校验用户是否允许操作
-//     *
-//     * @param user 用户信息
-//     */
-//    public void checkUserAllowed(SysUser user);
+    /**
+     * 校验用户是否允许操作
+     *
+     * @param user 用户信息
+     */
+    public void checkUserAllowed(SysUser user);
 
     /**
      * 校验用户是否有数据权限
@@ -134,14 +134,14 @@ public interface ISysUserService {
 //     * @param roleIds 角色组
 //     */
 //    public void insertUserAuth(Long userId, Long[] roleIds);
-//
-//    /**
-//     * 修改用户状态
-//     *
-//     * @param user 用户信息
-//     * @return 结果
-//     */
-//    public int updateUserStatus(SysUser user);
+
+    /**
+     * 修改用户状态
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    public int updateUserStatus(SysUser user);
 
     /**
      * 修改用户基本信息

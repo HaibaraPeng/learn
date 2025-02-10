@@ -253,20 +253,20 @@ public class SysUserController extends BaseController {
 //        user.setUpdateBy(SecurityUtils.getUsername());
 //        return toAjax(userService.resetPwd(user));
 //    }
-//
-//    /**
-//     * 状态修改
-//     */
-//    @RequiresPermissions("system:user:edit")
-//    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
-//    @PutMapping("/changeStatus")
-//    public AjaxResult changeStatus(@RequestBody SysUser user) {
-//        userService.checkUserAllowed(user);
-//        userService.checkUserDataScope(user.getUserId());
-//        user.setUpdateBy(SecurityUtils.getUsername());
-//        return toAjax(userService.updateUserStatus(user));
-//    }
-//
+
+    /**
+     * 状态修改
+     */
+    @RequiresPermissions("system:user:edit")
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody SysUser user) {
+        userService.checkUserAllowed(user);
+        userService.checkUserDataScope(user.getUserId());
+        user.setUpdateBy(SecurityUtils.getUsername());
+        return toAjax(userService.updateUserStatus(user));
+    }
+
 //    /**
 //     * 根据用户编号获取授权角色
 //     */
