@@ -406,27 +406,27 @@ public class SysUserServiceImpl implements ISysUserService {
 //        userPostMapper.deleteUserPostByUserId(userId);
 //        return userMapper.deleteUserById(userId);
 //    }
-//
-//    /**
-//     * 批量删除用户信息
-//     *
-//     * @param userIds 需要删除的用户ID
-//     * @return 结果
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int deleteUserByIds(Long[] userIds) {
-//        for (Long userId : userIds) {
-//            checkUserAllowed(new SysUser(userId));
-//            checkUserDataScope(userId);
-//        }
-//        // 删除用户与角色关联
-//        userRoleMapper.deleteUserRole(userIds);
-//        // 删除用户与岗位关联
-//        userPostMapper.deleteUserPost(userIds);
-//        return userMapper.deleteUserByIds(userIds);
-//    }
-//
+
+    /**
+     * 批量删除用户信息
+     *
+     * @param userIds 需要删除的用户ID
+     * @return 结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteUserByIds(Long[] userIds) {
+        for (Long userId : userIds) {
+            checkUserAllowed(new SysUser(userId));
+            checkUserDataScope(userId);
+        }
+        // 删除用户与角色关联
+        userRoleMapper.deleteUserRole(userIds);
+        // 删除用户与岗位关联
+        userPostMapper.deleteUserPost(userIds);
+        return userMapper.deleteUserByIds(userIds);
+    }
+
 //    /**
 //     * 导入用户数据
 //     *

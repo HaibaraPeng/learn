@@ -227,18 +227,18 @@ public class SysUserController extends BaseController {
         return toAjax(userService.updateUser(user));
     }
 
-//    /**
-//     * 删除用户
-//     */
-//    @RequiresPermissions("system:user:remove")
-//    @Log(title = "用户管理", businessType = BusinessType.DELETE)
-//    @DeleteMapping("/{userIds}")
-//    public AjaxResult remove(@PathVariable Long[] userIds) {
-//        if (ArrayUtils.contains(userIds, SecurityUtils.getUserId())) {
-//            return error("当前用户不能删除");
-//        }
-//        return toAjax(userService.deleteUserByIds(userIds));
-//    }
+    /**
+     * 删除用户
+     */
+    @RequiresPermissions("system:user:remove")
+    @Log(title = "用户管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{userIds}")
+    public AjaxResult remove(@PathVariable Long[] userIds) {
+        if (ArrayUtils.contains(userIds, SecurityUtils.getUserId())) {
+            return error("当前用户不能删除");
+        }
+        return toAjax(userService.deleteUserByIds(userIds));
+    }
 
     /**
      * 重置密码
