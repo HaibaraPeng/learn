@@ -281,18 +281,18 @@ public class SysUserController extends BaseController {
         return ajax;
     }
 
-//    /**
-//     * 用户授权角色
-//     */
-//    @RequiresPermissions("system:user:edit")
-//    @Log(title = "用户管理", businessType = BusinessType.GRANT)
-//    @PutMapping("/authRole")
-//    public AjaxResult insertAuthRole(Long userId, Long[] roleIds) {
-//        userService.checkUserDataScope(userId);
-//        roleService.checkRoleDataScope(roleIds);
-//        userService.insertUserAuth(userId, roleIds);
-//        return success();
-//    }
+    /**
+     * 用户授权角色
+     */
+    @RequiresPermissions("system:user:edit")
+    @Log(title = "用户管理", businessType = BusinessType.GRANT)
+    @PutMapping("/authRole")
+    public AjaxResult insertAuthRole(Long userId, Long[] roleIds) {
+        userService.checkUserDataScope(userId);
+        roleService.checkRoleDataScope(roleIds);
+        userService.insertUserAuth(userId, roleIds);
+        return success();
+    }
 
     /**
      * 获取部门树列表

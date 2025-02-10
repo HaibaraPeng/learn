@@ -272,18 +272,18 @@ public class SysUserServiceImpl implements ISysUserService {
         return userMapper.updateUser(user);
     }
 
-//    /**
-//     * 用户授权角色
-//     *
-//     * @param userId  用户ID
-//     * @param roleIds 角色组
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public void insertUserAuth(Long userId, Long[] roleIds) {
-//        userRoleMapper.deleteUserRoleByUserId(userId);
-//        insertUserRole(userId, roleIds);
-//    }
+    /**
+     * 用户授权角色
+     *
+     * @param userId  用户ID
+     * @param roleIds 角色组
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertUserAuth(Long userId, Long[] roleIds) {
+        userRoleMapper.deleteUserRoleByUserId(userId);
+        insertUserRole(userId, roleIds);
+    }
 
     /**
      * 修改用户状态
