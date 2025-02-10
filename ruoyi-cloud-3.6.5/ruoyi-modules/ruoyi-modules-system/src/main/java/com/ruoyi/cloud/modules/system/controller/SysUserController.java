@@ -239,20 +239,20 @@ public class SysUserController extends BaseController {
 //        }
 //        return toAjax(userService.deleteUserByIds(userIds));
 //    }
-//
-//    /**
-//     * 重置密码
-//     */
-//    @RequiresPermissions("system:user:edit")
-//    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
-//    @PutMapping("/resetPwd")
-//    public AjaxResult resetPwd(@RequestBody SysUser user) {
-//        userService.checkUserAllowed(user);
-//        userService.checkUserDataScope(user.getUserId());
-//        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
-//        user.setUpdateBy(SecurityUtils.getUsername());
-//        return toAjax(userService.resetPwd(user));
-//    }
+
+    /**
+     * 重置密码
+     */
+    @RequiresPermissions("system:user:edit")
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/resetPwd")
+    public AjaxResult resetPwd(@RequestBody SysUser user) {
+        userService.checkUserAllowed(user);
+        userService.checkUserDataScope(user.getUserId());
+        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+        user.setUpdateBy(SecurityUtils.getUsername());
+        return toAjax(userService.resetPwd(user));
+    }
 
     /**
      * 状态修改

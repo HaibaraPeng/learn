@@ -319,16 +319,16 @@ public class SysUserServiceImpl implements ISysUserService {
         return userMapper.updateUserAvatar(userName, avatar) > 0;
     }
 
-//    /**
-//     * 重置用户密码
-//     *
-//     * @param user 用户信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int resetPwd(SysUser user) {
-//        return userMapper.updateUser(user);
-//    }
+    /**
+     * 重置用户密码
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    public int resetPwd(SysUser user) {
+        return userMapper.updateUser(user);
+    }
 
     /**
      * 重置用户密码
