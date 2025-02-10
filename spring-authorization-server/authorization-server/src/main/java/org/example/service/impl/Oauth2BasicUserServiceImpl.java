@@ -11,9 +11,9 @@ import org.example.mapper.Oauth2BasicUserMapper;
 import org.example.mapper.SysAuthorityMapper;
 import org.example.mapper.SysRoleAuthorityMapper;
 import org.example.mapper.SysUserRoleMapper;
+import org.example.model.security.CustomGrantedAuthority;
 import org.example.service.IOauth2BasicUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -73,7 +73,7 @@ public class Oauth2BasicUserServiceImpl extends ServiceImpl<Oauth2BasicUserMappe
 
         // 根据菜单ID查出菜单
         List<SysAuthority> menus = sysAuthorityMapper.selectBatchIds(menusId);
-        Set<SimpleGrantedAuthority> authorities = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream().map(SysAuthority::getUrl).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+        Set<CustomGrantedAuthority> authorities = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream().map(SysAuthority::getUrl).map(CustomGrantedAuthority::new).collect(Collectors.toSet());
         basicUser.setAuthorities(authorities);
         return basicUser;
     }

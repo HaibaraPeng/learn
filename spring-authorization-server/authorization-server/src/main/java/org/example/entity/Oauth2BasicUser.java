@@ -9,8 +9,10 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.model.security.CustomGrantedAuthority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,8 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author Roc
  * @since 2025-02-08
  */
-@Getter
-@Setter
+@Data
 @JsonSerialize
 @TableName("oauth2_basic_user")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -95,10 +96,10 @@ public class Oauth2BasicUser implements UserDetails, Serializable {
      *  非数据库字段
      */
     @TableField(exist = false)
-    private Collection<? extends GrantedAuthority> authorities;
+    private Collection<CustomGrantedAuthority> authorities;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<CustomGrantedAuthority> getAuthorities() {
         return this.authorities;
     }
 

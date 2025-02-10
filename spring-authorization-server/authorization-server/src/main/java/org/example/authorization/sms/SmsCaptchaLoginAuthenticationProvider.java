@@ -5,18 +5,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.authorization.CaptchaAuthenticationProvider;
 import org.example.constant.SecurityConstants;
 import org.example.exception.InvalidCaptchaException;
+import org.example.support.RedisOperator;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Objects;
+
+import static org.example.constant.RedisConstants.SMS_CAPTCHA_PREFIX_KEY;
 
 /**
  * @Author Roc
@@ -26,6 +30,8 @@ import java.util.Objects;
 @Component
 public class SmsCaptchaLoginAuthenticationProvider extends CaptchaAuthenticationProvider {
 
+    private final RedisOperator<String> redisOperator;
+
     /**
      * 利用构造方法在通过{@link Component}注解初始化时
      * 注入UserDetailsService和passwordEncoder，然后
@@ -34,8 +40,9 @@ public class SmsCaptchaLoginAuthenticationProvider extends CaptchaAuthentication
      * @param userDetailsService 用户服务，给框架提供用户信息
      * @param passwordEncoder    密码解析器，用于加密和校验密码
      */
-    public SmsCaptchaLoginAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        super(userDetailsService, passwordEncoder);
+    public SmsCaptchaLoginAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, RedisOperator<String> redisOperator) {
+        super(userDetailsService, passwordEncoder, redisOperator);
+        this.redisOperator = redisOperator;
     }
 
     @Override
@@ -55,16 +62,16 @@ public class SmsCaptchaLoginAuthenticationProvider extends CaptchaAuthentication
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
 
         // 获取当前登录方式
-        String loginType = request.getParameter("loginType");
+        String loginType = request.getParameter(SecurityConstants.LOGIN_TYPE_NAME);
         // 获取grant_type
-        String grantType = request.getParameter("grant_type");
+        String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
         // 短信登录和自定义短信认证grant type会走下方认证
         // 如果是自定义密码模式则下方的认证判断只要判断下loginType即可
         // if (Objects.equals(loginType, SecurityConstants.SMS_LOGIN_TYPE)) {}
         if (Objects.equals(loginType, SecurityConstants.SMS_LOGIN_TYPE)
                 || Objects.equals(grantType, SecurityConstants.GRANT_TYPE_SMS_CODE)) {
-            // 获取存入session的验证码(UsernamePasswordAuthenticationToken的principal中现在存入的是手机号)
-            String smsCaptcha = (String) request.getSession(Boolean.FALSE).getAttribute((String) authentication.getPrincipal());
+            // 获取存入缓存中的验证码(UsernamePasswordAuthenticationToken的principal中现在存入的是手机号)
+            String smsCaptcha = redisOperator.getAndDelete((SMS_CAPTCHA_PREFIX_KEY + authentication.getPrincipal()));
             // 校验输入的验证码是否正确(UsernamePasswordAuthenticationToken的credentials中现在存入的是输入的验证码)
             if (!Objects.equals(smsCaptcha, authentication.getCredentials())) {
                 throw new BadCredentialsException("The sms captcha is incorrect.");

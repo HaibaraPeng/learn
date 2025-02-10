@@ -4,9 +4,12 @@ spring:
     url: jdbc:mysql://192.168.190.42:3306/authorization-server?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
     username: root
     password: root
-logging:
-  level:
-    root: DEBUG
+  data:
+    redis:
+      url: ${REDIS_URL:redis://192.168.190.42:6379}
+#logging:
+#  level:
+#    root: DEBUG
 
 # Mybatis-Plus 配置
 mybatis-plus:
