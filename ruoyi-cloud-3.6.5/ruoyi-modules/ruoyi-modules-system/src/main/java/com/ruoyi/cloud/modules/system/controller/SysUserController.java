@@ -267,20 +267,20 @@ public class SysUserController extends BaseController {
         return toAjax(userService.updateUserStatus(user));
     }
 
-//    /**
-//     * 根据用户编号获取授权角色
-//     */
-//    @RequiresPermissions("system:user:query")
-//    @GetMapping("/authRole/{userId}")
-//    public AjaxResult authRole(@PathVariable("userId") Long userId) {
-//        AjaxResult ajax = AjaxResult.success();
-//        SysUser user = userService.selectUserById(userId);
-//        List<SysRole> roles = roleService.selectRolesByUserId(userId);
-//        ajax.put("user", user);
-//        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-//        return ajax;
-//    }
-//
+    /**
+     * 根据用户编号获取授权角色
+     */
+    @RequiresPermissions("system:user:query")
+    @GetMapping("/authRole/{userId}")
+    public AjaxResult authRole(@PathVariable("userId") Long userId) {
+        AjaxResult ajax = AjaxResult.success();
+        SysUser user = userService.selectUserById(userId);
+        List<SysRole> roles = roleService.selectRolesByUserId(userId);
+        ajax.put("user", user);
+        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        return ajax;
+    }
+
 //    /**
 //     * 用户授权角色
 //     */

@@ -45,26 +45,26 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return roleMapper.selectRoleList(role);
     }
 
-//    /**
-//     * 根据用户ID查询角色
-//     *
-//     * @param userId 用户ID
-//     * @return 角色列表
-//     */
-//    @Override
-//    public List<SysRole> selectRolesByUserId(Long userId) {
-//        List<SysRole> userRoles = roleMapper.selectRolePermissionByUserId(userId);
-//        List<SysRole> roles = selectRoleAll();
-//        for (SysRole role : roles) {
-//            for (SysRole userRole : userRoles) {
-//                if (role.getRoleId().longValue() == userRole.getRoleId().longValue()) {
-//                    role.setFlag(true);
-//                    break;
-//                }
-//            }
-//        }
-//        return roles;
-//    }
+    /**
+     * 根据用户ID查询角色
+     *
+     * @param userId 用户ID
+     * @return 角色列表
+     */
+    @Override
+    public List<SysRole> selectRolesByUserId(Long userId) {
+        List<SysRole> userRoles = roleMapper.selectRolePermissionByUserId(userId);
+        List<SysRole> roles = selectRoleAll();
+        for (SysRole role : roles) {
+            for (SysRole userRole : userRoles) {
+                if (role.getRoleId().longValue() == userRole.getRoleId().longValue()) {
+                    role.setFlag(true);
+                    break;
+                }
+            }
+        }
+        return roles;
+    }
 
     /**
      * 根据用户ID查询权限
