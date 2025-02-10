@@ -2,12 +2,15 @@ package com.ruoyi.cloud.modules.system.service.impl;
 
 import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.api.system.domain.SysUser;
+import com.ruoyi.cloud.common.core.constant.UserConstants;
 import com.ruoyi.cloud.common.core.exception.ServiceException;
 import com.ruoyi.cloud.common.core.utils.SpringUtils;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.datascope.annotation.DataScope;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
+import com.ruoyi.cloud.modules.system.domain.SysRoleMenu;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
+import com.ruoyi.cloud.modules.system.mapper.SysRoleMenuMapper;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +27,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Autowired
     private SysRoleMapper roleMapper;
 
-//    @Autowired
-//    private SysRoleMenuMapper roleMenuMapper;
-//
+    @Autowired
+    private SysRoleMenuMapper roleMenuMapper;
+
 //    @Autowired
 //    private SysUserRoleMapper userRoleMapper;
 //
@@ -115,39 +118,39 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //    public SysRole selectRoleById(Long roleId) {
 //        return roleMapper.selectRoleById(roleId);
 //    }
-//
-//    /**
-//     * 校验角色名称是否唯一
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    @Override
-//    public boolean checkRoleNameUnique(SysRole role) {
-//        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-//        SysRole info = roleMapper.checkRoleNameUnique(role.getRoleName());
-//        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
-//            return UserConstants.NOT_UNIQUE;
-//        }
-//        return UserConstants.UNIQUE;
-//    }
-//
-//    /**
-//     * 校验角色权限是否唯一
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    @Override
-//    public boolean checkRoleKeyUnique(SysRole role) {
-//        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-//        SysRole info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
-//        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
-//            return UserConstants.NOT_UNIQUE;
-//        }
-//        return UserConstants.UNIQUE;
-//    }
-//
+
+    /**
+     * 校验角色名称是否唯一
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    public boolean checkRoleNameUnique(SysRole role) {
+        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
+        SysRole info = roleMapper.checkRoleNameUnique(role.getRoleName());
+        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
+    }
+
+    /**
+     * 校验角色权限是否唯一
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    public boolean checkRoleKeyUnique(SysRole role) {
+        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
+        SysRole info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
+        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
+    }
+
 //    /**
 //     * 校验角色是否允许操作
 //     *
@@ -189,21 +192,21 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //    public int countUserRoleByRoleId(Long roleId) {
 //        return userRoleMapper.countUserRoleByRoleId(roleId);
 //    }
-//
-//    /**
-//     * 新增保存角色信息
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int insertRole(SysRole role) {
-//        // 新增角色信息
-//        roleMapper.insertRole(role);
-//        return insertRoleMenu(role);
-//    }
-//
+
+    /**
+     * 新增保存角色信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insertRole(SysRole role) {
+        // 新增角色信息
+        roleMapper.insertRole(role);
+        return insertRoleMenu(role);
+    }
+
 //    /**
 //     * 修改保存角色信息
 //     *
@@ -247,28 +250,28 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //        // 新增角色和部门信息（数据权限）
 //        return insertRoleDept(role);
 //    }
-//
-//    /**
-//     * 新增角色菜单信息
-//     *
-//     * @param role 角色对象
-//     */
-//    public int insertRoleMenu(SysRole role) {
-//        int rows = 1;
-//        // 新增用户与角色管理
-//        List<SysRoleMenu> list = new ArrayList<SysRoleMenu>();
-//        for (Long menuId : role.getMenuIds()) {
-//            SysRoleMenu rm = new SysRoleMenu();
-//            rm.setRoleId(role.getRoleId());
-//            rm.setMenuId(menuId);
-//            list.add(rm);
-//        }
-//        if (list.size() > 0) {
-//            rows = roleMenuMapper.batchRoleMenu(list);
-//        }
-//        return rows;
-//    }
-//
+
+    /**
+     * 新增角色菜单信息
+     *
+     * @param role 角色对象
+     */
+    public int insertRoleMenu(SysRole role) {
+        int rows = 1;
+        // 新增用户与角色管理
+        List<SysRoleMenu> list = new ArrayList<SysRoleMenu>();
+        for (Long menuId : role.getMenuIds()) {
+            SysRoleMenu rm = new SysRoleMenu();
+            rm.setRoleId(role.getRoleId());
+            rm.setMenuId(menuId);
+            list.add(rm);
+        }
+        if (list.size() > 0) {
+            rows = roleMenuMapper.batchRoleMenu(list);
+        }
+        return rows;
+    }
+
 //    /**
 //     * 新增角色部门信息(数据权限)
 //     *

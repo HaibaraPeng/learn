@@ -2,8 +2,12 @@ package com.ruoyi.cloud.modules.system.controller;
 
 import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
+import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
 import com.ruoyi.cloud.common.core.web.page.TableDataInfo;
+import com.ruoyi.cloud.common.log.annotation.Log;
+import com.ruoyi.cloud.common.log.enums.BusinessType;
 import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -54,24 +58,24 @@ public class SysRoleController extends BaseController {
 //        roleService.checkRoleDataScope(roleId);
 //        return success(roleService.selectRoleById(roleId));
 //    }
-//
-//    /**
-//     * 新增角色
-//     */
-//    @RequiresPermissions("system:role:add")
-//    @Log(title = "角色管理", businessType = BusinessType.INSERT)
-//    @PostMapping
-//    public AjaxResult add(@Validated @RequestBody SysRole role) {
-//        if (!roleService.checkRoleNameUnique(role)) {
-//            return error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
-//        } else if (!roleService.checkRoleKeyUnique(role)) {
-//            return error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
-//        }
-//        role.setCreateBy(SecurityUtils.getUsername());
-//        return toAjax(roleService.insertRole(role));
-//
-//    }
-//
+
+    /**
+     * 新增角色
+     */
+    @RequiresPermissions("system:role:add")
+    @Log(title = "角色管理", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@Validated @RequestBody SysRole role) {
+        if (!roleService.checkRoleNameUnique(role)) {
+            return error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
+        } else if (!roleService.checkRoleKeyUnique(role)) {
+            return error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
+        }
+        role.setCreateBy(SecurityUtils.getUsername());
+        return toAjax(roleService.insertRole(role));
+
+    }
+
 //    /**
 //     * 修改保存角色
 //     */

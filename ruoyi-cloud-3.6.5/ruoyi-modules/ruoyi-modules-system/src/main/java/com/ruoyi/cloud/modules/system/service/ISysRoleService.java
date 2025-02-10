@@ -56,23 +56,23 @@ public interface ISysRoleService {
 //     * @return 角色对象信息
 //     */
 //    public SysRole selectRoleById(Long roleId);
-//
-//    /**
-//     * 校验角色名称是否唯一
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    public boolean checkRoleNameUnique(SysRole role);
-//
-//    /**
-//     * 校验角色权限是否唯一
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    public boolean checkRoleKeyUnique(SysRole role);
-//
+
+    /**
+     * 校验角色名称是否唯一
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    public boolean checkRoleNameUnique(SysRole role);
+
+    /**
+     * 校验角色权限是否唯一
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    public boolean checkRoleKeyUnique(SysRole role);
+
 //    /**
 //     * 校验角色是否允许操作
 //     *
@@ -94,15 +94,15 @@ public interface ISysRoleService {
 //     * @return 结果
 //     */
 //    public int countUserRoleByRoleId(Long roleId);
-//
-//    /**
-//     * 新增保存角色信息
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    public int insertRole(SysRole role);
-//
+
+    /**
+     * 新增保存角色信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    public int insertRole(SysRole role);
+
 //    /**
 //     * 修改保存角色信息
 //     *
