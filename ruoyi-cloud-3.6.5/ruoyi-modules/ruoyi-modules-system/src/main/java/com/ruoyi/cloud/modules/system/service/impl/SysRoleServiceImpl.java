@@ -1,7 +1,9 @@
 package com.ruoyi.cloud.modules.system.service.impl;
 
 import com.ruoyi.cloud.api.system.domain.SysRole;
+import com.ruoyi.cloud.common.core.utils.SpringUtils;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
+import com.ruoyi.cloud.common.datascope.annotation.DataScope;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +29,18 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //
 //    @Autowired
 //    private SysRoleDeptMapper roleDeptMapper;
-//
-//    /**
-//     * 根据条件分页查询角色数据
-//     *
-//     * @param role 角色信息
-//     * @return 角色数据集合信息
-//     */
-//    @Override
-//    @DataScope(deptAlias = "d")
-//    public List<SysRole> selectRoleList(SysRole role) {
-//        return roleMapper.selectRoleList(role);
-//    }
+
+    /**
+     * 根据条件分页查询角色数据
+     *
+     * @param role 角色信息
+     * @return 角色数据集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d")
+    public List<SysRole> selectRoleList(SysRole role) {
+        return roleMapper.selectRoleList(role);
+    }
 
 //    /**
 //     * 根据用户ID查询角色
@@ -79,16 +81,16 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return permsSet;
     }
 
-//    /**
-//     * 查询所有角色
-//     *
-//     * @return 角色列表
-//     */
-//    @Override
-//    public List<SysRole> selectRoleAll() {
-//        return SpringUtils.getAopProxy(this).selectRoleList(new SysRole());
-//    }
-//
+    /**
+     * 查询所有角色
+     *
+     * @return 角色列表
+     */
+    @Override
+    public List<SysRole> selectRoleAll() {
+        return SpringUtils.getAopProxy(this).selectRoleList(new SysRole());
+    }
+
 //    /**
 //     * 根据用户ID获取角色选择框列表
 //     *

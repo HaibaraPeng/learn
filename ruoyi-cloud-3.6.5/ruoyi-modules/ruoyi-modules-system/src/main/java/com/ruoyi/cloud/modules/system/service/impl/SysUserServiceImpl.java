@@ -3,8 +3,11 @@ package com.ruoyi.cloud.modules.system.service.impl;
 import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.common.core.constant.UserConstants;
+import com.ruoyi.cloud.common.core.exception.ServiceException;
+import com.ruoyi.cloud.common.core.utils.SpringUtils;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.datascope.annotation.DataScope;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.SysPost;
 import com.ruoyi.cloud.modules.system.mapper.SysPostMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
@@ -101,16 +104,16 @@ public class SysUserServiceImpl implements ISysUserService {
         return userMapper.selectUserByUserName(userName);
     }
 
-//    /**
-//     * 通过用户ID查询用户
-//     *
-//     * @param userId 用户ID
-//     * @return 用户对象信息
-//     */
-//    @Override
-//    public SysUser selectUserById(Long userId) {
-//        return userMapper.selectUserById(userId);
-//    }
+    /**
+     * 通过用户ID查询用户
+     *
+     * @param userId 用户ID
+     * @return 用户对象信息
+     */
+    @Override
+    public SysUser selectUserById(Long userId) {
+        return userMapper.selectUserById(userId);
+    }
 
     /**
      * 查询用户所属角色组
@@ -201,24 +204,24 @@ public class SysUserServiceImpl implements ISysUserService {
 //            throw new ServiceException("不允许操作超级管理员用户");
 //        }
 //    }
-//
-//    /**
-//     * 校验用户是否有数据权限
-//     *
-//     * @param userId 用户id
-//     */
-//    @Override
-//    public void checkUserDataScope(Long userId) {
-//        if (!SysUser.isAdmin(SecurityUtils.getUserId())) {
-//            SysUser user = new SysUser();
-//            user.setUserId(userId);
-//            List<SysUser> users = SpringUtils.getAopProxy(this).selectUserList(user);
-//            if (StringUtils.isEmpty(users)) {
-//                throw new ServiceException("没有权限访问用户数据！");
-//            }
-//        }
-//    }
-//
+
+    /**
+     * 校验用户是否有数据权限
+     *
+     * @param userId 用户id
+     */
+    @Override
+    public void checkUserDataScope(Long userId) {
+        if (!SysUser.isAdmin(SecurityUtils.getUserId())) {
+            SysUser user = new SysUser();
+            user.setUserId(userId);
+            List<SysUser> users = SpringUtils.getAopProxy(this).selectUserList(user);
+            if (StringUtils.isEmpty(users)) {
+                throw new ServiceException("没有权限访问用户数据！");
+            }
+        }
+    }
+
 //    /**
 //     * 新增保存用户信息
 //     *

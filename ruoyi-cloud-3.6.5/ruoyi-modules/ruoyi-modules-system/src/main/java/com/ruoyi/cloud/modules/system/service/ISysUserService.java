@@ -41,13 +41,13 @@ public interface ISysUserService {
      */
     public SysUser selectUserByUserName(String userName);
 
-//    /**
-//     * 通过用户ID查询用户
-//     *
-//     * @param userId 用户ID
-//     * @return 用户对象信息
-//     */
-//    public SysUser selectUserById(Long userId);
+    /**
+     * 通过用户ID查询用户
+     *
+     * @param userId 用户ID
+     * @return 用户对象信息
+     */
+    public SysUser selectUserById(Long userId);
 
     /**
      * 根据用户ID查询用户所属角色组
@@ -95,14 +95,14 @@ public interface ISysUserService {
 //     * @param user 用户信息
 //     */
 //    public void checkUserAllowed(SysUser user);
-//
-//    /**
-//     * 校验用户是否有数据权限
-//     *
-//     * @param userId 用户id
-//     */
-//    public void checkUserDataScope(Long userId);
-//
+
+    /**
+     * 校验用户是否有数据权限
+     *
+     * @param userId 用户id
+     */
+    public void checkUserDataScope(Long userId);
+
 //    /**
 //     * 新增用户信息
 //     *

@@ -6,6 +6,7 @@ package com.ruoyi.cloud.modules.system.controller;
  */
 
 import com.ruoyi.cloud.api.system.domain.SysDept;
+import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.common.core.domain.R;
@@ -17,9 +18,7 @@ import com.ruoyi.cloud.common.security.annotation.InnerAuth;
 import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.service.TokenService;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
-import com.ruoyi.cloud.modules.system.service.ISysDeptService;
-import com.ruoyi.cloud.modules.system.service.ISysPermissionService;
-import com.ruoyi.cloud.modules.system.service.ISysUserService;
+import com.ruoyi.cloud.modules.system.service.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -38,14 +37,14 @@ public class SysUserController extends BaseController {
     @Autowired
     private ISysUserService userService;
 
-//    @Autowired
-//    private ISysRoleService roleService;
+    @Autowired
+    private ISysRoleService roleService;
 
     @Autowired
     private ISysDeptService deptService;
 
-//    @Autowired
-//    private ISysPostService postService;
+    @Autowired
+    private ISysPostService postService;
 
     @Autowired
     private ISysPermissionService permissionService;
@@ -163,26 +162,26 @@ public class SysUserController extends BaseController {
         return ajax;
     }
 
-//    /**
-//     * 根据用户编号获取详细信息
-//     */
-//    @RequiresPermissions("system:user:query")
-//    @GetMapping(value = {"/", "/{userId}"})
-//    public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
-//        AjaxResult ajax = AjaxResult.success();
-//        if (StringUtils.isNotNull(userId)) {
-//            userService.checkUserDataScope(userId);
-//            SysUser sysUser = userService.selectUserById(userId);
-//            ajax.put(AjaxResult.DATA_TAG, sysUser);
-//            ajax.put("postIds", postService.selectPostListByUserId(userId));
-//            ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
-//        }
-//        List<SysRole> roles = roleService.selectRoleAll();
-//        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-//        ajax.put("posts", postService.selectPostAll());
-//        return ajax;
-//    }
-//
+    /**
+     * 根据用户编号获取详细信息
+     */
+    @RequiresPermissions("system:user:query")
+    @GetMapping(value = {"/", "/{userId}"})
+    public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
+        AjaxResult ajax = AjaxResult.success();
+        if (StringUtils.isNotNull(userId)) {
+            userService.checkUserDataScope(userId);
+            SysUser sysUser = userService.selectUserById(userId);
+            ajax.put(AjaxResult.DATA_TAG, sysUser);
+            ajax.put("postIds", postService.selectPostListByUserId(userId));
+            ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
+        }
+        List<SysRole> roles = roleService.selectRoleAll();
+        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        ajax.put("posts", postService.selectPostAll());
+        return ajax;
+    }
+
 //    /**
 //     * 新增用户
 //     */

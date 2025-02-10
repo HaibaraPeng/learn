@@ -1,5 +1,7 @@
 package com.ruoyi.cloud.modules.system.service;
 
+import com.ruoyi.cloud.api.system.domain.SysRole;
+
 import java.util.List;
 import java.util.Set;
 
@@ -8,14 +10,14 @@ import java.util.Set;
  * @Date 2025/01/12 17:07
  */
 public interface ISysRoleService {
-//    /**
-//     * 根据条件分页查询角色数据
-//     *
-//     * @param role 角色信息
-//     * @return 角色数据集合信息
-//     */
-//    public List<SysRole> selectRoleList(SysRole role);
-//
+    /**
+     * 根据条件分页查询角色数据
+     *
+     * @param role 角色信息
+     * @return 角色数据集合信息
+     */
+    public List<SysRole> selectRoleList(SysRole role);
+
 //    /**
 //     * 根据用户ID查询角色列表
 //     *
@@ -32,13 +34,13 @@ public interface ISysRoleService {
      */
     public Set<String> selectRolePermissionByUserId(Long userId);
 
-//    /**
-//     * 查询所有角色
-//     *
-//     * @return 角色列表
-//     */
-//    public List<SysRole> selectRoleAll();
-//
+    /**
+     * 查询所有角色
+     *
+     * @return 角色列表
+     */
+    public List<SysRole> selectRoleAll();
+
 //    /**
 //     * 根据用户ID获取角色选择框列表
 //     *
