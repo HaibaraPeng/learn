@@ -14,7 +14,9 @@ import org.example.authorization.handler.LoginSuccessHandler;
 import org.example.authorization.handler.LoginTargetAuthenticationEntryPoint;
 import org.example.authorization.sms.SmsCaptchaGrantAuthenticationConverter;
 import org.example.authorization.sms.SmsCaptchaGrantAuthenticationProvider;
+import org.example.constant.RedisConstants;
 import org.example.constant.SecurityConstants;
+import org.example.support.RedisOperator;
 import org.example.support.RedisSecurityContextRepository;
 import org.example.util.SecurityUtils;
 import org.springframework.context.annotation.Bean;
@@ -57,6 +59,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -94,6 +97,8 @@ public class AuthorizationConfig {
     private static final String CUSTOM_CONSENT_PAGE_URI = "/oauth2/consent";
 
     private final RedisSecurityContextRepository redisSecurityContextRepository;
+
+    private final RedisOperator<String> redisOperator;
 
     /**
      * 配置端点的过滤器链
@@ -408,15 +413,28 @@ public class AuthorizationConfig {
      * @return JWKSource
      */
     @Bean
+    @SneakyThrows
     public JWKSource<SecurityContext> jwkSource() {
-        KeyPair keyPair = generateRsaKey();
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-        RSAKey rsaKey = new RSAKey.Builder(publicKey)
-                .privateKey(privateKey)
-                .keyID(UUID.randomUUID().toString())
-                .build();
-        JWKSet jwkSet = new JWKSet(rsaKey);
+        // 先从redis获取
+        String jwkSetCache = redisOperator.get(RedisConstants.AUTHORIZATION_JWS_PREFIX_KEY);
+        if (ObjectUtils.isEmpty(jwkSetCache)) {
+            KeyPair keyPair = generateRsaKey();
+            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+            RSAKey rsaKey = new RSAKey.Builder(publicKey)
+                    .privateKey(privateKey)
+                    .keyID(UUID.randomUUID().toString())
+                    .build();
+            // 生成jws
+            JWKSet jwkSet = new JWKSet(rsaKey);
+            // 转为json字符串
+            String jwkSetString = jwkSet.toString(Boolean.FALSE);
+            // 存入redis
+            redisOperator.set(RedisConstants.AUTHORIZATION_JWS_PREFIX_KEY, jwkSetString);
+            return new ImmutableJWKSet<>(jwkSet);
+        }
+        // 解析存储的jws
+        JWKSet jwkSet = JWKSet.parse(jwkSetCache);
         return new ImmutableJWKSet<>(jwkSet);
     }
 
