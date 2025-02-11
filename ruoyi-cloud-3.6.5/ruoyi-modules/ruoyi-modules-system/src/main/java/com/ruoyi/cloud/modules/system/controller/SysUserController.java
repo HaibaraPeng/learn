@@ -11,6 +11,7 @@ import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.common.core.domain.R;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
+import com.ruoyi.cloud.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
 import com.ruoyi.cloud.common.core.web.page.TableDataInfo;
@@ -68,15 +69,15 @@ public class SysUserController extends BaseController {
         return getDataTable(list);
     }
 
-//    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
-//    @RequiresPermissions("system:user:export")
-//    @PostMapping("/export")
-//    public void export(HttpServletResponse response, SysUser user) {
-//        List<SysUser> list = userService.selectUserList(user);
-//        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-//        util.exportExcel(response, list, "用户数据");
-//    }
-//
+    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:user:export")
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, SysUser user) {
+        List<SysUser> list = userService.selectUserList(user);
+        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        util.exportExcel(response, list, "用户数据");
+    }
+
 //    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
 //    @RequiresPermissions("system:user:import")
 //    @PostMapping("/importData")
