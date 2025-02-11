@@ -13,7 +13,7 @@ const loginModel = ref({
   password: '',
   loginType: '',
   captchaId: '',
-  nonce: getQueryString('nonce')
+  nonceId: getQueryString('nonceId')
 })
 
 // 图形验证码的base64数据
@@ -29,7 +29,7 @@ const counterActive = ref(false)
 const getCaptcha = () => {
   axios({
     method: 'GET',
-    url: 'http://192.168.1.102:8080/getCaptcha'
+    url: 'http://localhost:8080/getCaptcha'
   }).then((r) => {
     let result = r.data
     if (result.success) {
@@ -49,9 +49,9 @@ const submitLogin = () => {
   loginModel.value.loginType = 'passwordLogin'
   axios({
     method: 'post',
-    url: 'http://192.168.1.102:8080/login',
+    url: 'http://localhost:8080/login',
     headers: {
-      nonce: loginModel.value.nonce,
+      nonceId: loginModel.value.nonceId,
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     data: loginModel.value
@@ -76,9 +76,9 @@ const submitSmsLogin = () => {
   loginModel.value.loginType = 'smsCaptcha'
   axios({
     method: 'post',
-    url: 'http://192.168.1.102:8080/login',
+    url: 'http://localhost:8080/login',
     headers: {
-      nonce: loginModel.value.nonce,
+      nonceId: loginModel.value.nonceId,
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     data: loginModel.value
@@ -114,7 +114,7 @@ const getSmsCaptcha = () => {
   }
   axios({
     method: 'get',
-    url: `http://192.168.1.102:8080/getSmsCaptcha?phone=${loginModel.value.username}`
+    url: `http://localhost:8080/getSmsCaptcha?phone=${loginModel.value.username}`
   }).then((r) => {
     let result = r.data
     if (result.success) {
