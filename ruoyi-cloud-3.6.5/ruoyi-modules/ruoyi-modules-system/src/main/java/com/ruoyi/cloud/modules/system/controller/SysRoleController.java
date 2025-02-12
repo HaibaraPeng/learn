@@ -2,6 +2,7 @@ package com.ruoyi.cloud.modules.system.controller;
 
 import com.ruoyi.cloud.api.system.domain.SysDept;
 import com.ruoyi.cloud.api.system.domain.SysRole;
+import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
@@ -12,6 +13,7 @@ import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.service.ISysDeptService;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
+import com.ruoyi.cloud.modules.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +31,8 @@ public class SysRoleController extends BaseController {
     @Autowired
     private ISysRoleService roleService;
 
-//    @Autowired
-//    private ISysUserService userService;
+    @Autowired
+    private ISysUserService userService;
 
     @Autowired
     private ISysDeptService deptService;
@@ -140,18 +142,18 @@ public class SysRoleController extends BaseController {
 //    public AjaxResult optionselect() {
 //        return success(roleService.selectRoleAll());
 //    }
-//
-//    /**
-//     * 查询已分配用户角色列表
-//     */
-//    @RequiresPermissions("system:role:list")
-//    @GetMapping("/authUser/allocatedList")
-//    public TableDataInfo allocatedList(SysUser user) {
-//        startPage();
-//        List<SysUser> list = userService.selectAllocatedList(user);
-//        return getDataTable(list);
-//    }
-//
+
+    /**
+     * 查询已分配用户角色列表
+     */
+    @RequiresPermissions("system:role:list")
+    @GetMapping("/authUser/allocatedList")
+    public TableDataInfo allocatedList(SysUser user) {
+        startPage();
+        List<SysUser> list = userService.selectAllocatedList(user);
+        return getDataTable(list);
+    }
+
 //    /**
 //     * 查询未分配用户角色列表
 //     */
