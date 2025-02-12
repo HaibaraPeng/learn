@@ -1,6 +1,7 @@
 package com.ruoyi.cloud.modules.system.service.impl;
 
 import com.ruoyi.cloud.api.system.domain.SysDept;
+import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.common.core.exception.ServiceException;
 import com.ruoyi.cloud.common.core.utils.SpringUtils;
@@ -9,6 +10,7 @@ import com.ruoyi.cloud.common.datascope.annotation.DataScope;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.vo.TreeSelect;
 import com.ruoyi.cloud.modules.system.mapper.SysDeptMapper;
+import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
 import com.ruoyi.cloud.modules.system.service.ISysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,8 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Autowired
     private SysDeptMapper deptMapper;
 
-//    @Autowired
-//    private SysRoleMapper roleMapper;
+    @Autowired
+    private SysRoleMapper roleMapper;
 
     /**
      * 查询部门管理数据
@@ -89,19 +91,18 @@ public class SysDeptServiceImpl implements ISysDeptService {
         return deptTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
-//    /**
-//     * 根据角色ID查询部门树信息
-//     *
-//     * @param roleId 角色ID
-//     * @return 选中部门列表
-//     */
-//    @Override
-//    public List<Long> selectDeptListByRoleId(Long roleId)
-//    {
-//        SysRole role = roleMapper.selectRoleById(roleId);
-//        return deptMapper.selectDeptListByRoleId(roleId, role.isDeptCheckStrictly());
-//    }
-//
+    /**
+     * 根据角色ID查询部门树信息
+     *
+     * @param roleId 角色ID
+     * @return 选中部门列表
+     */
+    @Override
+    public List<Long> selectDeptListByRoleId(Long roleId) {
+        SysRole role = roleMapper.selectRoleById(roleId);
+        return deptMapper.selectDeptListByRoleId(roleId, role.isDeptCheckStrictly());
+    }
+
 //    /**
 //     * 根据部门ID查询信息
 //     *

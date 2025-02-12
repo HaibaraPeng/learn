@@ -1,5 +1,6 @@
 package com.ruoyi.cloud.modules.system.controller;
 
+import com.ruoyi.cloud.api.system.domain.SysDept;
 import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
@@ -9,6 +10,7 @@ import com.ruoyi.cloud.common.log.annotation.Log;
 import com.ruoyi.cloud.common.log.enums.BusinessType;
 import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
+import com.ruoyi.cloud.modules.system.service.ISysDeptService;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -29,9 +31,9 @@ public class SysRoleController extends BaseController {
 
 //    @Autowired
 //    private ISysUserService userService;
-//
-//    @Autowired
-//    private ISysDeptService deptService;
+
+    @Autowired
+    private ISysDeptService deptService;
 
     @RequiresPermissions("system:role:list")
     @GetMapping("/list")
@@ -191,16 +193,16 @@ public class SysRoleController extends BaseController {
 //        roleService.checkRoleDataScope(roleId);
 //        return toAjax(roleService.insertAuthUsers(roleId, userIds));
 //    }
-//
-//    /**
-//     * 获取对应角色部门树列表
-//     */
-//    @RequiresPermissions("system:role:query")
-//    @GetMapping(value = "/deptTree/{roleId}")
-//    public AjaxResult deptTree(@PathVariable("roleId") Long roleId) {
-//        AjaxResult ajax = AjaxResult.success();
-//        ajax.put("checkedKeys", deptService.selectDeptListByRoleId(roleId));
-//        ajax.put("depts", deptService.selectDeptTreeList(new SysDept()));
-//        return ajax;
-//    }
+
+    /**
+     * 获取对应角色部门树列表
+     */
+    @RequiresPermissions("system:role:query")
+    @GetMapping(value = "/deptTree/{roleId}")
+    public AjaxResult deptTree(@PathVariable("roleId") Long roleId) {
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("checkedKeys", deptService.selectDeptListByRoleId(roleId));
+        ajax.put("depts", deptService.selectDeptTreeList(new SysDept()));
+        return ajax;
+    }
 }

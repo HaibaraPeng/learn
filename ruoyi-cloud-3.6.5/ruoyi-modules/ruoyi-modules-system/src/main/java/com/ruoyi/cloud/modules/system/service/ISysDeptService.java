@@ -42,14 +42,14 @@ public interface ISysDeptService {
      */
     public List<TreeSelect> buildDeptTreeSelect(List<SysDept> depts);
 
-//    /**
-//     * 根据角色ID查询部门树信息
-//     *
-//     * @param roleId 角色ID
-//     * @return 选中部门列表
-//     */
-//    public List<Long> selectDeptListByRoleId(Long roleId);
-//
+    /**
+     * 根据角色ID查询部门树信息
+     *
+     * @param roleId 角色ID
+     * @return 选中部门列表
+     */
+    public List<Long> selectDeptListByRoleId(Long roleId);
+
 //    /**
 //     * 根据部门ID查询信息
 //     *
