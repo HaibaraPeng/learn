@@ -1,6 +1,7 @@
 package com.ruoyi.cloud.modules.system.service;
 
 import com.ruoyi.cloud.api.system.domain.SysRole;
+import com.ruoyi.cloud.modules.system.domain.SysUserRole;
 
 import java.util.List;
 import java.util.Set;
@@ -143,14 +144,14 @@ public interface ISysRoleService {
      */
     public int deleteRoleByIds(Long[] roleIds);
 
-//    /**
-//     * 取消授权用户角色
-//     *
-//     * @param userRole 用户和角色关联信息
-//     * @return 结果
-//     */
-//    public int deleteAuthUser(SysUserRole userRole);
-//
+    /**
+     * 取消授权用户角色
+     *
+     * @param userRole 用户和角色关联信息
+     * @return 结果
+     */
+    public int deleteAuthUser(SysUserRole userRole);
+
 //    /**
 //     * 批量取消授权用户角色
 //     *

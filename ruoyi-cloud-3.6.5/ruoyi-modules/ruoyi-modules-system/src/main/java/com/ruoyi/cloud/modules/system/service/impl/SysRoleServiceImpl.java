@@ -10,6 +10,7 @@ import com.ruoyi.cloud.common.datascope.annotation.DataScope;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.SysRoleDept;
 import com.ruoyi.cloud.modules.system.domain.SysRoleMenu;
+import com.ruoyi.cloud.modules.system.domain.SysUserRole;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleDeptMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMenuMapper;
@@ -336,17 +337,17 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return roleMapper.deleteRoleByIds(roleIds);
     }
 
-//    /**
-//     * 取消授权用户角色
-//     *
-//     * @param userRole 用户和角色关联信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int deleteAuthUser(SysUserRole userRole) {
-//        return userRoleMapper.deleteUserRoleInfo(userRole);
-//    }
-//
+    /**
+     * 取消授权用户角色
+     *
+     * @param userRole 用户和角色关联信息
+     * @return 结果
+     */
+    @Override
+    public int deleteAuthUser(SysUserRole userRole) {
+        return userRoleMapper.deleteUserRoleInfo(userRole);
+    }
+
 //    /**
 //     * 批量取消授权用户角色
 //     *

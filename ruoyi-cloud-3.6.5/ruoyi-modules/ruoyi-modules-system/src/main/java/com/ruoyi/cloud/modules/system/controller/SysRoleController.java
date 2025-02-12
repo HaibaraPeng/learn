@@ -11,6 +11,7 @@ import com.ruoyi.cloud.common.log.annotation.Log;
 import com.ruoyi.cloud.common.log.enums.BusinessType;
 import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
+import com.ruoyi.cloud.modules.system.domain.SysUserRole;
 import com.ruoyi.cloud.modules.system.service.ISysDeptService;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
 import com.ruoyi.cloud.modules.system.service.ISysUserService;
@@ -164,17 +165,17 @@ public class SysRoleController extends BaseController {
 //        List<SysUser> list = userService.selectUnallocatedList(user);
 //        return getDataTable(list);
 //    }
-//
-//    /**
-//     * 取消授权用户
-//     */
-//    @RequiresPermissions("system:role:edit")
-//    @Log(title = "角色管理", businessType = BusinessType.GRANT)
-//    @PutMapping("/authUser/cancel")
-//    public AjaxResult cancelAuthUser(@RequestBody SysUserRole userRole) {
-//        return toAjax(roleService.deleteAuthUser(userRole));
-//    }
-//
+
+    /**
+     * 取消授权用户
+     */
+    @RequiresPermissions("system:role:edit")
+    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @PutMapping("/authUser/cancel")
+    public AjaxResult cancelAuthUser(@RequestBody SysUserRole userRole) {
+        return toAjax(roleService.deleteAuthUser(userRole));
+    }
+
 //    /**
 //     * 批量取消授权用户
 //     */
