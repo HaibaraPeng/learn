@@ -243,16 +243,16 @@ public class SysUserServiceImpl implements ISysUserService {
         return rows;
     }
 
-//    /**
-//     * 注册用户信息
-//     *
-//     * @param user 用户信息
-//     * @return 结果
-//     */
-//    @Override
-//    public boolean registerUser(SysUser user) {
-//        return userMapper.insertUser(user) > 0;
-//    }
+    /**
+     * 注册用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    public boolean registerUser(SysUser user) {
+        return userMapper.insertUser(user) > 0;
+    }
 
     /**
      * 修改保存用户信息

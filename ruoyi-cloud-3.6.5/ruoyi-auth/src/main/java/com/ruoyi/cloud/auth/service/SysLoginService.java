@@ -15,6 +15,7 @@ import com.ruoyi.cloud.common.core.utils.DateUtils;
 import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.utils.ip.IpUtils;
 import com.ruoyi.cloud.common.redis.service.RedisService;
+import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -105,33 +106,33 @@ public class SysLoginService {
         recordLogService.recordLogininfor(loginName, Constants.LOGOUT, "退出成功");
     }
 
-//    /**
-//     * 注册
-//     */
-//    public void register(String username, String password) {
-//        // 用户名或密码为空 错误
-//        if (StringUtils.isAnyBlank(username, password)) {
-//            throw new ServiceException("用户/密码必须填写");
-//        }
-//        if (username.length() < UserConstants.USERNAME_MIN_LENGTH
-//                || username.length() > UserConstants.USERNAME_MAX_LENGTH) {
-//            throw new ServiceException("账户长度必须在2到20个字符之间");
-//        }
-//        if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
-//                || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
-//            throw new ServiceException("密码长度必须在5到20个字符之间");
-//        }
-//
-//        // 注册用户信息
-//        SysUser sysUser = new SysUser();
-//        sysUser.setUserName(username);
-//        sysUser.setNickName(username);
-//        sysUser.setPassword(SecurityUtils.encryptPassword(password));
-//        R<?> registerResult = remoteUserService.registerUserInfo(sysUser, SecurityConstants.INNER);
-//
-//        if (R.FAIL == registerResult.getCode()) {
-//            throw new ServiceException(registerResult.getMsg());
-//        }
-//        recordLogService.recordLogininfor(username, Constants.REGISTER, "注册成功");
-//    }
+    /**
+     * 注册
+     */
+    public void register(String username, String password) {
+        // 用户名或密码为空 错误
+        if (StringUtils.isAnyBlank(username, password)) {
+            throw new ServiceException("用户/密码必须填写");
+        }
+        if (username.length() < UserConstants.USERNAME_MIN_LENGTH
+                || username.length() > UserConstants.USERNAME_MAX_LENGTH) {
+            throw new ServiceException("账户长度必须在2到20个字符之间");
+        }
+        if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
+                || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
+            throw new ServiceException("密码长度必须在5到20个字符之间");
+        }
+
+        // 注册用户信息
+        SysUser sysUser = new SysUser();
+        sysUser.setUserName(username);
+        sysUser.setNickName(username);
+        sysUser.setPassword(SecurityUtils.encryptPassword(password));
+        R<?> registerResult = remoteUserService.registerUserInfo(sysUser, SecurityConstants.INNER);
+
+        if (R.FAIL == registerResult.getCode()) {
+            throw new ServiceException(registerResult.getMsg());
+        }
+        recordLogService.recordLogininfor(username, Constants.REGISTER, "注册成功");
+    }
 }

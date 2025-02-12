@@ -2,6 +2,7 @@ package com.ruoyi.cloud.auth.controller;
 
 import com.ruoyi.cloud.api.system.model.LoginUser;
 import com.ruoyi.cloud.auth.form.LoginBody;
+import com.ruoyi.cloud.auth.form.RegisterBody;
 import com.ruoyi.cloud.auth.service.SysLoginService;
 import com.ruoyi.cloud.common.core.domain.R;
 import com.ruoyi.cloud.common.core.utils.JwtUtils;
@@ -60,11 +61,11 @@ public class TokenController {
 //        }
 //        return R.ok();
 //    }
-//
-//    @PostMapping("register")
-//    public R<?> register(@RequestBody RegisterBody registerBody) {
-//        // 用户注册
-//        sysLoginService.register(registerBody.getUsername(), registerBody.getPassword());
-//        return R.ok();
-//    }
+
+    @PostMapping("register")
+    public R<?> register(@RequestBody RegisterBody registerBody) {
+        // 用户注册
+        sysLoginService.register(registerBody.getUsername(), registerBody.getPassword());
+        return R.ok();
+    }
 }
