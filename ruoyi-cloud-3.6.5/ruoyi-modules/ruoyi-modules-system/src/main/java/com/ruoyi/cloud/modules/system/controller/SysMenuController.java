@@ -53,20 +53,19 @@ public class SysMenuController extends BaseController {
         return success(menuService.buildMenuTreeSelect(menus));
     }
 
-//    /**
-//     * 加载对应角色菜单列表树
-//     */
-//    @GetMapping(value = "/roleMenuTreeselect/{roleId}")
-//    public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId)
-//    {
-//        Long userId = SecurityUtils.getUserId();
-//        List<SysMenu> menus = menuService.selectMenuList(userId);
-//        AjaxResult ajax = AjaxResult.success();
-//        ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
-//        ajax.put("menus", menuService.buildMenuTreeSelect(menus));
-//        return ajax;
-//    }
-//
+    /**
+     * 加载对应角色菜单列表树
+     */
+    @GetMapping(value = "/roleMenuTreeselect/{roleId}")
+    public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId) {
+        Long userId = SecurityUtils.getUserId();
+        List<SysMenu> menus = menuService.selectMenuList(userId);
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
+        ajax.put("menus", menuService.buildMenuTreeSelect(menus));
+        return ajax;
+    }
+
 //    /**
 //     * 新增菜单
 //     */

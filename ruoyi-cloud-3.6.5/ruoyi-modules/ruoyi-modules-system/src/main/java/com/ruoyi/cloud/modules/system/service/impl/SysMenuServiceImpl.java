@@ -1,5 +1,6 @@
 package com.ruoyi.cloud.modules.system.service.impl;
 
+import com.ruoyi.cloud.api.system.domain.SysRole;
 import com.ruoyi.cloud.api.system.domain.SysUser;
 import com.ruoyi.cloud.common.core.constant.Constants;
 import com.ruoyi.cloud.common.core.constant.UserConstants;
@@ -10,6 +11,7 @@ import com.ruoyi.cloud.modules.system.domain.vo.MetaVo;
 import com.ruoyi.cloud.modules.system.domain.vo.RouterVo;
 import com.ruoyi.cloud.modules.system.domain.vo.TreeSelect;
 import com.ruoyi.cloud.modules.system.mapper.SysMenuMapper;
+import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
 import com.ruoyi.cloud.modules.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,23 +30,22 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Autowired
     private SysMenuMapper menuMapper;
 
-//    @Autowired
-//    private SysRoleMapper roleMapper;
-//
+    @Autowired
+    private SysRoleMapper roleMapper;
+
 //    @Autowired
 //    private SysRoleMenuMapper roleMenuMapper;
-//
-//    /**
-//     * 根据用户查询系统菜单列表
-//     *
-//     * @param userId 用户ID
-//     * @return 菜单列表
-//     */
-//    @Override
-//    public List<SysMenu> selectMenuList(Long userId)
-//    {
-//        return selectMenuList(new SysMenu(), userId);
-//    }
+
+    /**
+     * 根据用户查询系统菜单列表
+     *
+     * @param userId 用户ID
+     * @return 菜单列表
+     */
+    @Override
+    public List<SysMenu> selectMenuList(Long userId) {
+        return selectMenuList(new SysMenu(), userId);
+    }
 
     /**
      * 查询系统菜单列表
@@ -118,18 +119,17 @@ public class SysMenuServiceImpl implements ISysMenuService {
         return getChildPerms(menus, 0);
     }
 
-//    /**
-//     * 根据角色ID查询菜单树信息
-//     *
-//     * @param roleId 角色ID
-//     * @return 选中菜单列表
-//     */
-//    @Override
-//    public List<Long> selectMenuListByRoleId(Long roleId)
-//    {
-//        SysRole role = roleMapper.selectRoleById(roleId);
-//        return menuMapper.selectMenuListByRoleId(roleId, role.isMenuCheckStrictly());
-//    }
+    /**
+     * 根据角色ID查询菜单树信息
+     *
+     * @param roleId 角色ID
+     * @return 选中菜单列表
+     */
+    @Override
+    public List<Long> selectMenuListByRoleId(Long roleId) {
+        SysRole role = roleMapper.selectRoleById(roleId);
+        return menuMapper.selectMenuListByRoleId(roleId, role.isMenuCheckStrictly());
+    }
 
     /**
      * 构建前端路由所需要的菜单

@@ -12,13 +12,13 @@ import java.util.Set;
  * @Date 2025/01/12 17:10
  */
 public interface ISysMenuService {
-//    /**
-//     * 根据用户查询系统菜单列表
-//     *
-//     * @param userId 用户ID
-//     * @return 菜单列表
-//     */
-//    public List<SysMenu> selectMenuList(Long userId);
+    /**
+     * 根据用户查询系统菜单列表
+     *
+     * @param userId 用户ID
+     * @return 菜单列表
+     */
+    public List<SysMenu> selectMenuList(Long userId);
 
     /**
      * 根据用户查询系统菜单列表
@@ -53,13 +53,13 @@ public interface ISysMenuService {
      */
     public List<SysMenu> selectMenuTreeByUserId(Long userId);
 
-//    /**
-//     * 根据角色ID查询菜单树信息
-//     *
-//     * @param roleId 角色ID
-//     * @return 选中菜单列表
-//     */
-//    public List<Long> selectMenuListByRoleId(Long roleId);
+    /**
+     * 根据角色ID查询菜单树信息
+     *
+     * @param roleId 角色ID
+     * @return 选中菜单列表
+     */
+    public List<Long> selectMenuListByRoleId(Long roleId);
 
     /**
      * 构建前端路由所需要的菜单
