@@ -9,8 +9,10 @@ import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.datascope.annotation.DataScope;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.SysRoleMenu;
+import com.ruoyi.cloud.modules.system.mapper.SysRoleDeptMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMenuMapper;
+import com.ruoyi.cloud.modules.system.mapper.SysUserRoleMapper;
 import com.ruoyi.cloud.modules.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,11 +32,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Autowired
     private SysRoleMenuMapper roleMenuMapper;
 
-//    @Autowired
-//    private SysUserRoleMapper userRoleMapper;
-//
-//    @Autowired
-//    private SysRoleDeptMapper roleDeptMapper;
+    @Autowired
+    private SysUserRoleMapper userRoleMapper;
+
+    @Autowired
+    private SysRoleDeptMapper roleDeptMapper;
 
     /**
      * 根据条件分页查询角色数据
@@ -107,17 +109,17 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //    public List<Long> selectRoleListByUserId(Long userId) {
 //        return roleMapper.selectRoleListByUserId(userId);
 //    }
-//
-//    /**
-//     * 通过角色ID查询角色
-//     *
-//     * @param roleId 角色ID
-//     * @return 角色对象信息
-//     */
-//    @Override
-//    public SysRole selectRoleById(Long roleId) {
-//        return roleMapper.selectRoleById(roleId);
-//    }
+
+    /**
+     * 通过角色ID查询角色
+     *
+     * @param roleId 角色ID
+     * @return 角色对象信息
+     */
+    @Override
+    public SysRole selectRoleById(Long roleId) {
+        return roleMapper.selectRoleById(roleId);
+    }
 
     /**
      * 校验角色名称是否唯一
@@ -151,17 +153,17 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return UserConstants.UNIQUE;
     }
 
-//    /**
-//     * 校验角色是否允许操作
-//     *
-//     * @param role 角色信息
-//     */
-//    @Override
-//    public void checkRoleAllowed(SysRole role) {
-//        if (StringUtils.isNotNull(role.getRoleId()) && role.isAdmin()) {
-//            throw new ServiceException("不允许操作超级管理员角色");
-//        }
-//    }
+    /**
+     * 校验角色是否允许操作
+     *
+     * @param role 角色信息
+     */
+    @Override
+    public void checkRoleAllowed(SysRole role) {
+        if (StringUtils.isNotNull(role.getRoleId()) && role.isAdmin()) {
+            throw new ServiceException("不允许操作超级管理员角色");
+        }
+    }
 
     /**
      * 校验角色是否有数据权限
@@ -182,16 +184,16 @@ public class SysRoleServiceImpl implements ISysRoleService {
         }
     }
 
-//    /**
-//     * 通过角色ID查询角色使用数量
-//     *
-//     * @param roleId 角色ID
-//     * @return 结果
-//     */
-//    @Override
-//    public int countUserRoleByRoleId(Long roleId) {
-//        return userRoleMapper.countUserRoleByRoleId(roleId);
-//    }
+    /**
+     * 通过角色ID查询角色使用数量
+     *
+     * @param roleId 角色ID
+     * @return 结果
+     */
+    @Override
+    public int countUserRoleByRoleId(Long roleId) {
+        return userRoleMapper.countUserRoleByRoleId(roleId);
+    }
 
     /**
      * 新增保存角色信息
@@ -207,33 +209,33 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return insertRoleMenu(role);
     }
 
-//    /**
-//     * 修改保存角色信息
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int updateRole(SysRole role) {
-//        // 修改角色信息
-//        roleMapper.updateRole(role);
-//        // 删除角色与菜单关联
-//        roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
-//        return insertRoleMenu(role);
-//    }
-//
-//    /**
-//     * 修改角色状态
-//     *
-//     * @param role 角色信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int updateRoleStatus(SysRole role) {
-//        return roleMapper.updateRole(role);
-//    }
-//
+    /**
+     * 修改保存角色信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int updateRole(SysRole role) {
+        // 修改角色信息
+        roleMapper.updateRole(role);
+        // 删除角色与菜单关联
+        roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
+        return insertRoleMenu(role);
+    }
+
+    /**
+     * 修改角色状态
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    public int updateRoleStatus(SysRole role) {
+        return roleMapper.updateRole(role);
+    }
+
 //    /**
 //     * 修改数据权限信息
 //     *
@@ -308,31 +310,31 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //        roleDeptMapper.deleteRoleDeptByRoleId(roleId);
 //        return roleMapper.deleteRoleById(roleId);
 //    }
-//
-//    /**
-//     * 批量删除角色信息
-//     *
-//     * @param roleIds 需要删除的角色ID
-//     * @return 结果
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int deleteRoleByIds(Long[] roleIds) {
-//        for (Long roleId : roleIds) {
-//            checkRoleAllowed(new SysRole(roleId));
-//            checkRoleDataScope(roleId);
-//            SysRole role = selectRoleById(roleId);
-//            if (countUserRoleByRoleId(roleId) > 0) {
-//                throw new ServiceException(String.format("%1$s已分配,不能删除", role.getRoleName()));
-//            }
-//        }
-//        // 删除角色与菜单关联
-//        roleMenuMapper.deleteRoleMenu(roleIds);
-//        // 删除角色与部门关联
-//        roleDeptMapper.deleteRoleDept(roleIds);
-//        return roleMapper.deleteRoleByIds(roleIds);
-//    }
-//
+
+    /**
+     * 批量删除角色信息
+     *
+     * @param roleIds 需要删除的角色ID
+     * @return 结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteRoleByIds(Long[] roleIds) {
+        for (Long roleId : roleIds) {
+            checkRoleAllowed(new SysRole(roleId));
+            checkRoleDataScope(roleId);
+            SysRole role = selectRoleById(roleId);
+            if (countUserRoleByRoleId(roleId) > 0) {
+                throw new ServiceException(String.format("%1$s已分配,不能删除", role.getRoleName()));
+            }
+        }
+        // 删除角色与菜单关联
+        roleMenuMapper.deleteRoleMenu(roleIds);
+        // 删除角色与部门关联
+        roleDeptMapper.deleteRoleDept(roleIds);
+        return roleMapper.deleteRoleByIds(roleIds);
+    }
+
 //    /**
 //     * 取消授权用户角色
 //     *

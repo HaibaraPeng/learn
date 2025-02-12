@@ -1,6 +1,7 @@
 package com.ruoyi.cloud.modules.system.controller;
 
 import com.ruoyi.cloud.api.system.domain.SysRole;
+import com.ruoyi.cloud.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
 import com.ruoyi.cloud.common.core.web.page.TableDataInfo;
@@ -40,15 +41,15 @@ public class SysRoleController extends BaseController {
         return getDataTable(list);
     }
 
-//    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
-//    @RequiresPermissions("system:role:export")
-//    @PostMapping("/export")
-//    public void export(HttpServletResponse response, SysRole role) {
-//        List<SysRole> list = roleService.selectRoleList(role);
-//        ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
-//        util.exportExcel(response, list, "角色数据");
-//    }
-//
+    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:role:export")
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, SysRole role) {
+        List<SysRole> list = roleService.selectRoleList(role);
+        ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
+        util.exportExcel(response, list, "角色数据");
+    }
+
 //    /**
 //     * 根据角色编号获取详细信息
 //     */
@@ -76,24 +77,24 @@ public class SysRoleController extends BaseController {
 
     }
 
-//    /**
-//     * 修改保存角色
-//     */
-//    @RequiresPermissions("system:role:edit")
-//    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
-//    @PutMapping
-//    public AjaxResult edit(@Validated @RequestBody SysRole role) {
-//        roleService.checkRoleAllowed(role);
-//        roleService.checkRoleDataScope(role.getRoleId());
-//        if (!roleService.checkRoleNameUnique(role)) {
-//            return error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
-//        } else if (!roleService.checkRoleKeyUnique(role)) {
-//            return error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
-//        }
-//        role.setUpdateBy(SecurityUtils.getUsername());
-//        return toAjax(roleService.updateRole(role));
-//    }
-//
+    /**
+     * 修改保存角色
+     */
+    @RequiresPermissions("system:role:edit")
+    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@Validated @RequestBody SysRole role) {
+        roleService.checkRoleAllowed(role);
+        roleService.checkRoleDataScope(role.getRoleId());
+        if (!roleService.checkRoleNameUnique(role)) {
+            return error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
+        } else if (!roleService.checkRoleKeyUnique(role)) {
+            return error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
+        }
+        role.setUpdateBy(SecurityUtils.getUsername());
+        return toAjax(roleService.updateRole(role));
+    }
+
 //    /**
 //     * 修改保存数据权限
 //     */
@@ -105,30 +106,30 @@ public class SysRoleController extends BaseController {
 //        roleService.checkRoleDataScope(role.getRoleId());
 //        return toAjax(roleService.authDataScope(role));
 //    }
-//
-//    /**
-//     * 状态修改
-//     */
-//    @RequiresPermissions("system:role:edit")
-//    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
-//    @PutMapping("/changeStatus")
-//    public AjaxResult changeStatus(@RequestBody SysRole role) {
-//        roleService.checkRoleAllowed(role);
-//        roleService.checkRoleDataScope(role.getRoleId());
-//        role.setUpdateBy(SecurityUtils.getUsername());
-//        return toAjax(roleService.updateRoleStatus(role));
-//    }
-//
-//    /**
-//     * 删除角色
-//     */
-//    @RequiresPermissions("system:role:remove")
-//    @Log(title = "角色管理", businessType = BusinessType.DELETE)
-//    @DeleteMapping("/{roleIds}")
-//    public AjaxResult remove(@PathVariable Long[] roleIds) {
-//        return toAjax(roleService.deleteRoleByIds(roleIds));
-//    }
-//
+
+    /**
+     * 状态修改
+     */
+    @RequiresPermissions("system:role:edit")
+    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody SysRole role) {
+        roleService.checkRoleAllowed(role);
+        roleService.checkRoleDataScope(role.getRoleId());
+        role.setUpdateBy(SecurityUtils.getUsername());
+        return toAjax(roleService.updateRoleStatus(role));
+    }
+
+    /**
+     * 删除角色
+     */
+    @RequiresPermissions("system:role:remove")
+    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{roleIds}")
+    public AjaxResult remove(@PathVariable Long[] roleIds) {
+        return toAjax(roleService.deleteRoleByIds(roleIds));
+    }
+
 //    /**
 //     * 获取角色选择框列表
 //     */
