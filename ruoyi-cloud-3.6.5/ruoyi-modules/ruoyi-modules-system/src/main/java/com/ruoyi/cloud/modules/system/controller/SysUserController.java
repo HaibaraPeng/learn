@@ -88,12 +88,12 @@ public class SysUserController extends BaseController {
 //        String message = userService.importUser(userList, updateSupport, operName);
 //        return success(message);
 //    }
-//
-//    @PostMapping("/importTemplate")
-//    public void importTemplate(HttpServletResponse response) throws IOException {
-//        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-//        util.importTemplateExcel(response, "用户数据");
-//    }
+
+    @PostMapping("/importTemplate")
+    public void importTemplate(HttpServletResponse response) throws IOException {
+        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        util.importTemplateExcel(response, "用户数据");
+    }
 
     /**
      * 获取当前用户信息
