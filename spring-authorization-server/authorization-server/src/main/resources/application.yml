@@ -34,6 +34,21 @@ spring:
             provider: github
             client-id:
             client-secret:
+          wechat:
+            # 微信登录配置
+            provider: wechat
+            # 客户端名字
+            client-name: Sign in with WeChat
+            # 认证方式
+            authorization-grant-type: authorization_code
+            # 客户端id，使用自己的微信的appid
+            client-id:
+            # 客户端秘钥，使用自己的微信的app secret
+            client-secret:
+            # 回调地址，设置为认证服务的回调地址，由认证服务用code换取token
+            redirect-uri: http://192.168.15.180:8080/login/oauth2/code/wechat
+            # 申请scope列表
+            scope: snsapi_userinfo
         # oauth登录提供商
         provider:
           # gitee的OAuth2端点配置
@@ -46,6 +61,18 @@ spring:
             user-info-uri: https://gitee.com/api/v5/user
             # 发起授权申请的地址
             authorization-uri: https://gitee.com/oauth/authorize
+          # 微信的OAuth2端点配置
+          wechat:
+            # 设置用户信息响应体中账号的字段
+            user-name-attribute: nickname
+            # 获取token的地址
+            token-uri: https://api.weixin.qq.com/sns/oauth2/access_token
+            # 获取用户信息的地址
+            user-info-uri: https://api.weixin.qq.com/sns/userinfo
+            # 发起授权申请的地址
+            authorization-uri: https://open.weixin.qq.com/connect/oauth2/authorize
+          github:
+            user-name-attribute: login
 #logging:
 #  level:
 #    root: DEBUG
