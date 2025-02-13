@@ -5,6 +5,8 @@ import cn.hutool.captcha.ShearCaptcha;
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.example.model.response.Oauth2UserinfoResult;
+import org.example.service.IOauth2BasicUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -36,6 +38,8 @@ public class AuthorizationController {
     private final RegisteredClientRepository registeredClientRepository;
 
     private final OAuth2AuthorizationConsentService authorizationConsentService;
+
+    private final IOauth2BasicUserService basicUserService;
 
 
     @GetMapping("/login")
@@ -157,11 +161,8 @@ public class AuthorizationController {
 
     @ResponseBody
     @GetMapping("/user")
-    public Map<String, Object> user(Principal principal) {
-        if (!(principal instanceof JwtAuthenticationToken token)) {
-            return Collections.emptyMap();
-        }
-        return token.getToken().getClaims();
+    public Oauth2UserinfoResult user(Principal principal) {
+        return basicUserService.getLoginUserInfo();
     }
 
 

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.example.authorization.DeviceClientAuthenticationConverter;
 import org.example.authorization.DeviceClientAuthenticationProvider;
+import org.example.authorization.federation.FederatedIdentityIdTokenCustomizer;
 import org.example.authorization.handler.LoginFailureHandler;
 import org.example.authorization.handler.LoginSuccessHandler;
 import org.example.authorization.handler.LoginTargetAuthenticationEntryPoint;
@@ -58,6 +59,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.UrlUtils;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.cors.CorsConfiguration;
@@ -92,7 +94,8 @@ public class AuthorizationConfig {
     /**
      * 登录地址，前后端分离就填写完整的url路径，不分离填写相对路径
      */
-    private final String LOGIN_URL = "http://localhost:5173";
+    private final String LOGIN_URL = "/login";
+//    private final String LOGIN_URL = "http://localhost:5173";
 
     private static final String CUSTOM_CONSENT_PAGE_URI = "/oauth2/consent";
 
@@ -194,15 +197,18 @@ public class AuthorizationConfig {
         http.cors(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((authorize) -> authorize
                         // 放行静态资源
-                        .requestMatchers("/assets/**", "/webjars/**", "/login", "/getCaptcha", "/getSmsCaptcha").permitAll()
+                        .requestMatchers("/assets/**", "/webjars/**", "/login", "/getCaptcha", "/getSmsCaptcha", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 // 指定登录页面
-                .formLogin(formLogin ->
-                        formLogin.loginPage("/login")
-                                // 登录成功和失败改为写回json，不重定向了
-                                .successHandler(new LoginSuccessHandler())
-                                .failureHandler(new LoginFailureHandler())
+                .formLogin(formLogin -> {
+                            formLogin.loginPage("/login");
+                            if (UrlUtils.isAbsoluteUrl(LOGIN_URL)) {
+                                // 绝对路径代表是前后端分离，登录成功和失败改为写回json，不重定向了
+                                formLogin.successHandler(new LoginSuccessHandler());
+                                formLogin.failureHandler(new LoginFailureHandler());
+                            }
+                        }
                 );
         // 添加BearerTokenAuthenticationFilter，将认证服务当做一个资源服务，解析请求头中的token
         http.oauth2ResourceServer((resourceServer) -> resourceServer
@@ -210,14 +216,22 @@ public class AuthorizationConfig {
                 .accessDeniedHandler(SecurityUtils::exceptionHandler)
                 .authenticationEntryPoint(SecurityUtils::exceptionHandler)
         );
-        http
-                // 当未登录时访问认证端点时重定向至login页面
-                .exceptionHandling((exceptions) -> exceptions
-                        .defaultAuthenticationEntryPointFor(
-                                new LoginTargetAuthenticationEntryPoint(LOGIN_URL),
-                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
-                        )
-                );
+        // 兼容前后端分离与不分离配置
+        if (UrlUtils.isAbsoluteUrl(LOGIN_URL)) {
+            http
+                    // 当未登录时访问认证端点时重定向至login页面
+                    .exceptionHandling((exceptions) -> exceptions
+                            .defaultAuthenticationEntryPointFor(
+                                    new LoginTargetAuthenticationEntryPoint(LOGIN_URL),
+                                    new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                            )
+                    );
+        }
+        // 联合登录配置
+        http.oauth2Login(oauth2Login ->
+                oauth2Login
+                        .loginPage(LOGIN_URL)
+        );
 
         // 使用redis存储、读取登录的认证信息
         http.securityContext(context -> context.securityContextRepository(redisSecurityContextRepository));
@@ -232,30 +246,7 @@ public class AuthorizationConfig {
      */
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> oAuth2TokenCustomizer() {
-        return context -> {
-            // 检查登录用户信息是不是UserDetails，排除掉没有用户参与的流程
-            if (context.getPrincipal().getPrincipal() instanceof UserDetails user) {
-                // 获取申请的scopes
-                Set<String> scopes = context.getAuthorizedScopes();
-                // 获取用户的权限
-                Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-                // 提取权限并转为字符串
-                Set<String> authoritySet = Optional.ofNullable(authorities).orElse(Collections.emptyList()).stream()
-                        // 获取权限字符串
-                        .map(GrantedAuthority::getAuthority)
-                        // 去重
-                        .collect(Collectors.toSet());
-
-                // 合并scope与用户信息
-                authoritySet.addAll(scopes);
-
-                JwtClaimsSet.Builder claims = context.getClaims();
-                // 将权限信息放入jwt的claims中（也可以生成一个以指定字符分割的字符串放入）
-                claims.claim(SecurityConstants.AUTHORITIES_KEY, authoritySet);
-                // 放入其它自定内容
-                // 角色、头像...
-            }
-        };
+        return new FederatedIdentityIdTokenCustomizer();
     }
 
     /**
