@@ -17,6 +17,7 @@
         <module>pig-common-feign</module>
         <module>pig-common-security</module>
         <module>pig-common-mybatis</module>
+        <module>pig-common-swagger</module>
     </modules>
 
     <properties>

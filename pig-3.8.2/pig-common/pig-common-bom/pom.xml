@@ -60,6 +60,11 @@
             </dependency>
             <dependency>
                 <groupId>com.pig.cloud</groupId>
+                <artifactId>pig-common-swagger</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pig.cloud</groupId>
                 <artifactId>pig-upms-api</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -84,6 +89,11 @@
                 <groupId>com.pig4cloud.plugin</groupId>
                 <artifactId>captcha-core</artifactId>
                 <version>${captcha.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
