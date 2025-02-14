@@ -55,6 +55,11 @@
             </dependency>
             <dependency>
                 <groupId>com.pig.cloud</groupId>
+                <artifactId>pig-common-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pig.cloud</groupId>
                 <artifactId>pig-upms-api</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -66,11 +71,24 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--orm 相关-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- 调用验证码核心模块 -->
             <dependency>
                 <groupId>com.pig4cloud.plugin</groupId>
                 <artifactId>captcha-core</artifactId>
                 <version>${captcha.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger.core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

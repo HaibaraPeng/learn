@@ -16,6 +16,7 @@
         <module>pig-common-core</module>
         <module>pig-common-feign</module>
         <module>pig-common-security</module>
+        <module>pig-common-mybatis</module>
     </modules>
 
     <properties>
