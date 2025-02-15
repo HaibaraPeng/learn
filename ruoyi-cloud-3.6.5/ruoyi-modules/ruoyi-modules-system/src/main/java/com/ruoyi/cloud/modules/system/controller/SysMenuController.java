@@ -1,7 +1,11 @@
 package com.ruoyi.cloud.modules.system.controller;
 
+import com.ruoyi.cloud.common.core.constant.UserConstants;
+import com.ruoyi.cloud.common.core.utils.StringUtils;
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
+import com.ruoyi.cloud.common.log.annotation.Log;
+import com.ruoyi.cloud.common.log.enums.BusinessType;
 import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.SysMenu;
@@ -66,68 +70,55 @@ public class SysMenuController extends BaseController {
         return ajax;
     }
 
-//    /**
-//     * 新增菜单
-//     */
-//    @RequiresPermissions("system:menu:add")
-//    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
-//    @PostMapping
-//    public AjaxResult add(@Validated @RequestBody SysMenu menu)
-//    {
-//        if (!menuService.checkMenuNameUnique(menu))
-//        {
-//            return error("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-//        }
-//        else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath()))
-//        {
-//            return error("新增菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
-//        }
-//        menu.setCreateBy(SecurityUtils.getUsername());
-//        return toAjax(menuService.insertMenu(menu));
-//    }
-//
-//    /**
-//     * 修改菜单
-//     */
-//    @RequiresPermissions("system:menu:edit")
-//    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
-//    @PutMapping
-//    public AjaxResult edit(@Validated @RequestBody SysMenu menu)
-//    {
-//        if (!menuService.checkMenuNameUnique(menu))
-//        {
-//            return error("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-//        }
-//        else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath()))
-//        {
-//            return error("修改菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
-//        }
-//        else if (menu.getMenuId().equals(menu.getParentId()))
-//        {
-//            return error("修改菜单'" + menu.getMenuName() + "'失败，上级菜单不能选择自己");
-//        }
-//        menu.setUpdateBy(SecurityUtils.getUsername());
-//        return toAjax(menuService.updateMenu(menu));
-//    }
-//
-//    /**
-//     * 删除菜单
-//     */
-//    @RequiresPermissions("system:menu:remove")
-//    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
-//    @DeleteMapping("/{menuId}")
-//    public AjaxResult remove(@PathVariable("menuId") Long menuId)
-//    {
-//        if (menuService.hasChildByMenuId(menuId))
-//        {
-//            return warn("存在子菜单,不允许删除");
-//        }
-//        if (menuService.checkMenuExistRole(menuId))
-//        {
-//            return warn("菜单已分配,不允许删除");
-//        }
-//        return toAjax(menuService.deleteMenuById(menuId));
-//    }
+    /**
+     * 新增菜单
+     */
+    @RequiresPermissions("system:menu:add")
+    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@Validated @RequestBody SysMenu menu) {
+        if (!menuService.checkMenuNameUnique(menu)) {
+            return error("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
+        } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
+            return error("新增菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
+        }
+        menu.setCreateBy(SecurityUtils.getUsername());
+        return toAjax(menuService.insertMenu(menu));
+    }
+
+    /**
+     * 修改菜单
+     */
+    @RequiresPermissions("system:menu:edit")
+    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@Validated @RequestBody SysMenu menu) {
+        if (!menuService.checkMenuNameUnique(menu)) {
+            return error("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
+        } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
+            return error("修改菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
+        } else if (menu.getMenuId().equals(menu.getParentId())) {
+            return error("修改菜单'" + menu.getMenuName() + "'失败，上级菜单不能选择自己");
+        }
+        menu.setUpdateBy(SecurityUtils.getUsername());
+        return toAjax(menuService.updateMenu(menu));
+    }
+
+    /**
+     * 删除菜单
+     */
+    @RequiresPermissions("system:menu:remove")
+    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{menuId}")
+    public AjaxResult remove(@PathVariable("menuId") Long menuId) {
+        if (menuService.hasChildByMenuId(menuId)) {
+            return warn("存在子菜单,不允许删除");
+        }
+        if (menuService.checkMenuExistRole(menuId)) {
+            return warn("菜单已分配,不允许删除");
+        }
+        return toAjax(menuService.deleteMenuById(menuId));
+    }
 
     /**
      * 获取路由信息

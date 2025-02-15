@@ -12,6 +12,7 @@ import com.ruoyi.cloud.modules.system.domain.vo.RouterVo;
 import com.ruoyi.cloud.modules.system.domain.vo.TreeSelect;
 import com.ruoyi.cloud.modules.system.mapper.SysMenuMapper;
 import com.ruoyi.cloud.modules.system.mapper.SysRoleMapper;
+import com.ruoyi.cloud.modules.system.mapper.SysRoleMenuMapper;
 import com.ruoyi.cloud.modules.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Autowired
     private SysRoleMapper roleMapper;
 
-//    @Autowired
-//    private SysRoleMenuMapper roleMenuMapper;
+    @Autowired
+    private SysRoleMenuMapper roleMenuMapper;
 
     /**
      * 根据用户查询系统菜单列表
@@ -229,86 +230,79 @@ public class SysMenuServiceImpl implements ISysMenuService {
 //    {
 //        return menuMapper.selectMenuById(menuId);
 //    }
-//
-//    /**
-//     * 是否存在菜单子节点
-//     *
-//     * @param menuId 菜单ID
-//     * @return 结果
-//     */
-//    @Override
-//    public boolean hasChildByMenuId(Long menuId)
-//    {
-//        int result = menuMapper.hasChildByMenuId(menuId);
-//        return result > 0;
-//    }
-//
-//    /**
-//     * 查询菜单使用数量
-//     *
-//     * @param menuId 菜单ID
-//     * @return 结果
-//     */
-//    @Override
-//    public boolean checkMenuExistRole(Long menuId)
-//    {
-//        int result = roleMenuMapper.checkMenuExistRole(menuId);
-//        return result > 0;
-//    }
-//
-//    /**
-//     * 新增保存菜单信息
-//     *
-//     * @param menu 菜单信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int insertMenu(SysMenu menu)
-//    {
-//        return menuMapper.insertMenu(menu);
-//    }
-//
-//    /**
-//     * 修改保存菜单信息
-//     *
-//     * @param menu 菜单信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int updateMenu(SysMenu menu)
-//    {
-//        return menuMapper.updateMenu(menu);
-//    }
-//
-//    /**
-//     * 删除菜单管理信息
-//     *
-//     * @param menuId 菜单ID
-//     * @return 结果
-//     */
-//    @Override
-//    public int deleteMenuById(Long menuId)
-//    {
-//        return menuMapper.deleteMenuById(menuId);
-//    }
-//
-//    /**
-//     * 校验菜单名称是否唯一
-//     *
-//     * @param menu 菜单信息
-//     * @return 结果
-//     */
-//    @Override
-//    public boolean checkMenuNameUnique(SysMenu menu)
-//    {
-//        Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
-//        SysMenu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-//        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue())
-//        {
-//            return UserConstants.NOT_UNIQUE;
-//        }
-//        return UserConstants.UNIQUE;
-//    }
+
+    /**
+     * 是否存在菜单子节点
+     *
+     * @param menuId 菜单ID
+     * @return 结果
+     */
+    @Override
+    public boolean hasChildByMenuId(Long menuId) {
+        int result = menuMapper.hasChildByMenuId(menuId);
+        return result > 0;
+    }
+
+    /**
+     * 查询菜单使用数量
+     *
+     * @param menuId 菜单ID
+     * @return 结果
+     */
+    @Override
+    public boolean checkMenuExistRole(Long menuId) {
+        int result = roleMenuMapper.checkMenuExistRole(menuId);
+        return result > 0;
+    }
+
+    /**
+     * 新增保存菜单信息
+     *
+     * @param menu 菜单信息
+     * @return 结果
+     */
+    @Override
+    public int insertMenu(SysMenu menu) {
+        return menuMapper.insertMenu(menu);
+    }
+
+    /**
+     * 修改保存菜单信息
+     *
+     * @param menu 菜单信息
+     * @return 结果
+     */
+    @Override
+    public int updateMenu(SysMenu menu) {
+        return menuMapper.updateMenu(menu);
+    }
+
+    /**
+     * 删除菜单管理信息
+     *
+     * @param menuId 菜单ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMenuById(Long menuId) {
+        return menuMapper.deleteMenuById(menuId);
+    }
+
+    /**
+     * 校验菜单名称是否唯一
+     *
+     * @param menu 菜单信息
+     * @return 结果
+     */
+    @Override
+    public boolean checkMenuNameUnique(SysMenu menu) {
+        Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
+        SysMenu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
+        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
+    }
 
     /**
      * 获取路由名称
