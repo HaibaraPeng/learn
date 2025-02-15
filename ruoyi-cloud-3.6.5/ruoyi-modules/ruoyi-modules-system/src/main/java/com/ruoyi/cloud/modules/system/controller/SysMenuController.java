@@ -2,6 +2,7 @@ package com.ruoyi.cloud.modules.system.controller;
 
 import com.ruoyi.cloud.common.core.web.controller.BaseController;
 import com.ruoyi.cloud.common.core.web.domain.AjaxResult;
+import com.ruoyi.cloud.common.security.annotation.RequiresPermissions;
 import com.ruoyi.cloud.common.security.utils.SecurityUtils;
 import com.ruoyi.cloud.modules.system.domain.SysMenu;
 import com.ruoyi.cloud.modules.system.service.ISysMenuService;
@@ -21,18 +22,17 @@ public class SysMenuController extends BaseController {
     @Autowired
     private ISysMenuService menuService;
 
-//    /**
-//     * 获取菜单列表
-//     */
-//    @RequiresPermissions("system:menu:list")
-//    @GetMapping("/list")
-//    public AjaxResult list(SysMenu menu)
-//    {
-//        Long userId = SecurityUtils.getUserId();
-//        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
-//        return success(menus);
-//    }
-//
+    /**
+     * 获取菜单列表
+     */
+    @RequiresPermissions("system:menu:list")
+    @GetMapping("/list")
+    public AjaxResult list(SysMenu menu) {
+        Long userId = SecurityUtils.getUserId();
+        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
+        return success(menus);
+    }
+
 //    /**
 //     * 根据菜单编号获取详细信息
 //     */
