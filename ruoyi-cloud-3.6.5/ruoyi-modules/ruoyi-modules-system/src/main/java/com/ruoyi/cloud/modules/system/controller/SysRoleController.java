@@ -185,17 +185,17 @@ public class SysRoleController extends BaseController {
 //    public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds) {
 //        return toAjax(roleService.deleteAuthUsers(roleId, userIds));
 //    }
-//
-//    /**
-//     * 批量选择用户授权
-//     */
-//    @RequiresPermissions("system:role:edit")
-//    @Log(title = "角色管理", businessType = BusinessType.GRANT)
-//    @PutMapping("/authUser/selectAll")
-//    public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
-//        roleService.checkRoleDataScope(roleId);
-//        return toAjax(roleService.insertAuthUsers(roleId, userIds));
-//    }
+
+    /**
+     * 批量选择用户授权
+     */
+    @RequiresPermissions("system:role:edit")
+    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @PutMapping("/authUser/selectAll")
+    public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
+        roleService.checkRoleDataScope(roleId);
+        return toAjax(roleService.insertAuthUsers(roleId, userIds));
+    }
 
     /**
      * 获取对应角色部门树列表

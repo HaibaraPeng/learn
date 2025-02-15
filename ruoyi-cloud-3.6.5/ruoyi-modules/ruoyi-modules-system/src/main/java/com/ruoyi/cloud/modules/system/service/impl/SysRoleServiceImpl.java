@@ -359,24 +359,24 @@ public class SysRoleServiceImpl implements ISysRoleService {
 //    public int deleteAuthUsers(Long roleId, Long[] userIds) {
 //        return userRoleMapper.deleteUserRoleInfos(roleId, userIds);
 //    }
-//
-//    /**
-//     * 批量选择授权用户角色
-//     *
-//     * @param roleId  角色ID
-//     * @param userIds 需要授权的用户数据ID
-//     * @return 结果
-//     */
-//    @Override
-//    public int insertAuthUsers(Long roleId, Long[] userIds) {
-//        // 新增用户与角色管理
-//        List<SysUserRole> list = new ArrayList<SysUserRole>();
-//        for (Long userId : userIds) {
-//            SysUserRole ur = new SysUserRole();
-//            ur.setUserId(userId);
-//            ur.setRoleId(roleId);
-//            list.add(ur);
-//        }
-//        return userRoleMapper.batchUserRole(list);
-//    }
+
+    /**
+     * 批量选择授权用户角色
+     *
+     * @param roleId  角色ID
+     * @param userIds 需要授权的用户数据ID
+     * @return 结果
+     */
+    @Override
+    public int insertAuthUsers(Long roleId, Long[] userIds) {
+        // 新增用户与角色管理
+        List<SysUserRole> list = new ArrayList<SysUserRole>();
+        for (Long userId : userIds) {
+            SysUserRole ur = new SysUserRole();
+            ur.setUserId(userId);
+            ur.setRoleId(roleId);
+            list.add(ur);
+        }
+        return userRoleMapper.batchUserRole(list);
+    }
 }
