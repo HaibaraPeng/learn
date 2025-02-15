@@ -155,16 +155,16 @@ public class SysRoleController extends BaseController {
         return getDataTable(list);
     }
 
-//    /**
-//     * 查询未分配用户角色列表
-//     */
-//    @RequiresPermissions("system:role:list")
-//    @GetMapping("/authUser/unallocatedList")
-//    public TableDataInfo unallocatedList(SysUser user) {
-//        startPage();
-//        List<SysUser> list = userService.selectUnallocatedList(user);
-//        return getDataTable(list);
-//    }
+    /**
+     * 查询未分配用户角色列表
+     */
+    @RequiresPermissions("system:role:list")
+    @GetMapping("/authUser/unallocatedList")
+    public TableDataInfo unallocatedList(SysUser user) {
+        startPage();
+        List<SysUser> list = userService.selectUnallocatedList(user);
+        return getDataTable(list);
+    }
 
     /**
      * 取消授权用户

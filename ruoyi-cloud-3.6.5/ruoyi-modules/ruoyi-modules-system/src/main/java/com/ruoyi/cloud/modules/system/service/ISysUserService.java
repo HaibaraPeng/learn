@@ -25,13 +25,13 @@ public interface ISysUserService {
      */
     public List<SysUser> selectAllocatedList(SysUser user);
 
-//    /**
-//     * 根据条件分页查询未分配用户角色列表
-//     *
-//     * @param user 用户信息
-//     * @return 用户信息集合信息
-//     */
-//    public List<SysUser> selectUnallocatedList(SysUser user);
+    /**
+     * 根据条件分页查询未分配用户角色列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectUnallocatedList(SysUser user);
 
     /**
      * 通过用户名查询用户
