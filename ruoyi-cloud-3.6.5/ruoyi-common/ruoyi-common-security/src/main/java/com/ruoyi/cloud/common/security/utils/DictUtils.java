@@ -39,24 +39,22 @@ public class DictUtils {
         return null;
     }
 
-//    /**
-//     * 删除指定字典缓存
-//     *
-//     * @param key 字典键
-//     */
-//    public static void removeDictCache(String key)
-//    {
-//        SpringUtils.getBean(RedisService.class).deleteObject(getCacheKey(key));
-//    }
-//
-//    /**
-//     * 清空字典缓存
-//     */
-//    public static void clearDictCache()
-//    {
-//        Collection<String> keys = SpringUtils.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY + "*");
-//        SpringUtils.getBean(RedisService.class).deleteObject(keys);
-//    }
+    /**
+     * 删除指定字典缓存
+     *
+     * @param key 字典键
+     */
+    public static void removeDictCache(String key) {
+        SpringUtils.getBean(RedisService.class).deleteObject(getCacheKey(key));
+    }
+
+    /**
+     * 清空字典缓存
+     */
+    public static void clearDictCache() {
+        Collection<String> keys = SpringUtils.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY + "*");
+        SpringUtils.getBean(RedisService.class).deleteObject(keys);
+    }
 
     /**
      * 设置cache key
