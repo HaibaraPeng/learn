@@ -44,14 +44,14 @@ public class SysDictTypeController extends BaseController {
         util.exportExcel(response, list, "字典类型");
     }
 
-//    /**
-//     * 查询字典类型详细
-//     */
-//    @RequiresPermissions("system:dict:query")
-//    @GetMapping(value = "/{dictId}")
-//    public AjaxResult getInfo(@PathVariable Long dictId) {
-//        return success(dictTypeService.selectDictTypeById(dictId));
-//    }
+    /**
+     * 查询字典类型详细
+     */
+    @RequiresPermissions("system:dict:query")
+    @GetMapping(value = "/{dictId}")
+    public AjaxResult getInfo(@PathVariable Long dictId) {
+        return success(dictTypeService.selectDictTypeById(dictId));
+    }
 
     /**
      * 新增字典类型
