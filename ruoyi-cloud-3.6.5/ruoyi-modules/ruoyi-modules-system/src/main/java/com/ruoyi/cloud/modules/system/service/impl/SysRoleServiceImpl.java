@@ -348,17 +348,17 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return userRoleMapper.deleteUserRoleInfo(userRole);
     }
 
-//    /**
-//     * 批量取消授权用户角色
-//     *
-//     * @param roleId  角色ID
-//     * @param userIds 需要取消授权的用户数据ID
-//     * @return 结果
-//     */
-//    @Override
-//    public int deleteAuthUsers(Long roleId, Long[] userIds) {
-//        return userRoleMapper.deleteUserRoleInfos(roleId, userIds);
-//    }
+    /**
+     * 批量取消授权用户角色
+     *
+     * @param roleId  角色ID
+     * @param userIds 需要取消授权的用户数据ID
+     * @return 结果
+     */
+    @Override
+    public int deleteAuthUsers(Long roleId, Long[] userIds) {
+        return userRoleMapper.deleteUserRoleInfos(roleId, userIds);
+    }
 
     /**
      * 批量选择授权用户角色

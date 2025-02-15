@@ -152,14 +152,14 @@ public interface ISysRoleService {
      */
     public int deleteAuthUser(SysUserRole userRole);
 
-//    /**
-//     * 批量取消授权用户角色
-//     *
-//     * @param roleId  角色ID
-//     * @param userIds 需要取消授权的用户数据ID
-//     * @return 结果
-//     */
-//    public int deleteAuthUsers(Long roleId, Long[] userIds);
+    /**
+     * 批量取消授权用户角色
+     *
+     * @param roleId  角色ID
+     * @param userIds 需要取消授权的用户数据ID
+     * @return 结果
+     */
+    public int deleteAuthUsers(Long roleId, Long[] userIds);
 
     /**
      * 批量选择授权用户角色
