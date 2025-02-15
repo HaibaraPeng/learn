@@ -219,17 +219,16 @@ public class SysMenuServiceImpl implements ISysMenuService {
         return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
-//    /**
-//     * 根据菜单ID查询信息
-//     *
-//     * @param menuId 菜单ID
-//     * @return 菜单信息
-//     */
-//    @Override
-//    public SysMenu selectMenuById(Long menuId)
-//    {
-//        return menuMapper.selectMenuById(menuId);
-//    }
+    /**
+     * 根据菜单ID查询信息
+     *
+     * @param menuId 菜单ID
+     * @return 菜单信息
+     */
+    @Override
+    public SysMenu selectMenuById(Long menuId) {
+        return menuMapper.selectMenuById(menuId);
+    }
 
     /**
      * 是否存在菜单子节点

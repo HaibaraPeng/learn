@@ -85,13 +85,13 @@ public interface ISysMenuService {
      */
     public List<TreeSelect> buildMenuTreeSelect(List<SysMenu> menus);
 
-//    /**
-//     * 根据菜单ID查询信息
-//     *
-//     * @param menuId 菜单ID
-//     * @return 菜单信息
-//     */
-//    public SysMenu selectMenuById(Long menuId);
+    /**
+     * 根据菜单ID查询信息
+     *
+     * @param menuId 菜单ID
+     * @return 菜单信息
+     */
+    public SysMenu selectMenuById(Long menuId);
 
     /**
      * 是否存在菜单子节点

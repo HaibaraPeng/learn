@@ -37,15 +37,14 @@ public class SysMenuController extends BaseController {
         return success(menus);
     }
 
-//    /**
-//     * 根据菜单编号获取详细信息
-//     */
-//    @RequiresPermissions("system:menu:query")
-//    @GetMapping(value = "/{menuId}")
-//    public AjaxResult getInfo(@PathVariable Long menuId)
-//    {
-//        return success(menuService.selectMenuById(menuId));
-//    }
+    /**
+     * 根据菜单编号获取详细信息
+     */
+    @RequiresPermissions("system:menu:query")
+    @GetMapping(value = "/{menuId}")
+    public AjaxResult getInfo(@PathVariable Long menuId) {
+        return success(menuService.selectMenuById(menuId));
+    }
 
     /**
      * 获取菜单下拉树列表
