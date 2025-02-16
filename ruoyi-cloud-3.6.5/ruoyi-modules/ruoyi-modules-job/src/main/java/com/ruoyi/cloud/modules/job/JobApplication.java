@@ -12,8 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCustomConfig
 @EnableRyFeignClients
 @SpringBootApplication
-public class RuoYiJobApplication {
+public class JobApplication {
     public static void main(String[] args) {
-        SpringApplication.run(RuoYiJobApplication.class, args);
+        SpringApplication.run(JobApplication.class, args);
     }
 }
