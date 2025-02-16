@@ -15,6 +15,7 @@
         <module>ruoyi-modules-system</module>
         <module>ruoyi-modules-file</module>
         <module>ruoyi-modules-job</module>
+        <module>ruoyi-modules-gen</module>
     </modules>
 
     <properties>
