@@ -62,114 +62,114 @@ public class SysJobServiceImpl implements ISysJobService {
         return jobMapper.selectJobById(jobId);
     }
 
-//    /**
-//     * 暂停任务
-//     *
-//     * @param job 调度信息
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int pauseJob(SysJob job) throws SchedulerException {
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
-//        int rows = jobMapper.updateJob(job);
-//        if (rows > 0) {
-//            scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
-//        }
-//        return rows;
-//    }
-//
-//    /**
-//     * 恢复任务
-//     *
-//     * @param job 调度信息
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int resumeJob(SysJob job) throws SchedulerException {
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
-//        int rows = jobMapper.updateJob(job);
-//        if (rows > 0) {
-//            scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
-//        }
-//        return rows;
-//    }
-//
-//    /**
-//     * 删除任务后，所对应的trigger也将被删除
-//     *
-//     * @param job 调度信息
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int deleteJob(SysJob job) throws SchedulerException {
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        int rows = jobMapper.deleteJobById(jobId);
-//        if (rows > 0) {
-//            scheduler.deleteJob(ScheduleUtils.getJobKey(jobId, jobGroup));
-//        }
-//        return rows;
-//    }
-//
-//    /**
-//     * 批量删除调度信息
-//     *
-//     * @param jobIds 需要删除的任务ID
-//     * @return 结果
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public void deleteJobByIds(Long[] jobIds) throws SchedulerException {
-//        for (Long jobId : jobIds) {
-//            SysJob job = jobMapper.selectJobById(jobId);
-//            deleteJob(job);
-//        }
-//    }
-//
-//    /**
-//     * 任务调度状态修改
-//     *
-//     * @param job 调度信息
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public int changeStatus(SysJob job) throws SchedulerException {
-//        int rows = 0;
-//        String status = job.getStatus();
-//        if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
-//            rows = resumeJob(job);
-//        } else if (ScheduleConstants.Status.PAUSE.getValue().equals(status)) {
-//            rows = pauseJob(job);
-//        }
-//        return rows;
-//    }
-//
-//    /**
-//     * 立即运行任务
-//     *
-//     * @param job 调度信息
-//     */
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public boolean run(SysJob job) throws SchedulerException {
-//        boolean result = false;
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        SysJob properties = selectJobById(job.getJobId());
-//        // 参数
-//        JobDataMap dataMap = new JobDataMap();
-//        dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
-//        JobKey jobKey = ScheduleUtils.getJobKey(jobId, jobGroup);
-//        if (scheduler.checkExists(jobKey)) {
-//            result = true;
-//            scheduler.triggerJob(jobKey, dataMap);
-//        }
-//        return result;
-//    }
+    /**
+     * 暂停任务
+     *
+     * @param job 调度信息
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int pauseJob(SysJob job) throws SchedulerException {
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+        int rows = jobMapper.updateJob(job);
+        if (rows > 0) {
+            scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+        }
+        return rows;
+    }
+
+    /**
+     * 恢复任务
+     *
+     * @param job 调度信息
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int resumeJob(SysJob job) throws SchedulerException {
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
+        int rows = jobMapper.updateJob(job);
+        if (rows > 0) {
+            scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+        }
+        return rows;
+    }
+
+    /**
+     * 删除任务后，所对应的trigger也将被删除
+     *
+     * @param job 调度信息
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteJob(SysJob job) throws SchedulerException {
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        int rows = jobMapper.deleteJobById(jobId);
+        if (rows > 0) {
+            scheduler.deleteJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+        }
+        return rows;
+    }
+
+    /**
+     * 批量删除调度信息
+     *
+     * @param jobIds 需要删除的任务ID
+     * @return 结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteJobByIds(Long[] jobIds) throws SchedulerException {
+        for (Long jobId : jobIds) {
+            SysJob job = jobMapper.selectJobById(jobId);
+            deleteJob(job);
+        }
+    }
+
+    /**
+     * 任务调度状态修改
+     *
+     * @param job 调度信息
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int changeStatus(SysJob job) throws SchedulerException {
+        int rows = 0;
+        String status = job.getStatus();
+        if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
+            rows = resumeJob(job);
+        } else if (ScheduleConstants.Status.PAUSE.getValue().equals(status)) {
+            rows = pauseJob(job);
+        }
+        return rows;
+    }
+
+    /**
+     * 立即运行任务
+     *
+     * @param job 调度信息
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean run(SysJob job) throws SchedulerException {
+        boolean result = false;
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        SysJob properties = selectJobById(job.getJobId());
+        // 参数
+        JobDataMap dataMap = new JobDataMap();
+        dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
+        JobKey jobKey = ScheduleUtils.getJobKey(jobId, jobGroup);
+        if (scheduler.checkExists(jobKey)) {
+            result = true;
+            scheduler.triggerJob(jobKey, dataMap);
+        }
+        return result;
+    }
 
     /**
      * 新增任务

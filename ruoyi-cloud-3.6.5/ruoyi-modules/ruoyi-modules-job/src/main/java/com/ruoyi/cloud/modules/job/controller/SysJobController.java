@@ -112,37 +112,37 @@ public class SysJobController extends BaseController {
         return toAjax(jobService.updateJob(job));
     }
 
-//    /**
-//     * 定时任务状态修改
-//     */
-//    @RequiresPermissions("monitor:job:changeStatus")
-//    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-//    @PutMapping("/changeStatus")
-//    public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException {
-//        SysJob newJob = jobService.selectJobById(job.getJobId());
-//        newJob.setStatus(job.getStatus());
-//        return toAjax(jobService.changeStatus(newJob));
-//    }
-//
-//    /**
-//     * 定时任务立即执行一次
-//     */
-//    @RequiresPermissions("monitor:job:changeStatus")
-//    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
-//    @PutMapping("/run")
-//    public AjaxResult run(@RequestBody SysJob job) throws SchedulerException {
-//        boolean result = jobService.run(job);
-//        return result ? success() : error("任务不存在或已过期！");
-//    }
-//
-//    /**
-//     * 删除定时任务
-//     */
-//    @RequiresPermissions("monitor:job:remove")
-//    @Log(title = "定时任务", businessType = BusinessType.DELETE)
-//    @DeleteMapping("/{jobIds}")
-//    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException {
-//        jobService.deleteJobByIds(jobIds);
-//        return success();
-//    }
+    /**
+     * 定时任务状态修改
+     */
+    @RequiresPermissions("monitor:job:changeStatus")
+    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
+    @PutMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException {
+        SysJob newJob = jobService.selectJobById(job.getJobId());
+        newJob.setStatus(job.getStatus());
+        return toAjax(jobService.changeStatus(newJob));
+    }
+
+    /**
+     * 定时任务立即执行一次
+     */
+    @RequiresPermissions("monitor:job:changeStatus")
+    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
+    @PutMapping("/run")
+    public AjaxResult run(@RequestBody SysJob job) throws SchedulerException {
+        boolean result = jobService.run(job);
+        return result ? success() : error("任务不存在或已过期！");
+    }
+
+    /**
+     * 删除定时任务
+     */
+    @RequiresPermissions("monitor:job:remove")
+    @Log(title = "定时任务", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{jobIds}")
+    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException {
+        jobService.deleteJobByIds(jobIds);
+        return success();
+    }
 }
