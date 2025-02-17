@@ -18,6 +18,7 @@
         <module>pig-common-security</module>
         <module>pig-common-mybatis</module>
         <module>pig-common-swagger</module>
+        <module>pig-common-log</module>
     </modules>
 
     <properties>

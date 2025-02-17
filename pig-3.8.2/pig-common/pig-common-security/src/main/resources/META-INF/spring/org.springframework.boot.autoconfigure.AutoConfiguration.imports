@@ -1,1 +1,3 @@
+com.pig.cloud.common.security.service.PigUserDetailsServiceImpl
+com.pig.cloud.common.security.component.PigSecurityMessageSourceConfiguration
 com.pig.cloud.common.security.service.PigRemoteRegisteredClientRepository

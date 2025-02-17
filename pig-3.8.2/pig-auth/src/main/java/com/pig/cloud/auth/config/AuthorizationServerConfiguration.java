@@ -2,7 +2,12 @@ package com.pig.cloud.auth.config;
 
 import com.pig.cloud.auth.filter.PasswordDecoderFilter;
 import com.pig.cloud.auth.filter.ValidateCodeFilter;
+import com.pig.cloud.auth.support.CustomeOAuth2AccessTokenGenerator;
+import com.pig.cloud.auth.support.core.CustomeOAuth2TokenCustomizer;
 import com.pig.cloud.auth.support.core.FormIdentityLoginConfigurer;
+import com.pig.cloud.auth.support.core.PigDaoAuthenticationProvider;
+import com.pig.cloud.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
+import com.pig.cloud.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -46,15 +51,16 @@ public class AuthorizationServerConfiguration {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ConditionalOnProperty(value = "security.micro", matchIfMissing = true)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        // TODO
-//        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
 
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         // 增加验证码过滤器
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
         // 增加密码解密过滤器
         http.addFilterBefore(passwordDecoderFilter, UsernamePasswordAuthenticationFilter.class);
 
+        http.with(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {// 个性化认证授权端点
+            tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter());
+        }), Customizer.withDefaults());
 //        http.with(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {// 个性化认证授权端点
 //                    tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter()) // 注入自定义的授权认证Converter
 //                            .accessTokenResponseHandler(new PigAuthenticationSuccessEventHandler()) // 登录成功处理器
@@ -93,13 +99,13 @@ public class AuthorizationServerConfiguration {
      *
      * @return OAuth2TokenGenerator
      */
-//    @Bean
-//    public OAuth2TokenGenerator oAuth2TokenGenerator() {
-//        CustomeOAuth2AccessTokenGenerator accessTokenGenerator = new CustomeOAuth2AccessTokenGenerator();
-//        // 注入Token 增加关联用户信息
-//        accessTokenGenerator.setAccessTokenCustomizer(new CustomeOAuth2TokenCustomizer());
-//        return new DelegatingOAuth2TokenGenerator(accessTokenGenerator, new OAuth2RefreshTokenGenerator());
-//    }
+    @Bean
+    public OAuth2TokenGenerator oAuth2TokenGenerator() {
+        CustomeOAuth2AccessTokenGenerator accessTokenGenerator = new CustomeOAuth2AccessTokenGenerator();
+        // 注入Token 增加关联用户信息
+        accessTokenGenerator.setAccessTokenCustomizer(new CustomeOAuth2TokenCustomizer());
+        return new DelegatingOAuth2TokenGenerator(accessTokenGenerator, new OAuth2RefreshTokenGenerator());
+    }
 
     /**
      * request -> xToken 注入请求转换器
@@ -109,7 +115,7 @@ public class AuthorizationServerConfiguration {
     @Bean
     public AuthenticationConverter accessTokenRequestConverter() {
         return new DelegatingAuthenticationConverter(Arrays.asList(
-//                new OAuth2ResourceOwnerPasswordAuthenticationConverter(),
+                new OAuth2ResourceOwnerPasswordAuthenticationConverter(),
 //                new OAuth2ResourceOwnerSmsAuthenticationConverter(),
                 new OAuth2RefreshTokenAuthenticationConverter(),
                 new OAuth2ClientCredentialsAuthenticationConverter(),
@@ -125,19 +131,19 @@ public class AuthorizationServerConfiguration {
      */
     @SuppressWarnings("unchecked")
     private void addCustomOAuth2GrantAuthenticationProvider(HttpSecurity http) {
-//        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-//        OAuth2AuthorizationService authorizationService = http.getSharedObject(OAuth2AuthorizationService.class);
-//
-//        OAuth2ResourceOwnerPasswordAuthenticationProvider resourceOwnerPasswordAuthenticationProvider = new OAuth2ResourceOwnerPasswordAuthenticationProvider(
-//                authenticationManager, authorizationService, oAuth2TokenGenerator());
-//
+        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+        OAuth2AuthorizationService authorizationService = http.getSharedObject(OAuth2AuthorizationService.class);
+
+        OAuth2ResourceOwnerPasswordAuthenticationProvider resourceOwnerPasswordAuthenticationProvider = new OAuth2ResourceOwnerPasswordAuthenticationProvider(
+                authenticationManager, authorizationService, oAuth2TokenGenerator());
+
 //        OAuth2ResourceOwnerSmsAuthenticationProvider resourceOwnerSmsAuthenticationProvider = new OAuth2ResourceOwnerSmsAuthenticationProvider(
 //                authenticationManager, authorizationService, oAuth2TokenGenerator());
-//
-//        // 处理 UsernamePasswordAuthenticationToken
-//        http.authenticationProvider(new PigDaoAuthenticationProvider());
-//        // 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
-//        http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);
+
+        // 处理 UsernamePasswordAuthenticationToken
+        http.authenticationProvider(new PigDaoAuthenticationProvider());
+        // 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
+        http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);
 //        // 处理 OAuth2ResourceOwnerSmsAuthenticationToken
 //        http.authenticationProvider(resourceOwnerSmsAuthenticationProvider);
     }

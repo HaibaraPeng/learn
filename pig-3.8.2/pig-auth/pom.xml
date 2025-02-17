@@ -29,6 +29,10 @@
         </dependency>
         <dependency>
             <groupId>com.pig.cloud</groupId>
+            <artifactId>pig-common-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pig.cloud</groupId>
             <artifactId>pig-upms-api</artifactId>
         </dependency>
         <!--注册中心客户端-->
