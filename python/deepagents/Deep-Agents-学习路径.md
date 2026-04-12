@@ -149,7 +149,7 @@ base_url = "https://api.anthropic.com"
 **WHY 学习**：从最简单的例子开始，建立信心和基本认知。
 
 ```python
-# hello_agent.py
+# 1-1-hello_agent.py
 from deepagents import create_deep_agent
 
 # 创建最简 Agent（使用默认配置）
@@ -174,7 +174,7 @@ print(result["messages"][-1].content)
 **WHY 学习**：了解 Agent 的核心能力，理解"开箱即用"的含义。
 
 ```python
-# agent_features.py
+# 1-2-agent_features.py
 from deepagents import create_deep_agent
 
 agent = create_deep_agent()
@@ -211,7 +211,7 @@ result = agent.invoke({
 **WHY 学习**：理解 Agent 可定制性，学会添加自己的工具。
 
 ```python
-# custom_agent.py
+# 1-3-custom_agent.py
 from deepagents import create_deep_agent
 from langchain_anthropic import ChatAnthropic
 from langchain_core.tools import tool
@@ -248,17 +248,20 @@ print(result["messages"][-1].content)
 **WHY 学习**：理解 Backend 抽象，学会控制 Agent 的文件访问权限。
 
 ```python
-# backend_agent.py
+# 1-4-backend_agent.py
 from deepagents import create_deep_agent
 from deepagents.backends import FilesystemBackend
 from deepagents.middleware.permissions import FilesystemPermission
 
-# 配置 Backend（指定工作目录）
-backend = FilesystemBackend(root_dir="./workspace")
+# 配置 Backend（指定工作目录，启用虚拟路径模式）
+backend = FilesystemBackend(root_dir="./workspace", virtual_mode=True)
 
-# 配置权限（只允许读取）
+# 配置权限（只允许读取 /workspace 目录，禁止写入）
 permissions = [
-    FilesystemPermission(path="/read", allow=["read_file", "ls", "glob"]),
+    # 允许读取 /workspace 目录下的所有文件
+    FilesystemPermission(operations=["read"], paths=["/workspace/**"]),
+    # 禁止写入 /workspace 目录下的所有文件
+    FilesystemPermission(operations=["write"], paths=["/workspace/**"], mode="deny"),
 ]
 
 # 创建 Agent
@@ -275,8 +278,22 @@ result = agent.invoke({
 
 **关键概念**：
 - `Backend` — Agent 的运行环境抽象（本地 filesystem 或远程 sandbox）
-- `FilesystemPermission` — 文件系统权限控制（读/写/执行）
+- `FilesystemPermission` — 文件系统权限控制规则
 - `root_dir` — Backend 工作根目录
+- `virtual_mode` — 虚拟路径模式，启用后路径会被限制在 root_dir 内
+
+**FilesystemPermission 参数说明**：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `operations` | `list["read" \| "write"]` | 操作类型（read 包含 ls/read_file/glob/grep，write 包含 write_file/edit_file） |
+| `paths` | `list[str]` | Glob 路径模式（必须以 `/` 开头，如 `["/workspace/**"]`） |
+| `mode` | `"allow" \| "deny"` | 允许或拒绝（默认 `allow`） |
+
+**注意**：
+- `paths` 参数的路径必须以 `/` 开头
+- 使用 Glob 模式匹配（如 `/**` 匹配所有子目录）
+- 规则按声明顺序评估，第一个匹配的规则生效
 
 ### 实践任务
 
