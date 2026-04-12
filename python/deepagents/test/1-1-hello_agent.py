@@ -1,9 +1,10 @@
 import os
 
 from deepagents import create_deep_agent
+from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic
 
-os.environ["ANTHROPIC_API_KEY"] = "sk-sp-617c87fc3f4849da9478cc8a859edd1d"
+load_dotenv()
 
 
 def main():
