@@ -305,11 +305,11 @@ result = agent.invoke({
 
 ### 学习检查清单
 
-- [ ] 理解 `create_deep_agent` 的核心作用
-- [ ] 知道 Agent 的三个核心能力（规划、文件、子 Agent）
-- [ ] 能创建自定义工具并集成
-- [ ] 能配置 Backend 和权限
-- [ ] 能阅读 SDK 源码的函数签名
+- [x] 理解 `create_deep_agent` 的核心作用
+- [x] 知道 Agent 的三个核心能力（规划、文件、子 Agent）
+- [x] 能创建自定义工具并集成
+- [x] 能配置 Backend 和权限
+- [x] 能阅读 SDK 源码的函数签名
 
 ---
 
@@ -361,9 +361,453 @@ result = agent.invoke({
 | **SkillsMiddleware** | 技能加载 | 加载 SKILL.md 工作流指导 |
 | **SubagentsMiddleware** | 子 Agent 管理 | 创建和管理子 Agent |
 | **SummarizationMiddleware** | 自动摘要 | 长对话自动压缩 |
+| **TodoListMiddleware** | 任务列表 | write_todos 工具实现 |
+| **PatchToolCallsMiddleware** | 工具调用修复 | 修复工具调用问题 |
+| **AnthropicPromptCachingMiddleware** | Prompt 缓存 | Anthropic 模型优化 |
+
+---
+
+### Middleware 初始化加载流程（深入解析）
+
+**WHY 理解**：知道 middleware 如何初始化，才能理解 Agent 启动时发生了什么。
+
+#### 初始化位置
+
+**核心类和方法**：
+- **位置**：`libs/deepagents/deepagents/graph.py`
+- **函数**：`create_deep_agent()`（line 217-623）
+- **最终调用**：`create_agent()`（line 602-614，来自 `langchain.agents`）
+
+#### 初始化流程图
+
+```
+用户调用 create_deep_agent(model=model, skills=..., memory=...)
+    ↓
+步骤 1: 解析模型和 Profile（line 415-418）
+    ↓
+步骤 2: 构建 通用子 Agent middleware（gp_middleware，line 431-455）
+    ↓
+步骤 3: 构建 用户自定义子 Agent middleware（subagent_middleware，line 488-510）
+    ↓
+步骤 4: 构建 主 Agent middleware（deepagent_middleware，line 539-586）
+    ↓
+步骤 5: 调用 create_agent() 传递 middleware（line 602-614）
+    ↓
+返回 CompiledStateGraph（可执行 Agent）
+```
+
+#### 详细初始化过程
+
+**步骤 1：解析模型和 Profile**
+
+```python
+# graph.py line 415-418
+_model_spec = model if isinstance(model, str) else None
+model = get_default_model() if model is None else resolve_model(model)
+_profile = _harness_profile_for_model(model, _model_spec)
+
+# WHY: Profile 提供了 Provider 特定的配置（如 excluded_tools、extra_middleware）
+```
+
+**步骤 2：构建通用子 Agent middleware**
+
+```python
+# graph.py line 431-455
+gp_middleware = [
+    TodoListMiddleware(),                      # 1. 任务列表
+    FilesystemMiddleware(backend=backend),     # 2. 文件操作
+    create_summarization_middleware(model),    # 3. 自动摘要
+    PatchToolCallsMiddleware(),                # 4. 工具调用修复
+]
+
+if skills is not None:
+    gp_middleware.append(SkillsMiddleware(...))  # 5. 技能加载（条件）
+
+gp_middleware.extend(_resolve_extra_middleware(_profile))  # 6. Provider 特定 middleware
+
+if _profile.excluded_tools:
+    gp_middleware.append(_ToolExclusionMiddleware(...))  # 7. 工具排除（条件）
+
+gp_middleware.append(AnthropicPromptCachingMiddleware(...))  # 8. Prompt 缓存（无条件）
+
+if permissions:
+    gp_middleware.append(_PermissionMiddleware(...))  # 9. 权限（条件，必须最后）
+```
+
+**WHY 这个顺序**：
+- `TodoListMiddleware` 最先：处理 write_todos 工具
+- `FilesystemMiddleware` 第二：处理文件操作
+- `SummarizationMiddleware` 中间：自动摘要长对话
+- `PatchToolCallsMiddleware` 中间：修复工具调用问题
+- `SkillsMiddleware` 条件：加载技能文件
+- `AnthropicPromptCachingMiddleware` 尾部：Prompt 缓存优化
+- `_PermissionMiddleware` 最后：必须看到所有工具才能检查权限
+
+**步骤 3：构建用户自定义子 Agent middleware**
+
+```python
+# graph.py line 488-510
+subagent_middleware = [
+    TodoListMiddleware(),
+    FilesystemMiddleware(backend=backend),
+    create_summarization_middleware(subagent_model),
+    PatchToolCallsMiddleware(),
+]
+
+if subagent_skills:
+    subagent_middleware.append(SkillsMiddleware(...))
+
+subagent_middleware.extend(spec.get("middleware", []))  # 用户自定义 middleware
+subagent_middleware.extend(_resolve_extra_middleware(_subagent_profile))
+subagent_middleware.append(AnthropicPromptCachingMiddleware(...))
+```
+
+**WHY 与主 Agent 不同**：
+- 子 Agent 没有 `SubAgentMiddleware`（不能创建子子 Agent）
+- 用户可以传入自定义 middleware
+
+**步骤 4：构建主 Agent middleware**
+
+```python
+# graph.py line 539-586
+deepagent_middleware = [
+    TodoListMiddleware(),                      # 1. 任务列表
+]
+
+if skills is not None:
+    deepagent_middleware.append(SkillsMiddleware(...))  # 2. 技能加载（条件）
+
+deepagent_middleware.extend([
+    FilesystemMiddleware(backend=backend),     # 3. 文件操作
+    SubAgentMiddleware(subagents=inline_subagents),  # 4. 子 Agent 管理
+    create_summarization_middleware(model),    # 5. 自动摘要
+    PatchToolCallsMiddleware(),                # 6. 工具调用修复
+])
+
+if async_subagents:
+    deepagent_middleware.append(AsyncSubAgentMiddleware(...))  # 7. 异步子 Agent（条件）
+
+if middleware:
+    deepagent_middleware.extend(middleware)  # 8. 用户自定义 middleware
+
+deepagent_middleware.extend(_resolve_extra_middleware(_profile))  # 9. Provider 特定
+
+if _profile.excluded_tools:
+    deepagent_middleware.append(_ToolExclusionMiddleware(...))  # 10. 工具排除
+
+deepagent_middleware.append(AnthropicPromptCachingMiddleware(...))  # 11. Prompt 缓存
+
+if memory is not None:
+    deepagent_middleware.append(MemoryMiddleware(...))  # 12. 记忆管理（条件）
+
+if interrupt_on is not None:
+    deepagent_middleware.append(HumanInTheLoopMiddleware(...))  # 13. 人机交互（条件）
+
+if permissions:
+    deepagent_middleware.append(_PermissionMiddleware(...))  # 14. 权限（最后）
+```
+
+**WHY 主 Agent middleware 更复杂**：
+- 主 Agent 有 `SubAgentMiddleware`：管理子 Agent
+- 主 Agent 有 `MemoryMiddleware`：加载记忆文件
+- 主 Agent 有 `HumanInTheLoopMiddleware`：人机交互审批
+- 用户自定义 middleware 插入在中间（不影响尾部栈）
+
+**步骤 5：调用 create_agent 传递 middleware**
+
+```python
+# graph.py line 602-614
+return create_agent(
+    model,
+    system_prompt=final_system_prompt,
+    tools=_tools,
+    middleware=deepagent_middleware,  # ← 传递 middleware 列表
+    response_format=response_format,
+    context_schema=context_schema,
+    checkpointer=checkpointer,
+    store=store,
+    debug=debug,
+    name=name,
+    cache=cache,
+)
+```
+
+**WHY 传递给 create_agent**：
+- `create_agent` 是 LangChain 的 Agent 构建函数
+- 它会编译 middleware 栈，构建 StateGraph
+- 返回可执行的 CompiledStateGraph
+
+---
+
+### Middleware 栈顺序总结
+
+**主 Agent middleware 顺序（从上到下）**：
+
+```
+用户请求
+    ↓
+1. TodoListMiddleware          — 处理 write_todos
+    ↓
+2. SkillsMiddleware            — 加载技能文件（条件）
+    ↓
+3. FilesystemMiddleware        — 处理文件操作
+    ↓
+4. SubAgentMiddleware          — 处理 task 工具（调用子 Agent）
+    ↓
+5. SummarizationMiddleware     — 长对话自动摘要
+    ↓
+6. PatchToolCallsMiddleware    — 修复工具调用问题
+    ↓
+7. AsyncSubAgentMiddleware     — 异步子 Agent（条件）
+    ↓
+8. [用户自定义 middleware]     — 用户传入的 middleware
+    ↓
+9. [Provider 特定 middleware]  — Profile.extra_middleware
+    ↓
+10. _ToolExclusionMiddleware   — 排除工具（条件）
+    ↓
+11. AnthropicPromptCachingMiddleware — Prompt 缓存（无条件）
+    ↓
+12. MemoryMiddleware           — 加载记忆文件（条件）
+    ↓
+13. HumanInTheLoopMiddleware   — 人机交互审批（条件）
+    ↓
+14. _PermissionMiddleware      — 权限检查（必须最后）
+    ↓
+Agent 执行
+    ↓
+返回响应
+```
+
+**关键设计原则**：
+- `_PermissionMiddleware` 必须最后：需要看到所有工具才能检查权限
+- `AnthropicPromptCachingMiddleware` 尾部：不影响前面 middleware 的工具注入
+- `MemoryMiddleware` 在缓存后：避免记忆更新破坏缓存
+- 用户 middleware 在中间：可以拦截工具，但不影响尾部栈
+
+---
+
+### 主 Agent middleware 顺序的实现位置（深入解析）
+
+**WHY 理解**：知道 middleware 顺序在哪实现，才能深入理解执行机制。
+
+#### 核心实现分布在三个层次
+
+| 层次 | 文件 | 函数/类 | 行号 | 作用 |
+|------|------|---------|------|------|
+| **初始化层** | deepagents/graph.py | create_deep_agent() | 539-586 | 构建 middleware 列表（定义顺序） |
+| **组合层** | langchain.agents/factory.py | create_agent() | 684, 1000-1006 | 调用 _chain_model_call_handlers |
+| **组合层** | langchain.agents/factory.py | _chain_model_call_handlers() | 219-308 | 将列表组合成嵌套调用链 |
+| **执行层** | langchain.agents/middleware/types.py | AgentMiddleware.wrap_model_call() | — | 每个 middleware 的拦截逻辑 |
+
+---
+
+#### 1. 初始化层：构建 middleware 列表
+
+**位置**：`libs/deepagents/deepagents/graph.py`  
+**函数**：`create_deep_agent()`  
+**行号**：539-586
+
+**作用**：构建 middleware 列表（列表顺序 = 执行顺序）
+
+```python
+# graph.py line 539-586
+deepagent_middleware = [
+    TodoListMiddleware(),          # 第1个 → 最外层（最先拦截）
+    SkillsMiddleware(...),         # 第2个
+    FilesystemMiddleware(...),     # 第3个
+    SubAgentMiddleware(...),       # 第4个
+    ...
+    _PermissionMiddleware(...),   # 最后1个 → 最内层（最后执行）
+]
+
+# WHY: Python 列表的顺序直接映射到执行顺序
+# 第一个元素是最外层（最先拦截请求）
+# 最后一个元素是最内层（最后拦截请求，最先拦截响应）
+```
+
+---
+
+#### 2. 组合层：将列表组合成嵌套调用链
+
+**位置**：`langchain.agents/factory.py`（LangChain 包，非本项目）  
+**函数**：`_chain_model_call_handlers()`  
+**行号**：219-308
+
+**作用**：将 middleware 列表组合成嵌套调用链
+
+```python
+# factory.py line 219-308
+def _chain_model_call_handlers(handlers):
+    """将多个 middleware 组合成一个调用栈。
+    
+    关键设计：第一个 handler 是最外层（最先执行）
+    """
+    
+    # 关键：从右向左组合（line 303-306）
+    composed_handler = compose_two(handlers[-2], handlers[-1])  # 最后两个组合
+    for h in reversed(handlers[:-2]):  # 剩下的从右向左组合
+        composed_handler = compose_two(h, composed_handler)
+    
+    return composed_handler
+
+# factory.py line 1000-1006
+sync_handlers = [
+    traceable(name=f"{m.name}.wrap_model_call")(m.wrap_model_call)
+    for m in middleware_w_wrap_model_call  # ← 按 middleware 列表顺序
+]
+wrap_model_call_handler = _chain_model_call_handlers(sync_handlers)
+```
+
+**WHY 从右向左组合**：
+
+```
+middleware 列表 = [M1, M2, M3, M4]
+
+组合过程：
+1. compose_two(M3, M4)  → M3(M4(handler))
+2. compose_two(M2, M3(M4)) → M2(M3(M4(handler)))
+3. compose_two(M1, M2(M3(M4))) → M1(M2(M3(M4(handler))))
+
+最终执行顺序：M1 → M2 → M3 → M4 → handler → M4 → M3 → M2 → M1
+```
+
+---
+
+#### 3. 执行层：每个 middleware 的拦截逻辑
+
+**位置**：`langchain.agents/middleware/types.py`（LangChain 包）  
+**类**：`AgentMiddleware`  
+**关键方法**：`wrap_model_call()` / `wrap_tool_call()`
+
+**作用**：每个 middleware 的拦截逻辑
+
+```python
+# types.py（简化示例）
+class AgentMiddleware:
+    def wrap_model_call(self, request, handler):
+        """拦截模型调用
+        
+        Args:
+            request: 模型请求（可修改）
+            handler: 下一个 middleware 或实际模型调用
+        """
+        # 1. 前置处理（修改 request）
+        modified_request = self.pre_process(request)
+        
+        # 2. 调用下一个 middleware
+        response = handler(modified_request)
+        
+        # 3. 后置处理（修改 response）
+        modified_response = self.post_process(response)
+        
+        return modified_response
+```
+
+**执行流程（洋葱模型）**：
+
+```
+用户请求
+    ↓
+M1.wrap_model_call(request, handler=M2.wrap_model_call)
+    ↓
+    M1.pre_process(request)  # M1 前置处理
+    ↓
+    M2.wrap_model_call(request, handler=M3.wrap_model_call)
+        ↓
+        M2.pre_process(request)  # M2 前置处理
+        ↓
+        M3.wrap_model_call(request, handler=M4.wrap_model_call)
+            ↓
+            M4.wrap_model_call(request, handler=model)
+                ↓
+                model(request)  # 实际模型调用
+                ↓
+            M4.post_process(response)  # M4 后置处理
+            ↓
+        M3.post_process(response)  # M3 后置处理
+        ↓
+    M2.post_process(response)  # M2 后置处理
+    ↓
+M1.post_process(response)  # M1 后置处理
+    ↓
+返回响应
+```
+
+---
+
+#### 关键设计点
+
+**1. 顺序由列表决定**
+
+```python
+# graph.py line 539-586
+deepagent_middleware = [
+    TodoListMiddleware(),          # 第1个 → 最外层
+    SkillsMiddleware(...),         # 第2个
+    FilesystemMiddleware(...),     # 第3个
+    SubAgentMiddleware(...),       # 第4个
+    ...
+    _PermissionMiddleware(...),   # 最后1个 → 最内层（最后执行）
+]
+```
+
+**WHY**：Python 列表的顺序直接映射到执行顺序。
+
+---
+
+**2. 组合算法：从右向左**
+
+```python
+# factory.py line 303-306
+composed_handler = compose_two(handlers[-2], handlers[-1])
+for h in reversed(handlers[:-2]):
+    composed_handler = compose_two(h, composed_handler)
+```
+
+**WHY 从右向左组合**：
+- 第一个 middleware（handlers[0]）是最外层
+- 最后一个 middleware（handlers[-1]）是最内层
+- 保证列表顺序 = 执行顺序
+
+---
+
+**3. 嵌套调用**
+
+```python
+# 最终组合结果
+M1.wrap_model_call(request, handler=M2.wrap_model_call)
+    M2.wrap_model_call(request, handler=M3.wrap_model_call)
+        M3.wrap_model_call(request, handler=M4.wrap_model_call)
+            M4.wrap_model_call(request, handler=model)
+```
+
+**WHY 嵌套**：每个 middleware 调用 handler 时，实际上是调用下一个 middleware。
+
+---
+
+**一句话总结**：
+
+主 Agent middleware 顺序由 `deepagents/graph.py` 的 `create_deep_agent()` 函数（line 539-586）构建列表决定，由 `langchain.agents/factory.py` 的 `_chain_model_call_handlers()` 函数（line 219-308）组合成嵌套调用链执行。
+
+---
+
+### 关键源码位置
+
+| 功能 | 文件 | 函数/类 | 行号 |
+|------|------|---------|------|
+| **middleware 初始化** | graph.py | create_deep_agent() | 431-586 |
+| **传递给 LangGraph** | graph.py | create_deep_agent() → create_agent() | 602-614 |
+| **TodoListMiddleware** | middleware/__init__.py | TodoListMiddleware | — |
+| **FilesystemMiddleware** | middleware/filesystem.py | FilesystemMiddleware | — |
+| **SkillsMiddleware** | middleware/skills.py | SkillsMiddleware | — |
+| **SubAgentMiddleware** | middleware/subagents.py | SubAgentMiddleware | — |
+| **MemoryMiddleware** | middleware/memory.py | MemoryMiddleware | — |
+| **SummarizationMiddleware** | middleware/summarization.py | create_summarization_middleware() | — |
 
 **阅读源码**：
-- `libs/deepagents/deepagents/middleware/__init__.py`
+- `libs/deepagents/deepagents/graph.py` — middleware 初始化流程（重点）
+- `libs/deepagents/deepagents/middleware/__init__.py` — middleware 导出
 - `libs/deepagents/deepagents/middleware/filesystem.py` — 文件操作拦截
 - `libs/deepagents/deepagents/middleware/skills.py` — 技能文件加载
 
